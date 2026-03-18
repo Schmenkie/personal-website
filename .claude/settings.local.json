@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -o files.zip -d .)",
+      "mcp__magic__21st_magic_component_inspiration",
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(mv /Users/spencercurnow/personal-website/_old /tmp/_old_personal_website)"
+    ]
+  }
+}
