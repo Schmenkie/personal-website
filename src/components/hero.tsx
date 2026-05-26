@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { ParticleField } from "@/components/ui/particle-field";
 
 const stagger = {
@@ -103,8 +103,11 @@ export function Hero() {
         >
           <motion.div variants={fadeUp}>
             <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/[0.08] px-4 py-1.5 text-sm font-medium text-accent-light">
-              <Sparkles size={14} />
-              Open to opportunities
+              <span className="relative flex h-2 w-2">
+                <span aria-hidden className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-60 animate-ping" />
+                <span aria-hidden className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+              </span>
+              Available for new projects
             </span>
           </motion.div>
 
@@ -122,31 +125,32 @@ export function Hero() {
             className="max-w-lg text-lg text-text-secondary leading-relaxed"
           >
             I&apos;m Spencer Curnow, a psychology grad turned self-taught
-            developer who ships real products. Most recently{" "}
+            developer. I take a vision and ship it, using AI-augmented
+            development to compress weeks of work into days. Most recently{" "}
             <a
               href="#featured"
               className="text-text-primary underline decoration-accent/60 underline-offset-4 hover:decoration-accent transition-colors"
             >
               LinkUp Golf
             </a>
-            , a social app for golfers live on the iOS App Store. Before that:
-            audio analysis tools, AI lead sourcing, and the rest of the catalog
-            below.
+            , a social app for golfers live on the iOS App Store. If you
+            have something you want built, I&apos;d like to build it for you.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
-            <a
-              href="#featured"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-obsidian hover:bg-accent-light transition-colors"
-            >
-              See What I&apos;ve Built
-              <ArrowDown size={16} />
-            </a>
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-3 pt-2">
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-accent/50 px-7 py-3 text-sm font-semibold text-accent-light hover:bg-accent/10 transition-colors"
+              className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-obsidian hover:bg-accent-light transition-colors"
             >
-              Let&apos;s Connect
+              Work with me
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href="#featured"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-accent/50 px-7 py-3 text-sm font-semibold text-accent-light hover:bg-accent/10 transition-colors"
+            >
+              See the work
+              <ArrowDown size={16} />
             </a>
           </motion.div>
         </motion.div>

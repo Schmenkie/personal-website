@@ -6,12 +6,12 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Approach", href: "#approach" },
-  { label: "Skills", href: "#skills" },
-  { label: "Writing", href: "#writing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#featured" },
+  { label: "About", href: "/#about" },
+  { label: "Journey", href: "/#journey" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Resume", href: "/resume" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {

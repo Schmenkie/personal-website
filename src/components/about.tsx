@@ -26,8 +26,8 @@ export function About() {
           <InView variant="slide-up" delay={0.1}>
             <div className="space-y-5 text-text-secondary leading-relaxed text-lg">
               <p>
-                I studied psychology at Boise State, earned an Electronic Music
-                Production certificate, ran intramural sports for 1,900+ student
+                I studied psychology at Boise State, earned a Music Production
+                certificate, ran intramural sports for 1,900+ student
                 participants, and currently lead PT aide operations at Prevail
                 Physical Therapy in Shoreline.
               </p>
@@ -63,7 +63,7 @@ export function About() {
                     BS Psychology
                   </span>
                   <span className="rounded-full bg-surface-light px-3 py-1 text-xs font-medium text-text-secondary">
-                    Electronic Music Production
+                    Music Production
                   </span>
                 </div>
               </div>

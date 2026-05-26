@@ -1,7 +1,8 @@
 "use client";
 
-import { Mail, Linkedin, Github, Music } from "lucide-react";
+import { Mail, Linkedin, Github, Music, FileText } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
+import Link from "next/link";
 
 const contactLinks = [
   { icon: Mail, label: "Email", href: "mailto:scurnow24@gmail.com" },
@@ -22,8 +23,9 @@ export function Contact() {
             <span className="italic text-accent">together</span>.
           </h2>
           <p className="mt-4 text-lg text-text-secondary leading-relaxed">
-            Whether you have a project in mind, a role to fill, or just want
-            to chat, I&apos;d love to hear from you.
+            Project work is the headline. Send me what you want built, we&apos;ll
+            scope it and figure out payment in conversation. Full-time roles
+            welcome too if the fit is right.
           </p>
         </InView>
 
@@ -36,15 +38,13 @@ export function Contact() {
               <Mail size={18} />
               Get In Touch
             </a>
-            <a
-              href="https://www.linkedin.com/in/spencercurnow/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/resume"
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-accent/50 px-8 py-3.5 text-sm font-semibold text-accent-light hover:bg-accent/10 transition-colors"
             >
-              <Linkedin size={18} />
-              LinkedIn
-            </a>
+              <FileText size={18} />
+              View Resume
+            </Link>
           </div>
         </InView>
 

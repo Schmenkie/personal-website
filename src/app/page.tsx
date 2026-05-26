@@ -5,6 +5,7 @@ import { About } from "@/components/about";
 import { FeaturedProject } from "@/components/featured-project";
 import { Projects } from "@/components/projects";
 import { Approach } from "@/components/approach";
+import { Journey } from "@/components/journey";
 import { Skills } from "@/components/skills";
 import { Blog } from "@/components/blog";
 import { Contact } from "@/components/contact";
@@ -21,6 +22,7 @@ export default function Home() {
         <FeaturedProject />
         <Projects />
         <Approach />
+        <Journey />
         <Skills />
         <Blog />
         <Contact />
