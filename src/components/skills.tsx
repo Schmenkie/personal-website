@@ -1,107 +1,67 @@
 "use client";
 
-import { Brain, Rocket, Users, Puzzle } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
 
 const skillGroups = [
   {
     category: "Frontend",
-    skills: ["React 19", "Next.js", "Vite", "Tailwind CSS", "Framer Motion", "Vanilla JS/CSS"],
+    skills: ["React 19", "Next.js", "Vite", "Tailwind CSS", "Framer Motion", "React Native", "Expo"],
   },
   {
     category: "Backend & Infrastructure",
-    skills: ["Node.js", "Cloudflare Workers", "Vercel", "Supabase", "D1 (SQLite)", "REST APIs"],
+    skills: ["Node.js", "Cloudflare Workers", "Vercel", "Supabase", "Postgres", "D1 (SQLite)", "REST APIs"],
   },
   {
     category: "AI & Data",
-    skills: ["Claude Code", "Gemini AI", "Prompt Engineering", "Web Audio / DSP", "Data Analysis (SPSS, Qualtrics)"],
+    skills: ["Claude Code", "Gemini AI", "Prompt Engineering", "Web Audio / DSP", "SPSS", "Qualtrics"],
   },
   {
     category: "Business & Product",
-    skills: ["Stripe Integration", "CRM Systems", "Email Automation (Resend)", "Product Thinking", "User Research"],
-  },
-];
-
-const superpowers = [
-  {
-    icon: Brain,
-    title: "Psychology + Code",
-    description: "A BS in Psychology means I build for how people actually think and behave — not just what looks cool.",
-  },
-  {
-    icon: Rocket,
-    title: "Idea to Production in Weeks",
-    description: "SoundSauce: 3 weeks. LeadHawk: live and monetized. I don\u2019t prototype endlessly — I ship.",
-  },
-  {
-    icon: Users,
-    title: "Managed 1,900+ Users",
-    description: "Led intramural sports at Boise State — 92% retention, team of 29, 1,000+ events per year.",
-  },
-  {
-    icon: Puzzle,
-    title: "Builder Mentality",
-    description: "If I have a problem, I build the solution. Every project started with a real need, not a tutorial.",
+    skills: ["Stripe", "Email Automation", "CRM Systems", "Product Thinking", "User Research"],
   },
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 md:py-32">
+    <section id="skills" className="py-24 md:py-32 border-t border-border">
       <div className="mx-auto max-w-6xl px-6">
-        <InView variant="slide-up">
-          <span className="text-sm font-semibold uppercase tracking-widest text-purple">
-            Skills
-          </span>
-          <h2 className="mt-3 font-serif text-4xl md:text-5xl leading-tight">
-            What I bring to the table
-          </h2>
-        </InView>
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20">
+          <InView variant="slide-up">
+            <div className="lg:sticky lg:top-28">
+              <span className="text-sm font-semibold uppercase tracking-widest text-accent">
+                Skills
+              </span>
+              <h2 className="mt-3 font-serif text-4xl md:text-5xl leading-tight">
+                The toolkit.
+              </h2>
+              <p className="mt-4 text-text-secondary leading-relaxed">
+                Picked one tool at a time, each chosen for a real project, not a
+                tutorial. Heavy on the React + Supabase + Cloudflare side; comfortable
+                anywhere the stack is plain JavaScript and a good API.
+              </p>
+            </div>
+          </InView>
 
-        <div className="mt-16 grid lg:grid-cols-2 gap-12">
-          {/* Skill pills */}
-          <InView variant="slide-left">
-            <div className="space-y-8">
+          <InView variant="slide-up" delay={0.1}>
+            <dl className="space-y-10">
               {skillGroups.map((group) => (
-                <div key={group.category}>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted mb-3">
+                <div key={group.category} className="grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-3 md:gap-6 items-baseline">
+                  <dt className="font-mono text-xs uppercase tracking-widest text-text-muted">
                     {group.category}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
+                  </dt>
+                  <dd className="flex flex-wrap gap-2">
                     {group.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-text-primary hover:border-purple hover:text-purple transition-colors cursor-default"
+                        className="rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm font-medium text-text-primary"
                       >
                         {skill}
                       </span>
                     ))}
-                  </div>
+                  </dd>
                 </div>
               ))}
-            </div>
-          </InView>
-
-          {/* What sets me apart */}
-          <InView variant="slide-right">
-            <div className="rounded-2xl border border-border bg-surface p-8 space-y-6">
-              <h3 className="font-serif text-2xl font-bold">
-                What sets me apart
-              </h3>
-              {superpowers.map((sp) => (
-                <div key={sp.title} className="flex gap-4">
-                  <div className="mt-0.5 flex-shrink-0 rounded-lg bg-purple/10 p-2 text-purple">
-                    <sp.icon size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">{sp.title}</h4>
-                    <p className="text-sm text-text-secondary mt-0.5">
-                      {sp.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            </dl>
           </InView>
         </div>
       </div>

@@ -13,7 +13,7 @@ interface InteractiveCardProps {
 export function InteractiveCard({
   children,
   className,
-  glareColor = "rgba(139, 92, 246, 0.15)",
+  glareColor = "rgba(217, 119, 87, 0.18)",
 }: InteractiveCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -55,7 +55,7 @@ export function InteractiveCard({
         transformStyle: "preserve-3d",
         perspective: 1000,
       }}
-      className={cn("relative glow-purple-hover", className)}
+      className={cn("relative", className)}
     >
       {children}
       {isHovered && (

@@ -50,7 +50,7 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm font-medium text-text-secondary hover:text-purple-light transition-colors"
+                className="text-sm font-medium text-text-secondary hover:text-accent transition-colors"
               >
                 {link.label}
               </a>
@@ -59,7 +59,7 @@ export function Navbar() {
           <li>
             <a
               href="#contact"
-              className="rounded-full bg-purple px-5 py-2 text-sm font-medium text-white hover:bg-purple-light transition-colors"
+              className="inline-flex min-h-11 items-center rounded-full bg-accent px-5 py-2 text-sm font-medium text-obsidian hover:bg-accent-light transition-colors"
             >
               Let&apos;s Talk
             </a>
@@ -69,7 +69,7 @@ export function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-text-primary"
+          className="md:hidden inline-flex min-h-11 min-w-11 items-center justify-center text-text-primary"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -91,7 +91,7 @@ export function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-base font-medium text-text-secondary hover:text-purple-light transition-colors"
+                    className="inline-flex min-h-11 items-center px-4 text-base font-medium text-text-secondary hover:text-accent transition-colors"
                   >
                     {link.label}
                   </a>
@@ -101,7 +101,7 @@ export function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-full bg-purple px-6 py-2.5 text-sm font-medium text-white hover:bg-purple-light transition-colors"
+                  className="inline-flex min-h-11 items-center rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-obsidian hover:bg-accent-light transition-colors"
                 >
                   Let&apos;s Talk
                 </a>

@@ -1,39 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Brain, Zap, Rocket } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
 
 const advantages = [
   {
-    icon: Brain,
     number: "01",
-    title: "Psychology Background",
+    title: "Psychology, before pixels.",
     description:
-      "I identify why users struggle before touching code. A BS in Psychology means real empathy — not assumed personas.",
-    color: "text-purple-light",
-    border: "border-purple/30",
-    glow: "shadow-purple/5",
+      "A BS in Psychology means I identify why users struggle before I touch a line of code. Real empathy, not assumed personas.",
   },
   {
-    icon: Zap,
     number: "02",
-    title: "AI-Assisted Development",
+    title: "AI as a thinking partner.",
     description:
-      "Claude Code as a thinking partner, not a shortcut. I move faster without cutting corners — shipping production-grade code in days.",
-    color: "text-cyan",
-    border: "border-cyan/30",
-    glow: "shadow-cyan/5",
+      "Claude Code accelerates the work without cutting corners. I move faster on the boring parts so I can spend more time on the interesting ones.",
   },
   {
-    icon: Rocket,
     number: "03",
-    title: "Ship to Real Users",
+    title: "Ship, or it didn't happen.",
     description:
-      "Not prototypes. Not demos. Live products with Stripe payments, auth flows, and actual users. If it\u2019s not in production, it\u2019s not done.",
-    color: "text-pink",
-    border: "border-pink/30",
-    glow: "shadow-pink/5",
+      "Not prototypes. Not demos. Live products with Stripe payments, auth flows, actual users. If it isn't in production, it isn't done.",
   },
 ];
 
@@ -41,86 +27,39 @@ export function Approach() {
   return (
     <section
       id="approach"
-      className="relative py-24 md:py-32 border-t border-border overflow-hidden"
+      className="relative py-24 md:py-32 border-t border-border"
     >
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(139,92,246,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,.2) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      <div className="relative mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <InView variant="slide-up">
-          <span className="text-sm font-semibold uppercase tracking-widest text-purple">
+          <span className="text-sm font-semibold uppercase tracking-widest text-accent">
             Approach
           </span>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl leading-tight">
-            How I work differently
+            How I work differently.
           </h2>
           <p className="mt-4 max-w-2xl text-lg text-text-secondary leading-relaxed">
-            Not your typical dev process. My unique background gives me
-            unfair advantages at every stage.
+            Three things that compound. Each one shapes how I pick what to
+            build, how fast I build it, and whether it actually ships.
           </p>
         </InView>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        <ol className="mt-16 divide-y divide-border">
           {advantages.map((step, i) => (
-            <InView key={step.number} variant="slide-up" delay={i * 0.15}>
-              <motion.div
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className={`rounded-2xl border ${step.border} bg-surface/80 backdrop-blur-sm p-8 h-full hover:shadow-lg ${step.glow} transition-all duration-300`}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`${step.color}`}>
-                    <step.icon size={28} />
-                  </div>
-                  <span className="text-sm font-mono text-text-muted">
-                    {step.number}
-                  </span>
-                </div>
-                <h3 className="mt-6 text-2xl font-serif font-bold">
+            <InView key={step.number} variant="slide-up" delay={i * 0.08}>
+              <li className="grid grid-cols-[auto_1fr] md:grid-cols-[5rem_1fr_2fr] gap-x-6 md:gap-x-10 gap-y-3 py-10 md:py-12 items-start">
+                <span className="font-mono text-sm text-accent self-start tracking-widest">
+                  {step.number}
+                </span>
+                <h3 className="font-serif text-2xl md:text-3xl leading-tight col-span-1 md:col-span-1">
                   {step.title}
                 </h3>
-                <p className="mt-3 text-text-secondary leading-relaxed">
+                <p className="col-span-2 md:col-span-1 text-text-secondary text-base md:text-lg leading-relaxed max-w-prose">
                   {step.description}
                 </p>
-              </motion.div>
+              </li>
             </InView>
           ))}
-        </div>
-
-        {/* Comparison callout */}
-        <InView variant="scale" delay={0.2} className="mt-16">
-          <div className="rounded-2xl bg-purple/10 border border-purple/20 p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="text-text-muted text-sm uppercase tracking-wider">Traditional</span>
-                </div>
-                <div className="text-4xl md:text-5xl font-serif font-bold text-text-muted/40">
-                  3-6 months
-                </div>
-              </div>
-              <div>
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="text-purple text-sm uppercase tracking-wider font-semibold">My approach</span>
-                </div>
-                <div className="text-4xl md:text-5xl font-serif font-bold text-purple">
-                  3 weeks
-                </div>
-                <p className="mt-3 text-text-secondary">
-                  SoundSauce — from idea to production in 21 days.
-                  Full-stack, with payments, auth, and a social layer.
-                </p>
-              </div>
-            </div>
-          </div>
-        </InView>
+        </ol>
       </div>
     </section>
   );

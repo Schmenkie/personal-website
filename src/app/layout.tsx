@@ -16,11 +16,11 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Spencer Curnow — Builder, Problem Solver, People Person",
+  title: "Spencer Curnow · Builder, Problem Solver, People Person",
   description:
-    "Personal portfolio of Spencer Curnow. I build products that merge technology and human connection — from AI workflows to music discovery platforms.",
+    "Personal portfolio of Spencer Curnow. I build products that merge technology and human connection, from AI workflows to music discovery platforms.",
   openGraph: {
-    title: "Spencer Curnow — Builder, Problem Solver, People Person",
+    title: "Spencer Curnow · Builder, Problem Solver, People Person",
     description:
       "I build products that merge technology and human connection.",
     type: "website",

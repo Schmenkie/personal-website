@@ -1,21 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --obsidian: #0A0A0F;
-  --obsidian-mid: #111118;
-  --surface: #1A1A2E;
-  --surface-light: #16162A;
-  --border: #1E1E3A;
-  --purple: #8B5CF6;
-  --purple-light: #A78BFA;
-  --purple-dark: #7C3AED;
-  --cyan: #06B6D4;
-  --cyan-light: #22D3EE;
-  --pink: #EC4899;
-  --pink-light: #F472B6;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
+  /* Warm-tinted near-black, never pure #000 */
+  --obsidian: #100A07;
+  --obsidian-mid: #1A1410;
+  --surface: #1F1815;
+  --surface-light: #2A211D;
+  --border: #2D241F;
+  --border-strong: #3D3128;
+
+  /* Single committed accent: terracotta */
+  --accent: #D97757;
+  --accent-light: #E8957A;
+  --accent-dark: #B85A3E;
+  --accent-muted: #6E4332;
+
+  /* Warm-tinted text, never pure #fff */
+  --text-primary: #F5EFE8;
+  --text-secondary: #B5A89C;
+  --text-muted: #8A7E72;
+
+  /* Single semantic state color (rare use) */
+  --danger: #C7553D;
 }
 
 @theme inline {
@@ -24,16 +30,15 @@
   --color-surface: var(--surface);
   --color-surface-light: var(--surface-light);
   --color-border: var(--border);
-  --color-purple: var(--purple);
-  --color-purple-light: var(--purple-light);
-  --color-purple-dark: var(--purple-dark);
-  --color-cyan: var(--cyan);
-  --color-cyan-light: var(--cyan-light);
-  --color-pink: var(--pink);
-  --color-pink-light: var(--pink-light);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-muted: var(--accent-muted);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-danger: var(--danger);
   --font-serif: var(--font-dm-serif);
   --font-sans: var(--font-jakarta);
 }
@@ -49,72 +54,29 @@ body {
 }
 
 ::selection {
-  background-color: var(--purple);
-  color: white;
+  background-color: var(--accent);
+  color: var(--obsidian);
+}
+
+/* Visible focus for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 @keyframes float-1 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(30px, -30px) rotate(120deg); }
-  66% { transform: translate(-20px, 20px) rotate(240deg); }
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -20px); }
 }
 
 @keyframes float-2 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(-25px, 35px) rotate(-120deg); }
-  66% { transform: translate(35px, -15px) rotate(-240deg); }
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, 25px); }
 }
 
-@keyframes float-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(15px, -25px) scale(1.1); }
-}
-
-.float-shape-1 { animation: float-1 20s ease-in-out infinite; }
-.float-shape-2 { animation: float-2 25s ease-in-out infinite; }
-.float-shape-3 { animation: float-3 15s ease-in-out infinite; }
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease-in-out infinite;
-}
-
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-.pulse-ring::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 2px solid var(--purple);
-  animation: pulse-ring 2s ease-out infinite;
-}
-
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.3); }
-}
-
-.glow-purple {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
-}
-
-.glow-purple-hover {
-  transition: box-shadow 0.3s ease;
-}
-
-.glow-purple-hover:hover {
-  box-shadow: 0 0 40px rgba(139, 92, 246, 0.35);
-}
+.float-shape-1 { animation: float-1 28s ease-in-out infinite; will-change: transform; }
+.float-shape-2 { animation: float-2 32s ease-in-out infinite; will-change: transform; }
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
@@ -122,5 +84,5 @@ body {
 }
 
 .animate-blink {
-  animation: blink 1s step-end infinite;
+  animation: blink 1.1s step-end infinite;
 }
