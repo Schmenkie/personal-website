@@ -120,7 +120,7 @@ export function FeaturedProject() {
                   />
                 </a>
                 <a
-                  href="https://apps.apple.com/app/linkup-golf-app/id6745146749"
+                  href="https://apps.apple.com/us/app/linkup-golf-app/id6762869994"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-3 text-sm font-semibold text-text-primary transition-all hover:border-[#C9A876]/60 hover:bg-surface-light"
