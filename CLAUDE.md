@@ -10,7 +10,11 @@ Engagement model is informal: "send me what you want built, we'll scope and pric
 
 - Next.js 16 (app router), React 19, Tailwind v4, Framer Motion, lucide-react.
 - Fonts loaded via `next/font/google`: DM Serif Display, Plus Jakarta Sans.
-- Deploy target: **spencercurnow.com** on Vercel. Domain is **not yet purchased** as of this writing — flag this if it still isn't owned.
+- **Live at https://spencercurnow.com** (as of 2026-05-28).
+  - GitHub: `Schmenkie/personal-website` (public).
+  - Hosting: Vercel project `personal-website` under `Schmenks's projects` (Hobby tier). Auto-deploys on push to `main`.
+  - Domain: `spencercurnow.com` registered at Cloudflare. DNS managed by Cloudflare with Vercel-recommended CNAME flattening (via one-time domain-connect authorization, not ongoing API access). Apex is canonical, `www` redirects to apex.
+- Analytics: PostHog client-side via [src/components/PostHogProvider.tsx](src/components/PostHogProvider.tsx). Reuses the LinkUp Golf project key (`NEXT_PUBLIC_POSTHOG_KEY` in Vercel env + `.env.local`). Every event tagged `app: 'personal_website'` so dashboards filter per app inside the shared project. SPA pageviews tracked via `usePathname`; DNT respected.
 - Dev: `npm run dev` (port 3000). Project has `.claude/launch.json` wired for the preview MCP, so `mcp__Claude_Preview__preview_start { name: "dev" }` Just Works.
 
 ## Design system
@@ -41,19 +45,20 @@ After an `/impeccable audit` rebuild, the site scores 20/20 on the impeccable ru
 
 ## Page architecture
 
-Single landing page at [src/app/page.tsx](src/app/page.tsx). Order:
+Single landing page at [src/app/page.tsx](src/app/page.tsx). The order is **proof-first**: what I do → what I've shipped → who I am → how I work → my timeline → toolkit → contact. Don't slip back into the portfolio-blog reflex of bio-before-evidence.
 
 1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal on the right, "Available for new projects" badge, "Work with me" primary CTA, "See the work" secondary.
-2. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf).
-3. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills. No trait grid.
-4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — LinkUp Golf headliner with fanned phones (feed / scorecard / marketplace). Forest+camel ambient gradient is the deliberate nod to LinkUp's actual brand against the dark site theme.
-5. **Projects** ([projects.tsx](src/components/projects.tsx)) — 4-card bento for SoundSauce, LeadHawk, Job Scout, This Website. Mono kicker + serif title. No top-stripe accents.
+2. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — LinkUp Golf headliner with fanned phones (feed / scorecard / marketplace). Forest+camel ambient gradient is the deliberate nod to LinkUp's actual brand against the dark site theme. **This is the strongest evidence on the page; it must come before Stats and About.**
+3. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). Lands after LinkUp so "4 live products shipped" has context.
+4. **Projects** ([projects.tsx](src/components/projects.tsx)) — 4-card bento for SoundSauce, LeadHawk, Job Scout, This Website. Mono kicker + serif title. No top-stripe accents.
+5. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills (Music Production, Cooking, Golf, Outdoors, Animals, Gaming). No trait grid. Reads as character study, not introduction — the prospect has already met the work.
 6. **Approach** ([approach.tsx](src/components/approach.tsx)) — numbered editorial rows, no cards.
 7. **Journey** ([journey.tsx](src/components/journey.tsx)) — vertical timeline showing **build track** (filled accent dot) and **operations track** (hollow border dot) running in parallel since 2024.
 8. **Skills** ([skills.tsx](src/components/skills.tsx)) — definition-list layout, sticky heading on the left, pill clouds on the right.
-9. **Blog/Writing** ([blog.tsx](src/components/blog.tsx)) — currently "Coming soon" with three planned posts. Either ship a real post or remove the section; don't leave placeholders forever.
-10. **Contact** ([contact.tsx](src/components/contact.tsx)) — Get In Touch + View Resume CTAs, social row below.
-11. **Footer** ([footer.tsx](src/components/footer.tsx)).
+9. **Contact** ([contact.tsx](src/components/contact.tsx)) — Get In Touch + View Resume CTAs, social row below.
+10. **Footer** ([footer.tsx](src/components/footer.tsx)).
+
+The Writing/Blog section was removed on 2026-05-28 — three "Coming soon" cards were a credibility tax. If you ship a real post later, add the section back with the real content; never reintroduce placeholders.
 
 Resume page: [src/app/resume/page.tsx](src/app/resume/page.tsx) at `/resume`. Builder-positioned. Print stylesheet generates a clean 1-page PDF via the in-page Print button. This is the canonical resume — when updating Spencer's work history, edit this file, not a PDF.
 
@@ -86,8 +91,22 @@ Send any of these and the answering session can integrate them:
 - [ ] "Now" paragraph if we want one (what he's working on this week).
 - [ ] Testimonials/quotes from anyone — coworkers, professors, TestFlight users.
 - [ ] Decision: build a dedicated `/work/linkup-golf` deep-dive case study page?
-- [ ] Decision: ship a real blog post or remove the Writing section?
-- [ ] Buy spencercurnow.com.
+- [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
+- [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-05-28
+
+- PostHog analytics wired in, tagged `app: 'personal_website'` against the shared LinkUp Golf project. Provider at [src/components/PostHogProvider.tsx](src/components/PostHogProvider.tsx).
+- Repo pushed to GitHub (`Schmenkie/personal-website`, public).
+- Vercel project created, env vars set for all three environments, deploy live.
+- `spencercurnow.com` bought at Cloudflare, DNS pointed at Vercel via auto-configure (CNAME flattening on apex). `www` redirects to apex.
+- Page reorganized to proof-first flow (FeaturedProject moved to position 2; About moved to position 5).
+- Writing/Blog section deleted.
+- About interests expanded: added Cooking (ChefHat), Golf (Flag), Outdoors (Mountain).
+
+## To verify in the next session
+
+- PostHog is actually capturing events in production. Open https://spencercurnow.com in a normal tab, then check the LinkUp Golf PostHog project's Activity feed for events with `app = personal_website`. If nothing shows up, the env vars on Vercel didn't take — re-check Settings → Environment Variables and trigger a redeploy.
 
 ## Don't
 
