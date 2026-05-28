@@ -126,6 +126,7 @@ Send any of these and the answering session can integrate them:
 - About interests expanded: added Cooking (ChefHat), Golf (Flag), Outdoors (Mountain).
 - `/admin/hub` shipped — see "/admin/hub — internal data hub" above. Replaces the localhost-only dashboard that used to live at `~/data-hub/data-hub.html`.
 - PostHog ingest verified — `app = personal_website` events flowing (pageviews, web-vitals, pageleaves).
+- Favicon swapped from the scaffolded Vercel triangle to a `SC` monogram: terracotta `#D97757` rounded square, Georgia bold `#F5EFE8` mark. Delivered as [src/app/icon.svg](src/app/icon.svg) — Next.js handles the `<link>` injection. Removed the old `favicon.ico`. Don't reintroduce one; SVG wins on quality at every size.
 
 ## Don't
 
