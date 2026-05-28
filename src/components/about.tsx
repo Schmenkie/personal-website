@@ -1,10 +1,13 @@
 "use client";
 
-import { GraduationCap, Music, Gamepad2, Dog } from "lucide-react";
+import { GraduationCap, Music, Gamepad2, Dog, ChefHat, Flag, Mountain } from "lucide-react";
 import { InView } from "@/components/ui/in-view";
 
 const interests = [
   { icon: Music, label: "Music Production" },
+  { icon: ChefHat, label: "Cooking" },
+  { icon: Flag, label: "Golf" },
+  { icon: Mountain, label: "Outdoors" },
   { icon: Dog, label: "Animals" },
   { icon: Gamepad2, label: "Gaming" },
 ];
