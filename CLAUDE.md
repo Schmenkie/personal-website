@@ -64,6 +64,27 @@ Resume page: [src/app/resume/page.tsx](src/app/resume/page.tsx) at `/resume`. Bu
 
 UI primitives: [src/components/ui/](src/components/ui/) holds `in-view`, `interactive-card`, `particle-field`. `GradientText` was deleted on purpose — don't add it back.
 
+## /admin/hub — internal data hub
+
+This site also hosts Spencer's cross-project observability dashboard at `/admin/hub` (basic-auth gated). It is NOT part of the public sales surface and the impeccable rubric does not apply — it can use identical card grids, hero-metric layouts, and dense tables that would be banned on the marketing pages. It does keep the site palette so it doesn't look alien when you context-switch from `/`.
+
+Pieces:
+- [src/proxy.ts](src/proxy.ts) — HTTP Basic Auth gate on `/admin/*` and `/api/admin/*`. Next.js 16 renamed Middleware to Proxy — the file is `proxy.ts`, not `middleware.ts`. Returns 503 if `ADMIN_PASSWORD` isn't set.
+- [src/app/admin/hub/page.tsx](src/app/admin/hub/page.tsx) + [HubClient.tsx](src/app/admin/hub/HubClient.tsx) — server shell + client component. Overview tab + one tab per project. Inline SVG sparkline (no Chart.js dep). `robots: { index: false, follow: false }`.
+- [src/app/api/admin/](src/app/api/admin/) — three Route Handlers: `posthog-sql/`, `sentry-issues/`, `sentry-events/`. They proxy PostHog + Sentry server-side so credentials never reach the browser.
+- [src/lib/hub/](src/lib/hub/) — `projects.ts` (PROJECTS config), `queries.ts` (HogQL templates), `format.ts` (flagEmoji, timeAgo, pluralize, eventKind), `types.ts`.
+
+Env vars required in Vercel (Production + Preview):
+- `ADMIN_PASSWORD` — the basic-auth password. Username is ignored; password is checked against this env var.
+- `POSTHOG_PERSONAL_API_KEY` — `phx_…` Personal API key, scopes `query:read` + `project:read`. Distinct from the public `NEXT_PUBLIC_POSTHOG_KEY` capture key.
+- `SENTRY_API_TOKEN` (optional) — Sentry tiles return empty without it.
+
+**Do NOT mark any of these as "Sensitive" in Vercel.** The Sensitive flag restricts which environments the var can target and locks you out of Production. All Vercel env vars are encrypted at rest regardless of that toggle.
+
+When adding a project to the hub: update [src/lib/hub/projects.ts](src/lib/hub/projects.ts) (add to `PROJECTS`, define `ProjectId`), and verify the new app's SDK registers `properties.app` with the same `id` string. Everything else (tabs, KPIs, breakdown, unified feed) derives from that config automatically.
+
+The legacy hub at `~/data-hub/data-hub.html` + `server.mjs` is a localhost fallback. The Next.js version is canonical — change queries here first.
+
 ## LinkUp Golf integration
 
 Spencer's flagship product is live on the iOS App Store. The repo lives at **`~/golf-app`** (separate from this project). When making claims about LinkUp on this site, the source-of-truth is golf-app's `PRODUCT.md` and `DESIGN.md`.
@@ -98,15 +119,13 @@ Send any of these and the answering session can integrate them:
 
 - PostHog analytics wired in, tagged `app: 'personal_website'` against the shared LinkUp Golf project. Provider at [src/components/PostHogProvider.tsx](src/components/PostHogProvider.tsx).
 - Repo pushed to GitHub (`Schmenkie/personal-website`, public).
-- Vercel project created, env vars set for all three environments, deploy live.
+- Vercel project created, env vars set, deploy live at https://spencercurnow.com.
 - `spencercurnow.com` bought at Cloudflare, DNS pointed at Vercel via auto-configure (CNAME flattening on apex). `www` redirects to apex.
 - Page reorganized to proof-first flow (FeaturedProject moved to position 2; About moved to position 5).
 - Writing/Blog section deleted.
 - About interests expanded: added Cooking (ChefHat), Golf (Flag), Outdoors (Mountain).
-
-## To verify in the next session
-
-- PostHog is actually capturing events in production. Open https://spencercurnow.com in a normal tab, then check the LinkUp Golf PostHog project's Activity feed for events with `app = personal_website`. If nothing shows up, the env vars on Vercel didn't take — re-check Settings → Environment Variables and trigger a redeploy.
+- `/admin/hub` shipped — see "/admin/hub — internal data hub" above. Replaces the localhost-only dashboard that used to live at `~/data-hub/data-hub.html`.
+- PostHog ingest verified — `app = personal_website` events flowing (pageviews, web-vitals, pageleaves).
 
 ## Don't
 
