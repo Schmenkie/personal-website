@@ -30,7 +30,7 @@ const stats = [
 export function FeaturedProject() {
   return (
     <section
-      id="featured"
+      id="linkup"
       className="relative overflow-hidden py-24 md:py-32 border-t border-border"
     >
       <div
@@ -49,7 +49,7 @@ export function FeaturedProject() {
               <div className="flex items-center gap-3">
                 <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent/70" />
                 <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                  Featured Project
+                  Featured Work / 03
                 </span>
               </div>
               <h2 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">

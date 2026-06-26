@@ -19,9 +19,9 @@ const terminalLines = [
   { type: "command" as const, text: "$ whoami" },
   { type: "result" as const, text: "→ spencer curnow" },
   { type: "command" as const, text: "$ ls projects/" },
-  { type: "result" as const, text: "→ linkup-golf/  soundsauce/  leadhawk/" },
+  { type: "result" as const, text: "→ sleeve/  yurr-mag/  linkup-golf/" },
   { type: "command" as const, text: "$ cat status.txt" },
-  { type: "result" as const, text: "→ live on the app store" },
+  { type: "result" as const, text: "→ sleeve in testflight, app store soon" },
   { type: "command" as const, text: "$ ./ship.sh" },
   { type: "success" as const, text: "✓ building..." },
   { type: "success" as const, text: "✓ shipped to ios + web" },
@@ -131,10 +131,11 @@ export function Hero() {
               href="#featured"
               className="text-text-primary underline decoration-accent/60 underline-offset-4 hover:decoration-accent transition-colors"
             >
-              LinkUp Golf
+              Sleeve
             </a>
-            , a social app for golfers live on the iOS App Store. If you
-            have something you want built, I&apos;d like to build it for you.
+            , a social app for music fans now in TestFlight beta, plus ongoing
+            design work for Yurr Magazine. If you have something you want built,
+            I&apos;d like to build it for you.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap gap-3 pt-2">

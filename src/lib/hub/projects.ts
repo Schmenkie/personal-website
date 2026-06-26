@@ -1,14 +1,25 @@
 export type ProjectId =
   | 'linkup_golf'
+  | 'sleeve'
   | 'soundsauce'
   | 'leadhawk'
   | 'personal_website'
   | 'job_scout'
 
+// Which PostHog project a project's events live in.
+// 'shared' = the cross-product project (310428) where every event is tagged
+//   `properties.app = '<ProjectId>'`. Most projects live here.
+// 'sleeve' = Sleeve's own dedicated project (473290, org "Sleeve Inc."). It is
+//   queried whole — Sleeve does NOT tag `properties.app`, so its queries drop the
+//   app filter and hit a different project id + personal API key (see route.ts).
+export type PosthogSource = 'shared' | 'sleeve'
+
 export type Project = {
   id: ProjectId
   label: string
   stack: string
+  /** Defaults to 'shared' when omitted. */
+  source?: PosthogSource
   sentryProject?: string
   keyEvents: string[]
 }
@@ -20,6 +31,13 @@ export const PROJECTS: Project[] = [
     stack: 'React Native',
     sentryProject: 'react-native',
     keyEvents: ['signup_completed', 'round_completed', 'tee_time_posted', 'trip_created', 'message_sent'],
+  },
+  {
+    id: 'sleeve',
+    label: 'Sleeve',
+    stack: 'Expo / RN',
+    source: 'sleeve',
+    keyEvents: ['signup_completed', 'album_rated', 'spins_opened', 'list_created', 'user_followed'],
   },
   {
     id: 'soundsauce',

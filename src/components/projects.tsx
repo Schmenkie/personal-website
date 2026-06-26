@@ -36,6 +36,15 @@ const projects = [
     span: "",
   },
   {
+    title: "Project Hub",
+    kicker: "Internal Observability",
+    description:
+      "A private, auth-gated cross-project dashboard I built into this site. One pane of glass for every product I run: PostHog HogQL queries for events, retention, and feature-flag state, plus Sentry issue counts, all proxied server-side so no credentials touch the browser. Unified activity feed across LinkUp Golf, Job Scout, and this site.",
+    tags: ["Next.js 16", "PostHog HogQL", "Sentry API", "Edge Proxy"],
+    source: "https://github.com/Schmenkie/personal-website",
+    span: "md:col-span-2",
+  },
+  {
     title: "This Website",
     kicker: "Portfolio",
     description:
@@ -43,7 +52,7 @@ const projects = [
     tags: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion"],
     link: "https://github.com/Schmenkie",
     source: "https://github.com/Schmenkie",
-    span: "md:col-span-2",
+    span: "md:col-span-3",
   },
 ];
 
@@ -85,15 +94,17 @@ export function Projects() {
                       </h3>
                     </div>
                     <div className="flex items-center gap-1">
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-text-muted hover:text-accent hover:bg-accent/10 transition-colors"
-                        aria-label={`Visit ${project.title}`}
-                      >
-                        <ExternalLink size={16} />
-                      </a>
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-text-muted hover:text-accent hover:bg-accent/10 transition-colors"
+                          aria-label={`Visit ${project.title}`}
+                        >
+                          <ExternalLink size={16} />
+                        </a>
+                      )}
                       <a
                         href={project.source}
                         target="_blank"

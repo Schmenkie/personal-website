@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { PROJECTS, SENTRY_ORG, type Project, type ProjectId } from '@/lib/hub/projects'
+import { PROJECTS, SENTRY_ORG, type Project, type ProjectId, type PosthogSource } from '@/lib/hub/projects'
 import {
   breakdownSql,
   projectDailySql,
@@ -30,11 +30,14 @@ type ProjectData = {
   sentry?: SentryIssue[]
 }
 
-async function runSql<T = Record<string, string>>(query: string): Promise<T[]> {
+async function runSql<T = Record<string, string>>(
+  query: string,
+  source: PosthogSource = 'shared'
+): Promise<T[]> {
   const r = await fetch('/api/admin/posthog-sql', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, source }),
   })
   if (!r.ok) throw new Error(`posthog ${r.status}`)
   const data = await r.json()
@@ -90,11 +93,12 @@ export default function HubClient() {
     try {
       const projectResults = await Promise.all(
         PROJECTS.map(async (proj): Promise<ProjectData> => {
+          const src = proj.source ?? 'shared'
           const [kpi, daily, geo, events] = await Promise.all([
-            runSql<KpiRow>(projectKpiSql(proj.id, days)).then((r) => r[0] || {}).catch(() => ({})),
-            runSql<DailyRow>(projectDailySql(proj.id, days)).catch(() => []),
-            runSql<GeoRow>(projectGeoSql(proj.id, days)).catch(() => []),
-            runSql<EventRow>(projectEventsSql(proj.id, days, 20)).catch(() => []),
+            runSql<KpiRow>(projectKpiSql(proj, days), src).then((r) => r[0] || {}).catch(() => ({})),
+            runSql<DailyRow>(projectDailySql(proj, days), src).catch(() => []),
+            runSql<GeoRow>(projectGeoSql(proj, days), src).catch(() => []),
+            runSql<EventRow>(projectEventsSql(proj, days, 20), src).catch(() => []),
           ])
           let sentry: SentryIssue[] | undefined
           if (proj.sentryProject) {
@@ -300,7 +304,7 @@ function Overview({
       <p className="mb-4 rounded-md border border-border bg-surface px-3 py-2 text-sm text-text-secondary">
         {loading
           ? 'Loading…'
-          : `Tracking ${perProject.length} projects via shared PostHog. ` +
+          : `Tracking ${perProject.length} projects across PostHog (shared project + Sleeve's own). ` +
             (live.length ? `Live: ${live.join(', ')}. ` : '') +
             (pending.length ? `Pending: ${pending.join(', ')}. ` : '') +
             `Last ${days}d: ${pluralize(totals.totalUsers, 'user')}, ${pluralize(totals.totalEvents, 'event')}, ${pluralize(totals.totalSignups, 'signup')}.`}
@@ -320,6 +324,10 @@ function Overview({
           {breakdown.length === 0 ? (
             <Muted>No tagged events yet.</Muted>
           ) : (
+            <>
+            <p className="mb-2 text-xs text-text-muted">
+              Shared-project apps, split by <code className="rounded bg-surface-light px-1">app</code> tag. Sleeve runs in its own project, so it has a tab but isn&apos;t in this split.
+            </p>
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left font-mono text-[11px] uppercase tracking-widest text-text-muted">
@@ -346,6 +354,7 @@ function Overview({
                 })}
               </tbody>
             </table>
+            </>
           )}
         </Section>
 
