@@ -5,6 +5,16 @@ import Link from "next/link";
 
 const shippedProducts = [
   {
+    name: "Sleeve",
+    role: "Founder · Solo builder",
+    period: "May 2026 – Present",
+    summary:
+      "Social app for music fans. Log what you listen to, rate it ½ to 5 stars, write reviews, and find the people whose taste tracks yours. Signature touch: on-device dominant-color extraction wraps every album page in its own color. Apple Music import, taste-twin matching, lists, and a vinyl discovery feed.",
+    stack: "React Native · Expo SDK 55 · TypeScript · Supabase",
+    url: "getsleeve.app",
+    notes: "Live on the iOS App Store since June 2026.",
+  },
+  {
     name: "LinkUp Golf",
     role: "Founder · Solo builder",
     period: "Jan 2026 – Present",
@@ -139,8 +149,8 @@ export default function ResumePage() {
         {/* Summary */}
         <section className="mt-8 print:mt-5">
           <p className="text-base md:text-lg leading-relaxed text-text-secondary print:text-black">
-            Self-taught full-stack developer with a psychology degree and four shipped products,
-            including a cross-platform iOS app live on the App Store. I take a vision and ship it,
+            Self-taught full-stack developer with a psychology degree and five shipped products,
+            including two cross-platform iOS apps live on the App Store. I take a vision and ship it,
             using AI-augmented development to compress weeks of work into days. Four years of
             customer-facing operations experience under the builder layer: 92% YoY retention across
             1,900+ users at Boise State, 29-person team leadership, clinical operations at two

@@ -22,8 +22,8 @@ const stack = [
 ];
 
 const stats = [
-  { label: "Stage", value: "TestFlight beta" },
-  { label: "Platform", value: "iOS" },
+  { label: "Status", value: "Live on iOS" },
+  { label: "Platform", value: "App Store" },
   { label: "Built", value: "Solo" },
 ];
 
@@ -152,10 +152,19 @@ export function FeaturedSleeve() {
                     className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   />
                 </a>
-                <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-5 py-3 text-sm font-semibold text-text-secondary">
+                <a
+                  href="https://apps.apple.com/app/id6779825854"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-5 py-3 text-sm font-semibold text-text-secondary transition-colors hover:border-accent/50 hover:text-text-primary"
+                >
                   <Apple size={16} />
-                  In App Store review
-                </span>
+                  Download on the App Store
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
               </div>
             </InView>
           </div>

@@ -21,7 +21,7 @@ const terminalLines = [
   { type: "command" as const, text: "$ ls projects/" },
   { type: "result" as const, text: "→ sleeve/  yurr-mag/  linkup-golf/" },
   { type: "command" as const, text: "$ cat status.txt" },
-  { type: "result" as const, text: "→ sleeve in testflight, app store soon" },
+  { type: "result" as const, text: "→ sleeve live on the app store" },
   { type: "command" as const, text: "$ ./ship.sh" },
   { type: "success" as const, text: "✓ building..." },
   { type: "success" as const, text: "✓ shipped to ios + web" },
@@ -133,8 +133,9 @@ export function Hero() {
             >
               Sleeve
             </a>
-            , a social app for music fans now in TestFlight beta, plus ongoing
-            design work for Yurr Magazine. If you have something you want built,
+            , a social app for music fans now live on the App Store, plus
+            ongoing design work for Yurr Magazine. If you have something you want
+            built,
             I&apos;d like to build it for you.
           </motion.p>
 

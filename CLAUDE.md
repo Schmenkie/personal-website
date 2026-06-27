@@ -50,10 +50,10 @@ Single landing page at [src/app/page.tsx](src/app/page.tsx). The order is **proo
 **Three headliners lead the page, in this hierarchy (Spencer's explicit call, 2026-06-25): Sleeve (01) → Yurr Magazine (02) → LinkUp Golf (03).** They run back-to-back right after the hero, before Stats/About. Each carries an editorial "Featured Work / 0N" eyebrow. To avoid three identical sections, the silhouettes alternate: Sleeve is phones-left/text-right, Yurr is a horizontal scrolling slide carousel, LinkUp is text-left/phones-right.
 
 1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal on the right, "Available for new projects" badge, "Work with me" primary CTA, "See the work" secondary. Terminal + body copy lead with Sleeve now (was LinkUp). The `#featured` anchor (nav "Work", hero "See the work") lands on the Sleeve section.
-2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **TestFlight beta / in App Store review** — do NOT claim it's live on the App Store. Links to getsleeve.app; the App Store slot is a static "In App Store review" pill, not a link. See "Sleeve integration" below.
+2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **Live on iOS / App Store** (App Store approved + publicly released 2026-06-26). Links to getsleeve.app and a real "Download on the App Store" link to `https://apps.apple.com/app/id6779825854`. See "Sleeve integration" below.
 3. **Magazine** ([magazine.tsx](src/components/magazine.tsx)) — headliner 02, `id="magazine"`. Yurr Magazine client design work as a horizontal snap-scroll carousel of real issue slides (covers + interiors). The gallery column needs `min-w-0` so the scroller engages inside the grid (section is `overflow-hidden`; without it the row expands the track and gets clipped instead of scrolling). Low-opacity orange ambient = Yurr's print ink, held faint so it never reads as a second site accent. See "Yurr Magazine" below.
 4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — headliner 03, `id="linkup"` (was `id="featured"`). LinkUp Golf with fanned phones (feed / scorecard / marketplace), text-left/phones-right. Forest+camel ambient gradient nods to LinkUp's brand. Still strong evidence; Spencer demoted it to third behind the two newer pieces. Must still come before Stats and About.
-5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). The "Latest launch (LinkUp)" tile is now "Sleeve / Newest build, in TestFlight."
+5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). The "Latest launch (LinkUp)" tile is now "Sleeve / Newest launch, live on iOS."
 6. **Projects** ([projects.tsx](src/components/projects.tsx)) — bento for SoundSauce, LeadHawk, Job Scout, Project Hub, This Website. Mono kicker + serif title. No top-stripe accents.
 7. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills (Music Production, Cooking, Golf, Outdoors, Animals, Gaming). No trait grid. Reads as character study, not introduction — the prospect has already met the work.
 8. **Approach** ([approach.tsx](src/components/approach.tsx)) — numbered editorial rows, no cards.
@@ -108,7 +108,8 @@ Spencer's flagship product is live on the iOS App Store. The repo lives at **`~/
 
 Spencer's newest product: **Sleeve, a Letterboxd-style social app for music fans** ("Where music finds friends" — log albums, rate ½ to 5 stars, review, find taste twins, discover through humans not algorithms). Repo lives at **`~/sleeve`** (separate from this project). Source-of-truth for claims is sleeve's `PRODUCT.md`, `DESIGN.md`, and `STORE_LISTING.md`.
 
-- Status (2026-06-25): **v1.0.0 in TestFlight beta, awaiting App Store review.** Not yet public on the App Store. Keep all copy at this honesty level — no "live on the App Store," no fabricated user/rating numbers. When it ships, flip the FeaturedSleeve App Store pill to a real link and update the hero/stats copy.
+- Status (2026-06-26): **Live and publicly released on the App Store.** App Store approved + publicly released 2026-06-26 (build #16). Keep copy honest — no fabricated user/rating numbers until Spencer supplies real ones.
+- App Store: <https://apps.apple.com/app/id6779825854>
 - Marketing site: <https://getsleeve.app> (support `/support`, privacy `/privacy`, terms `/terms`).
 - Stack: Expo SDK 55, React Native, TypeScript, Supabase. Apple Music import, **on-device dominant-color extraction** (the signature: every album page is wrapped in its own color), taste-twin matching, lists, a vinyl "Spins" discovery feed.
 - Design DNA ("quiet with ink"): neutral near-black chrome, album color only on album-owned surfaces. The green+purple ambient on FeaturedSleeve is the nod to those per-album washes.
@@ -138,13 +139,17 @@ Send any of these and the answering session can integrate them:
 
 - [ ] Headshots (1–2, casual or polished).
 - [ ] LinkUp Golf metrics (current user count, App Store rating, anything quotable).
-- [ ] Sleeve metrics once it clears App Store review (live link, ratings, user count) so the FeaturedSleeve status can move past "TestFlight beta."
+- [ ] Sleeve metrics now that it's live on the App Store (ratings, user count, anything quotable) to put real numbers behind the "Live on iOS" status.
 - [ ] Real public Instagram handle for Yurr Magazine, to relink the gallery CTA (only `@clintyurr` is documented).
 - [ ] "Now" paragraph if we want one (what he's working on this week).
 - [ ] Testimonials/quotes from anyone — coworkers, professors, TestFlight users.
 - [ ] Decision: build a dedicated `/work/linkup-golf` deep-dive case study page?
 - [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
 - [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-06-26
+
+- **Sleeve is live on the App Store.** Flipped all "TestFlight beta / in review" copy to live-on-iOS. FeaturedSleeve stats now read "Status / Live on iOS" + "Platform / App Store"; the static "In App Store review" pill became a real "Download on the App Store" link to <https://apps.apple.com/app/id6779825854>. Hero terminal line + body copy and the Stats band tile updated to match. Verified in the browser preview: no "TestFlight"/"beta" left in `src/`, link href confirmed.
 
 ## Shipped on 2026-06-25
 
