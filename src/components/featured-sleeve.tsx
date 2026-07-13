@@ -23,8 +23,9 @@ const stack = [
 
 const stats = [
   { label: "Status", value: "Live on iOS" },
-  { label: "Platform", value: "App Store" },
-  { label: "Built", value: "Solo" },
+  { label: "Users", value: "350+" },
+  { label: "Countries", value: "20+" },
+  { label: "Albums logged", value: "2,750+" },
 ];
 
 export function FeaturedSleeve() {
@@ -111,7 +112,7 @@ export function FeaturedSleeve() {
             </InView>
 
             <InView variant="slide-up" delay={0.2}>
-              <dl className="mt-8 grid grid-cols-3 gap-4 max-w-md">
+              <dl className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5 max-w-md">
                 {stats.map((s) => (
                   <div key={s.label}>
                     <dt className="text-xs uppercase tracking-widest text-text-muted">

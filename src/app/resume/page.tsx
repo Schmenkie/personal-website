@@ -12,7 +12,7 @@ const shippedProducts = [
       "Social app for music fans. Log what you listen to, rate it ½ to 5 stars, write reviews, and find the people whose taste tracks yours. Signature touch: on-device dominant-color extraction wraps every album page in its own color. Apple Music import, taste-twin matching, lists, and a vinyl discovery feed.",
     stack: "React Native · Expo SDK 55 · TypeScript · Supabase",
     url: "getsleeve.app",
-    notes: "Live on the iOS App Store since June 2026.",
+    notes: "Live on the iOS App Store since June 2026. 350+ users across 20+ countries, 2,750+ albums logged, rated 5.0★.",
   },
   {
     name: "LinkUp Golf",

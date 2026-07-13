@@ -5,7 +5,7 @@ import { InView } from "@/components/ui/in-view";
 const stats = [
   { value: "4", label: "Live products shipped" },
   { value: "3 wks", label: "Typical idea to launch" },
-  { value: "Sleeve", label: "Newest launch, live on iOS" },
+  { value: "5.0★", label: "Sleeve's App Store rating" },
   { value: "2024", label: "Self-taught dev since" },
 ];
 

@@ -50,10 +50,10 @@ Single landing page at [src/app/page.tsx](src/app/page.tsx). The order is **proo
 **Three headliners lead the page, in this hierarchy (Spencer's explicit call, 2026-06-25): Sleeve (01) → Yurr Magazine (02) → LinkUp Golf (03).** They run back-to-back right after the hero, before Stats/About. Each carries an editorial "Featured Work / 0N" eyebrow. To avoid three identical sections, the silhouettes alternate: Sleeve is phones-left/text-right, Yurr is a horizontal scrolling slide carousel, LinkUp is text-left/phones-right.
 
 1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal on the right, "Available for new projects" badge, "Work with me" primary CTA, "See the work" secondary. Terminal + body copy lead with Sleeve now (was LinkUp). The `#featured` anchor (nav "Work", hero "See the work") lands on the Sleeve section.
-2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **Live on iOS / App Store** (App Store approved + publicly released 2026-06-26). Links to getsleeve.app and a real "Download on the App Store" link to `https://apps.apple.com/app/id6779825854`. See "Sleeve integration" below.
+2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **Live on iOS / App Store** (App Store approved + publicly released 2026-06-26). The stat block is a 2×2 (as of 2026-07-13): `Status / Live on iOS`, `Users / 350+`, `Countries / 20+`, `Albums logged / 2,750+`. Links to getsleeve.app and a real "Download on the App Store" link to `https://apps.apple.com/app/id6779825854`. See "Sleeve integration" below.
 3. **Magazine** ([magazine.tsx](src/components/magazine.tsx)) — headliner 02, `id="magazine"`. Yurr Magazine client design work as a horizontal snap-scroll carousel of real issue slides (covers + interiors). The gallery column needs `min-w-0` so the scroller engages inside the grid (section is `overflow-hidden`; without it the row expands the track and gets clipped instead of scrolling). Low-opacity orange ambient = Yurr's print ink, held faint so it never reads as a second site accent. See "Yurr Magazine" below.
 4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — headliner 03, `id="linkup"` (was `id="featured"`). LinkUp Golf with fanned phones (feed / scorecard / marketplace), text-left/phones-right. Forest+camel ambient gradient nods to LinkUp's brand. Still strong evidence; Spencer demoted it to third behind the two newer pieces. Must still come before Stats and About.
-5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). The "Latest launch (LinkUp)" tile is now "Sleeve / Newest launch, live on iOS."
+5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). The "Latest launch (LinkUp)" tile is now "5.0★ / Sleeve's App Store rating" (real rating, supplied 2026-07-13: 5.0 from 4 ratings; the count is held off the site since it's small, the rating value is shown honestly).
 6. **Projects** ([projects.tsx](src/components/projects.tsx)) — bento for SoundSauce, LeadHawk, Job Scout, Project Hub, This Website. Mono kicker + serif title. No top-stripe accents.
 7. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills (Music Production, Cooking, Golf, Outdoors, Animals, Gaming). No trait grid. Reads as character study, not introduction — the prospect has already met the work.
 8. **Approach** ([approach.tsx](src/components/approach.tsx)) — numbered editorial rows, no cards.
@@ -108,7 +108,7 @@ Spencer's flagship product is live on the iOS App Store. The repo lives at **`~/
 
 Spencer's newest product: **Sleeve, a Letterboxd-style social app for music fans** ("Where music finds friends" — log albums, rate ½ to 5 stars, review, find taste twins, discover through humans not algorithms). Repo lives at **`~/sleeve`** (separate from this project). Source-of-truth for claims is sleeve's `PRODUCT.md`, `DESIGN.md`, and `STORE_LISTING.md`.
 
-- Status (2026-06-26): **Live and publicly released on the App Store.** App Store approved + publicly released 2026-06-26 (build #16). Keep copy honest — no fabricated user/rating numbers until Spencer supplies real ones.
+- Status (2026-06-26): **Live and publicly released on the App Store.** App Store approved + publicly released 2026-06-26 (build #16). Real metrics supplied by Spencer 2026-07-13 and now on the site: **5.0★ (from 4 ratings), 350+ users, 20+ countries, 2,750+ albums logged.** The star rating is shown as "5.0★" without the 4-count (small, held off); everything else is shown verbatim. Keep copy honest — update these numbers when Spencer sends fresher ones; don't inflate.
 - App Store: <https://apps.apple.com/app/id6779825854>
 - Marketing site: <https://getsleeve.app> (support `/support`, privacy `/privacy`, terms `/terms`).
 - Stack: Expo SDK 55, React Native, TypeScript, Supabase. Apple Music import, **on-device dominant-color extraction** (the signature: every album page is wrapped in its own color), taste-twin matching, lists, a vinyl "Spins" discovery feed.
@@ -139,13 +139,22 @@ Send any of these and the answering session can integrate them:
 
 - [ ] Headshots (1–2, casual or polished).
 - [ ] LinkUp Golf metrics (current user count, App Store rating, anything quotable).
-- [ ] Sleeve metrics now that it's live on the App Store (ratings, user count, anything quotable) to put real numbers behind the "Live on iOS" status.
+- [x] ~~Sleeve metrics now that it's live on the App Store (ratings, user count, anything quotable) to put real numbers behind the "Live on iOS" status.~~ — supplied 2026-07-13: 5.0★ (4 ratings), 350+ users, 20+ countries, 2,750+ albums logged. Live on the site. Send refreshed numbers anytime and a session can bump them.
 - [ ] Real public Instagram handle for Yurr Magazine, to relink the gallery CTA (only `@clintyurr` is documented).
 - [ ] "Now" paragraph if we want one (what he's working on this week).
 - [ ] Testimonials/quotes from anyone — coworkers, professors, TestFlight users.
 - [ ] Decision: build a dedicated `/work/linkup-golf` deep-dive case study page?
 - [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
 - [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-07-13
+
+- **Real Sleeve traction numbers on the site.** Spencer supplied: 5.0★ (from 4 ratings), 350+ users, 20+ countries, 2,750+ albums logged. Wired in, distributed so no surface repeats another:
+  - FeaturedSleeve stat block: `Status / Platform / Built` (3-up) → 2×2 dl: `Status / Live on iOS` · `Users / 350+` · `Countries / 20+` · `Albums logged / 2,750+` ([featured-sleeve.tsx](src/components/featured-sleeve.tsx), `grid-cols-2`). Spencer asked to keep the explicit "Live on iOS App Store" status, so it stayed as the first tile alongside the traction numbers.
+  - Stats band tile: `Sleeve / Newest launch, live on iOS` → `5.0★ / Sleeve's App Store rating` ([stats.tsx](src/components/stats.tsx)).
+  - Hero terminal: `→ sleeve live on the app store` → `→ sleeve: live on the ios app store` ([hero.tsx](src/components/hero.tsx)).
+  - Resume: appended "350+ users across 20+ countries, 2,750+ albums logged, rated 5.0★." to the Sleeve notes ([resume/page.tsx](src/app/resume/page.tsx)).
+  - Rating shown as "5.0★" without the 4-count (honest value, small count held off). Verified in browser preview: all values present in the live DOM, resume route confirmed, no console errors.
 
 ## Shipped on 2026-06-26
 
