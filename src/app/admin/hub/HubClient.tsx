@@ -315,7 +315,7 @@ function Overview({
         <Card label="Active users" value={totals.totalUsers} sub={`across all apps · ${days}d`} />
         <Card label="Total events" value={totals.totalEvents} sub="all sources" />
         <Card label="Signups" value={totals.totalSignups} sub="across all apps" />
-        <Card label="Sentry errors" value={sentryCount} sub="LinkUp Golf" />
+        <Card label="Sentry errors" value={sentryCount} sub="Dogleg" />
         <Card label="Countries" value={totals.countries} sub="with traffic" />
       </CardGrid>
 

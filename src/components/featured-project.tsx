@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { InView } from "@/components/ui/in-view";
 
 const screenshots = [
-  { src: "/projects/linkup/feed.png", alt: "LinkUp Golf social feed", rotate: -7, x: -90, z: 0 },
-  { src: "/projects/linkup/scorecard.png", alt: "LinkUp Golf scorecard", rotate: 0, x: 0, z: 10 },
-  { src: "/projects/linkup/marketplace.png", alt: "LinkUp Golf tee time marketplace", rotate: 7, x: 90, z: 0 },
+  { src: "/projects/dogleg/feed.png", alt: "Dogleg rounds feed", rotate: -7, x: -90, z: 0 },
+  { src: "/projects/dogleg/login.png", alt: "Dogleg welcome screen", rotate: 0, x: 0, z: 10 },
+  { src: "/projects/dogleg/play.png", alt: "Dogleg start-a-round screen", rotate: 7, x: 90, z: 0 },
 ];
 
 const stack = [
@@ -18,19 +18,19 @@ const stack = [
   "Supabase",
   "Postgres",
   "Realtime",
-  "Edge Functions",
+  "Apple Maps",
 ];
 
 const stats = [
-  { label: "Launched", value: "Apr 2026" },
-  { label: "Platforms", value: "iOS + Web" },
+  { label: "Status", value: "Live on iOS" },
   { label: "Built", value: "Solo" },
+  { label: "Scoring", value: "GPS + USGA" },
 ];
 
 export function FeaturedProject() {
   return (
     <section
-      id="linkup"
+      id="dogleg"
       className="relative overflow-hidden py-24 md:py-32 border-t border-border"
     >
       <div
@@ -38,7 +38,7 @@ export function FeaturedProject() {
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           background:
-            "radial-gradient(60% 50% at 30% 40%, rgba(20, 53, 43, 0.32) 0%, transparent 60%), radial-gradient(50% 40% at 80% 60%, rgba(201, 168, 118, 0.10) 0%, transparent 60%)",
+            "radial-gradient(60% 50% at 30% 40%, rgba(30, 91, 69, 0.30) 0%, transparent 60%), radial-gradient(50% 40% at 80% 60%, rgba(194, 64, 43, 0.10) 0%, transparent 60%)",
         }}
       />
 
@@ -53,27 +53,27 @@ export function FeaturedProject() {
                 </span>
               </div>
               <h2 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">
-                LinkUp Golf
+                Dogleg
               </h2>
               <p className="mt-3 text-lg md:text-xl text-text-secondary font-serif italic">
-                The only golf app where you actually find someone to play with.
+                A golf scorecard that feels like the clubhouse, not a
+                spreadsheet.
               </p>
             </InView>
 
             <InView variant="slide-up" delay={0.1}>
               <p className="mt-6 text-base md:text-lg text-text-secondary leading-relaxed">
-                Every other major golf app, from 18Birdies to GolfShot to
-                TheGrint, is a solo stats tracker. LinkUp is the only one where
-                you can post{" "}
+                Tap to score every hole, with live{" "}
                 <span className="text-text-primary">
-                  &ldquo;2 spots Saturday 8am at Chambers Bay&rdquo;
+                  GPS distance to the green
                 </span>{" "}
-                and have vouched-via-mutuals golfers claim a seat. Tee-time
-                marketplace, GPS scorecard with USGA handicap, recurring group
-                standings, a full trip planner with cost splitter, and a social
-                feed with live mid-round updates. Designed against a 60+
-                accessibility floor because the first user was my dad&apos;s
-                Saturday foursome.
+                (wind and elevation adjusted) and a real USGA handicap that
+                recalculates the moment you sign the card. Satellite hole maps,
+                shareable round posters for the group chat, and a feed where
+                your crew&apos;s rounds land. Built solo, end to end, on React
+                Native and Supabase, with color, distance, and scoring computed
+                on-device. Held to a 60+ accessibility floor, because the first
+                user was my dad&apos;s Saturday foursome.
               </p>
             </InView>
 
@@ -108,12 +108,12 @@ export function FeaturedProject() {
             <InView variant="slide-up" delay={0.4}>
               <div className="mt-10 flex flex-wrap gap-3">
                 <a
-                  href="https://linkupgolf.org"
+                  href="https://dogleg.spencercurnow.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-obsidian transition-colors hover:bg-accent-light"
                 >
-                  linkupgolf.org
+                  dogleg.spencercurnow.com
                   <ArrowUpRight
                     size={16}
                     className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

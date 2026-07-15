@@ -47,13 +47,13 @@ After an `/impeccable audit` rebuild, the site scores 20/20 on the impeccable ru
 
 Single landing page at [src/app/page.tsx](src/app/page.tsx). The order is **proof-first**: what I do → what I've shipped → who I am → how I work → my timeline → toolkit → contact. Don't slip back into the portfolio-blog reflex of bio-before-evidence.
 
-**Three headliners lead the page, in this hierarchy (Spencer's explicit call, 2026-06-25): Sleeve (01) → Yurr Magazine (02) → LinkUp Golf (03).** They run back-to-back right after the hero, before Stats/About. Each carries an editorial "Featured Work / 0N" eyebrow. To avoid three identical sections, the silhouettes alternate: Sleeve is phones-left/text-right, Yurr is a horizontal scrolling slide carousel, LinkUp is text-left/phones-right.
+**Three headliners lead the page, in this hierarchy (Spencer's explicit call, 2026-06-25): Sleeve (01) → Yurr Magazine (02) → Dogleg (03).** They run back-to-back right after the hero, before Stats/About. Each carries an editorial "Featured Work / 0N" eyebrow. To avoid three identical sections, the silhouettes alternate: Sleeve is phones-left/text-right, Yurr is a horizontal scrolling slide carousel, Dogleg is text-left/phones-right.
 
 1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal on the right, "Available for new projects" badge, "Work with me" primary CTA, "See the work" secondary. Terminal + body copy lead with Sleeve now (was LinkUp). The `#featured` anchor (nav "Work", hero "See the work") lands on the Sleeve section.
 2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **Live on iOS / App Store** (App Store approved + publicly released 2026-06-26). The stat block is a 2×2 (as of 2026-07-13): `Status / Live on iOS`, `Users / 350+`, `Countries / 20+`, `Albums logged / 2,750+`. Links to getsleeve.app and a real "Download on the App Store" link to `https://apps.apple.com/app/id6779825854`. See "Sleeve integration" below.
 3. **Magazine** ([magazine.tsx](src/components/magazine.tsx)) — headliner 02, `id="magazine"`. Yurr Magazine client design work as a horizontal snap-scroll carousel of real issue slides (covers + interiors). The gallery column needs `min-w-0` so the scroller engages inside the grid (section is `overflow-hidden`; without it the row expands the track and gets clipped instead of scrolling). Low-opacity orange ambient = Yurr's print ink, held faint so it never reads as a second site accent. See "Yurr Magazine" below.
-4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — headliner 03, `id="linkup"` (was `id="featured"`). LinkUp Golf with fanned phones (feed / scorecard / marketplace), text-left/phones-right. Forest+camel ambient gradient nods to LinkUp's brand. Still strong evidence; Spencer demoted it to third behind the two newer pieces. Must still come before Stats and About.
-5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since LinkUp Golf). The "Latest launch (LinkUp)" tile is now "5.0★ / Sleeve's App Store rating" (real rating, supplied 2026-07-13: 5.0 from 4 ratings; the count is held off the site since it's small, the rating value is shown honestly).
+4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — headliner 03, `id="dogleg"` (was `id="linkup"`, originally `id="featured"`). **Dogleg** (the golf app formerly named LinkUp Golf; rebranded + pivoted 2026-07-13, see "Dogleg integration" below) with fanned phones (feed / welcome / play; the branded Dogleg welcome screen is the center hero, Spencer's call), text-left/phones-right. Green+cherry ambient gradient nods to Dogleg's "Scorecard" brand (fairway green `#1E5B45` + under-par red `#C2402B`, held faint). Craft-evidence framing: a live solo-built iOS app (GPS, USGA handicap, shareable cards), NOT the old marketplace pitch. Still strong evidence; Spencer demoted it to third behind the two newer pieces. Must still come before Stats and About.
+5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since the golf app). The "Latest launch" tile is "5.0★ / Sleeve's App Store rating" (real rating, supplied 2026-07-13: 5.0 from 4 ratings; the count is held off the site since it's small, the rating value is shown honestly).
 6. **Projects** ([projects.tsx](src/components/projects.tsx)) — bento for SoundSauce, LeadHawk, Job Scout, Project Hub, This Website. Mono kicker + serif title. No top-stripe accents.
 7. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills (Music Production, Cooking, Golf, Outdoors, Animals, Gaming). No trait grid. Reads as character study, not introduction — the prospect has already met the work.
 8. **Approach** ([approach.tsx](src/components/approach.tsx)) — numbered editorial rows, no cards.
@@ -94,15 +94,17 @@ When adding a project to the hub: update [src/lib/hub/projects.ts](src/lib/hub/p
 
 The legacy hub at `~/data-hub/data-hub.html` + `server.mjs` is a localhost fallback. The Next.js version is canonical — change queries here first.
 
-## LinkUp Golf integration
+## Dogleg integration (formerly LinkUp Golf, headliner 03)
 
-Spencer's flagship product is live on the iOS App Store. The repo lives at **`~/golf-app`** (separate from this project). When making claims about LinkUp on this site, the source-of-truth is golf-app's `PRODUCT.md` and `DESIGN.md`.
+Spencer's live iOS golf app. **Renamed LinkUp Golf → Dogleg and pivoted on 2026-07-13**: the old marketplace / social-network thesis (tee-time marketplace, trips, groups, chat, discover, course reviews) was **torn down**. Dogleg is now a personal GPS + scorecard round tracker (4 tabs: Feed / Play / Friends / Profile) that Spencer builds joy-driven, **not marketing or monetizing**. The repo still lives at **`~/golf-app`** (folder name unchanged). Source-of-truth for claims is golf-app's `CLAUDE.md` (most current — `PRODUCT.md`/`store-listing.md` still carry pre-pivot LinkUp copy, so trust `CLAUDE.md` first).
 
-- App Store: <https://apps.apple.com/us/app/linkup-golf-app/id6762869994>
-- Web: <https://linkupgolf.org>
-- Stack: Expo SDK 55, React Native, TypeScript, Supabase.
-- Brand ("The Blend"): ivory + deep forest + camel. The forest/camel ambient gradient in FeaturedProject is the nod.
-- Landing-page screenshots live in `~/golf-app/assets/landing/` and were copied to `/public/projects/linkup/`. If LinkUp's UI changes meaningfully, refresh those.
+- **Site framing (Spencer's call, 2026-07-14): craft evidence, not a marketplace/business.** Pitch the shipping ability (a live, polished, solo-built iOS app: tap-to-score, GPS distance-to-green with wind+elevation, satellite hole maps, USGA handicap, shareable round cards) — never the dead "find someone to play with" pitch. No revenue/user-count claims (it's not monetized and the base is tiny by design).
+- App Store: <https://apps.apple.com/us/app/linkup-golf-app/id6762869994> — **same numeric id** (the "Dogleg: Golf" 1.2.0 rename goes live ~2026-07-15; the `linkup-golf-app` URL slug still resolves by id).
+- Web (marketing): <https://dogleg.spencercurnow.com>. `linkupgolf.org` now shows only a "we've rebranded → Dogleg" splash but stays load-bearing for auth redirects + App Store privacy/support URLs — do NOT link the site to `linkupgolf.org`.
+- Stack: Expo SDK 55, React Native, TypeScript, Supabase, Apple Maps.
+- Brand ("Scorecard"): warm paper `#FAF9F5` / ink `#1A1915` / one fairway green `#1E5B45` / under-par red `#C2402B`. The green+cherry ambient gradient in FeaturedProject is the nod (opacity-40 pattern, same as Sleeve/Yurr). The old "Blend" (ivory/forest/camel) is deleted.
+- Screenshots: real on-device caps in `/public/projects/dogleg/`. `feed.png`, `scorecard.png`, `play.png`, `friends.png` are resized from `~/golf-app/assets/landing/dl-*.png` (640w); `login.png` is the branded welcome screen, resized from `~/golf-app/design/screenshots/raw/6.png`. The phone fan uses **feed / login / play** (welcome screen center); `scorecard.png` + `friends.png` are kept as spare assets. If Dogleg's UI changes meaningfully, refresh those.
+- **Telemetry join key is unchanged:** the app still tags `properties.app = 'linkup_golf'` and reports to the `linkup-golf` Sentry org. The hub keeps that `id`/`SENTRY_ORG`; only the display `label` moved to "Dogleg" ([projects.ts](src/lib/hub/projects.ts)). Don't rename the id or the hub's data join breaks.
 
 ## Sleeve integration (headliner 01)
 
@@ -138,14 +140,23 @@ Sub-commands available: `audit`, `critique`, `polish`, `bolder`, `quieter`, `dis
 Send any of these and the answering session can integrate them:
 
 - [ ] Headshots (1–2, casual or polished).
-- [ ] LinkUp Golf metrics (current user count, App Store rating, anything quotable).
+- [x] ~~LinkUp Golf metrics.~~ — moot: the golf app is now Dogleg, a personal non-monetized project; the site frames it as craft evidence with no user-count/revenue claims (Spencer's call, 2026-07-14).
 - [x] ~~Sleeve metrics now that it's live on the App Store (ratings, user count, anything quotable) to put real numbers behind the "Live on iOS" status.~~ — supplied 2026-07-13: 5.0★ (4 ratings), 350+ users, 20+ countries, 2,750+ albums logged. Live on the site. Send refreshed numbers anytime and a session can bump them.
 - [ ] Real public Instagram handle for Yurr Magazine, to relink the gallery CTA (only `@clintyurr` is documented).
 - [ ] "Now" paragraph if we want one (what he's working on this week).
 - [ ] Testimonials/quotes from anyone — coworkers, professors, TestFlight users.
-- [ ] Decision: build a dedicated `/work/linkup-golf` deep-dive case study page?
+- [ ] Decision: build a dedicated `/work/dogleg` deep-dive case study page?
 - [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
 - [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-07-14
+
+- **LinkUp Golf → Dogleg rebrand + pivot reflected across the site.** Spencer rebuilt the golf app: renamed to **Dogleg**, tore down the marketplace/social-network thesis, and reframed it as a personal GPS + scorecard round tracker (see "Dogleg integration"). Site updated to match, framed as **craft evidence** (Spencer's call), not a marketplace pitch:
+  - **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — title `LinkUp Golf → Dogleg`; `id="linkup" → id="dogleg"` (nothing else referenced it); new serif tagline + body (tap-to-score, GPS distance w/ wind+elevation, satellite hole maps, USGA handicap, shareable cards, crew feed; the dead "2 spots Saturday 8am" marketplace copy is gone); stats `Launched/Platforms/Built → Status:Live on iOS / Built:Solo / Scoring:GPS+USGA`; stack pill `Edge Functions → Apple Maps`; ambient gradient forest+camel → fairway-green `#1E5B45` + under-par-red `#C2402B`; screenshots swapped to `/projects/dogleg/{feed,login,play}.png` (branded welcome screen center, Spencer's call); primary link `linkupgolf.org → dogleg.spencercurnow.com` (App Store id unchanged).
+  - **New screenshots**: `dl-{feed,scorecard,play,friends}.png` from `~/golf-app/assets/landing/`, resized to 640w → `/public/projects/dogleg/`. Old `/public/projects/linkup/` (feed/scorecard/marketplace) removed.
+  - **Copy elsewhere**: hero terminal `linkup-golf/ → dogleg/` ([hero.tsx](src/components/hero.tsx)); Journey timeline entry → "Dogleg · iOS launch" noting it launched as LinkUp Golf ([journey.tsx](src/components/journey.tsx)); Projects intro + Project-Hub blurb LinkUp → Dogleg ([projects.tsx](src/components/projects.tsx)); resume shipped-products entry rewritten to Dogleg ([resume/page.tsx](src/app/resume/page.tsx)).
+  - **Hub (display only, join keys preserved)**: `label 'LinkUp Golf' → 'Dogleg'` and refreshed `keyEvents` to what the current app emits (`signup_completed`, `round_completed`, `round_card_shared`) in [projects.ts](src/lib/hub/projects.ts); Sentry card `sub="LinkUp Golf" → "Dogleg"` ([HubClient.tsx](src/app/admin/hub/HubClient.tsx)). The `id: 'linkup_golf'` and `SENTRY_ORG = 'linkup-golf'` stay — the app still tags `app: 'linkup_golf'` / reports to the `linkup-golf` Sentry org.
+  - **Timing note**: the "Dogleg: Golf" App Store rename (1.2.0) was in review on 2026-07-14, going live ~2026-07-15; until then the store page briefly still reads "LinkUp Golf App" while the site says Dogleg. The App Store URL resolves by numeric id regardless.
 
 ## Shipped on 2026-07-13
 

@@ -19,7 +19,7 @@ const terminalLines = [
   { type: "command" as const, text: "$ whoami" },
   { type: "result" as const, text: "→ spencer curnow" },
   { type: "command" as const, text: "$ ls projects/" },
-  { type: "result" as const, text: "→ sleeve/  yurr-mag/  linkup-golf/" },
+  { type: "result" as const, text: "→ sleeve/  yurr-mag/  dogleg/" },
   { type: "command" as const, text: "$ cat status.txt" },
   { type: "result" as const, text: "→ sleeve: live on the ios app store" },
   { type: "command" as const, text: "$ ./ship.sh" },

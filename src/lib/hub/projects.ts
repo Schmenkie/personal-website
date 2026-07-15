@@ -26,11 +26,14 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    // `id` and `sentryProject` are the live telemetry join keys — the app still
+    // tags `properties.app = 'linkup_golf'` and reports to the `linkup-golf`
+    // Sentry org, even after the Dogleg rebrand. Only the display `label` moves.
     id: 'linkup_golf',
-    label: 'LinkUp Golf',
+    label: 'Dogleg',
     stack: 'React Native',
     sentryProject: 'react-native',
-    keyEvents: ['signup_completed', 'round_completed', 'tee_time_posted', 'trip_created', 'message_sent'],
+    keyEvents: ['signup_completed', 'round_completed', 'round_card_shared'],
   },
   {
     id: 'sleeve',

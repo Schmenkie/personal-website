@@ -15,14 +15,14 @@ const shippedProducts = [
     notes: "Live on the iOS App Store since June 2026. 350+ users across 20+ countries, 2,750+ albums logged, rated 5.0★.",
   },
   {
-    name: "LinkUp Golf",
+    name: "Dogleg",
     role: "Founder · Solo builder",
     period: "Jan 2026 – Present",
     summary:
-      "Cross-platform social network for golfers. Tee-time marketplace, GPS scorecard with USGA handicap, group standings, trip planner with cost splitter, social feed with live mid-round updates. Designed with a 60+ accessibility floor.",
-    stack: "React Native · Expo SDK 55 · TypeScript · Supabase · Postgres · Realtime · Edge Functions",
-    url: "linkupgolf.org",
-    notes: "Live on iOS App Store since April 2026. Web app at linkupgolf.org.",
+      "A golf round tracker built end to end. Tap-to-score scorecard, GPS distance to the green (wind and elevation adjusted), satellite hole maps, USGA-accurate handicap that recalcs every round, shareable round cards, and a feed of your crew's rounds. On-device color, distance, and scoring. Designed with a 60+ accessibility floor.",
+    stack: "React Native · Expo SDK 55 · TypeScript · Supabase · Postgres · Realtime · Apple Maps",
+    url: "dogleg.spencercurnow.com",
+    notes: "Live on the iOS App Store since April 2026 (launched as LinkUp Golf, rebuilt and rebranded as Dogleg in 2026). Web app at dogleg.spencercurnow.com.",
   },
   {
     name: "SoundSauce",

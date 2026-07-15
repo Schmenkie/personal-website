@@ -46,7 +46,7 @@ export function FeaturedSleeve() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 lg:gap-12 items-center">
-          {/* Visual first on desktop: mirrors LinkUp's layout so the two headliners don't read identically. */}
+          {/* Visual first on desktop: mirrors Dogleg's layout so the two headliners don't read identically. */}
           <InView variant="scale" delay={0.2} className="order-2 lg:order-1">
             <div className="relative h-[520px] md:h-[600px] flex items-center justify-center">
               {screenshots.map((shot, i) => (

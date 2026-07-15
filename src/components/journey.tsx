@@ -13,10 +13,10 @@ const entries: {
 }[] = [
   {
     period: "Apr 2026",
-    role: "LinkUp Golf · iOS launch",
+    role: "Dogleg · iOS launch",
     org: "Founder · solo",
     detail:
-      "Shipped a cross-platform social network for golfers to the App Store. Tee-time marketplace, GPS scorecard, group standings, full trip planner. Designed against a 60+ accessibility floor.",
+      "Shipped a golf round tracker to the App Store (launched as LinkUp Golf, since rebuilt as Dogleg). Tap-to-score scorecard, GPS distance to the green, satellite hole maps, USGA handicap, shareable round cards. Designed against a 60+ accessibility floor.",
     track: "build",
   },
   {

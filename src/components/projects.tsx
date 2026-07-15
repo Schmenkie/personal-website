@@ -39,7 +39,7 @@ const projects = [
     title: "Project Hub",
     kicker: "Internal Observability",
     description:
-      "A private, auth-gated cross-project dashboard I built into this site. One pane of glass for every product I run: PostHog HogQL queries for events, retention, and feature-flag state, plus Sentry issue counts, all proxied server-side so no credentials touch the browser. Unified activity feed across LinkUp Golf, Job Scout, and this site.",
+      "A private, auth-gated cross-project dashboard I built into this site. One pane of glass for every product I run: PostHog HogQL queries for events, retention, and feature-flag state, plus Sentry issue counts, all proxied server-side so no credentials touch the browser. Unified activity feed across Dogleg, Job Scout, and this site.",
     tags: ["Next.js 16", "PostHog HogQL", "Sentry API", "Edge Proxy"],
     source: "https://github.com/Schmenkie/personal-website",
     span: "md:col-span-2",
@@ -68,7 +68,7 @@ export function Projects() {
             More from the catalog.
           </h2>
           <p className="mt-4 max-w-2xl text-lg text-text-secondary leading-relaxed">
-            Before LinkUp Golf there was a steady stream of side projects.
+            Before Dogleg there was a steady stream of side projects.
             Every one started with a real problem and shipped end-to-end. No
             tutorials, no toy apps, no abandoned half-builds.
           </p>
