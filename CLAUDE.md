@@ -94,6 +94,24 @@ When adding a project to the hub: update [src/lib/hub/projects.ts](src/lib/hub/p
 
 The legacy hub at `~/data-hub/data-hub.html` + `server.mjs` is a localhost fallback. The Next.js version is canonical — change queries here first.
 
+## /web — local-services web-work landing page
+
+A **separate, focused sales page at `/web`** (not part of the main single-page flow) that pitches Spencer building websites for **local-services businesses** (plumbers, HVAC, contractors, salons, dentists). Added 2026-07-20 as the front door for a lead-gen side business (cold outreach → this page → free-mockup CTA). The main site (`/`) stays the personal/craft-credibility layer; `/web` links back to it ("See my full portfolio"), and `/web`'s "Who builds it" section links out to `/`.
+
+- Files: [src/app/web/page.tsx](src/app/web/page.tsx) (server shell + focused metadata) → [src/components/web-landing.tsx](src/components/web-landing.tsx) (`WebLanding`, client). Reuses `Footer` + `InView`; has its **own** lightweight header (SC logo + one "Get a free mockup" CTA), NOT the site `Navbar` (wrong audience).
+- **Impeccable rubric applies** (it's a public sales surface). Same palette/type/bans as `/`. Silhouettes deliberately varied so no two sections repeat: hero (phone-mockup visual) → problem (prose) → what-you-get (icon feature list, `sm:grid-cols-2`) → process (numbered `ol`, mirrors [approach.tsx](src/components/approach.tsx)) → credibility (centered prose) → FAQ (`dl`) → final CTA. Verified on desktop + mobile: no console errors, no horizontal overflow.
+- CTA is a single `mailto:` (MAILTO const in web-landing.tsx) that **prefills** business name / current site / what they want / phone, so leads arrive scoped. No form backend.
+- The hero phone preview is a **generic, clearly-illustrative** mock ("Riverside Plumbing"), not a real business, and desktop-only (`hidden md:block`).
+- **Offer copy rules:** free mockup first, scope-and-price-in-conversation (no rate card, matches Spencer's model), "live in about a week." Keep it honest.
+- **Not yet done:** `/impeccable audit` on this page (run it to confirm 20/20 holds), and there's no small-business demo/case-study yet — the free-mockup pitch leans on that gap, so a real example would strengthen it.
+
+## Lead-gen tooling (`scripts/`)
+
+Support tooling for the `/web` side business (added 2026-07-20). Not shipped to the site, just dev utilities.
+
+- [scripts/lead-finder.mjs](scripts/lead-finder.mjs) — finds local-services businesses that need a website via the **Google Places API (New)**. Ranks leads: `none` (no website, hottest) → `weak` (broken/dated/not-mobile, with a reason from a live site fetch) → drops `solid` sites. Outputs a CSV. Zero npm deps (Node 20.6+ native `fetch` + `--env-file`). Needs `GOOGLE_PLACES_API_KEY` in `.env.local` (Spencer's own Google Cloud key + billing). Run: `node --env-file=.env.local scripts/lead-finder.mjs --query "plumbers" --location "Boise, ID" --check-sites --out leads.csv`.
+- [scripts/outreach-kit.md](scripts/outreach-kit.md) — cold-outreach playbook keyed to the scraper's `none`/`weak` tiers: positioning line, email templates per tier, follow-up cadence, call script, objection table, deposit/pricing mechanics, and a lead-tracker column schema that extends the scraper CSV.
+
 ## Dogleg integration (formerly LinkUp Golf, headliner 03)
 
 Spencer's live iOS golf app. **Renamed LinkUp Golf → Dogleg and pivoted on 2026-07-13**: the old marketplace / social-network thesis (tee-time marketplace, trips, groups, chat, discover, course reviews) was **torn down**. Dogleg is now a personal GPS + scorecard round tracker (4 tabs: Feed / Play / Friends / Profile) that Spencer builds joy-driven, **not marketing or monetizing**. The repo still lives at **`~/golf-app`** (folder name unchanged). Source-of-truth for claims is golf-app's `CLAUDE.md` (most current — `PRODUCT.md`/`store-listing.md` still carry pre-pivot LinkUp copy, so trust `CLAUDE.md` first).
