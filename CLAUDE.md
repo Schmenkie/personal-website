@@ -181,6 +181,8 @@ Send any of these and the answering session can integrate them:
 
 - **Multi-page restructure: landing + `/work` + case studies.** See "Page architecture" above for the full map. Landing lost the three full headliner sections and the Projects bento, gained the compact SelectedWork teasers; `/work` index (three grouped silhouettes) and four case studies (`sleeve`, `yurr`, `dogleg`, `soundsauce`) went up. Case-study enrichment drew on a fresh repo survey: Sleeve's Daily Spins, Dogleg's caddie book/multi-tee/plays-like, Yurr's Python pipeline, SoundSauce's full-SaaS build (kept metric-free per the ban). `projects.tsx` deleted. Verified: all 8 routes 200, clean `next build` (15/15 static), no horizontal overflow, single h1 per case page.
 - **`/web` local-services landing page + lead-gen tooling** (see their own sections above). Lead-finder ran real sweeps: Bellevue plumbers test + a 3-category × 3-city sweep, 110 unique leads in `leads-sweep/` (gitignored). Cloudflare bot-walls taught the scraper its `protected`/`unknown` tiers.
+- **All of the above pushed and verified live on production** (all 8 routes 200 on spencercurnow.com). Post-restructure audit: 20/20 across `/`, `/work`, and all four case pages. Navbar SC logo fixed to link home from any page (was `href="#"`).
+- **Business context behind today's work:** Spencer is starting a freelance push, building websites for local-services businesses (his chosen niche) to earn extra income. The funnel: lead-finder CSV → outreach-kit templates → spencercurnow.com/web → free mockup → scope-in-conversation. His next manual steps: verify top leads by phone-checking their sites (Porter Family Roofing, Alpha Plumbers, the no-HTTPS roofers), then send first emails.
 
 ## Shipped on 2026-07-14
 
