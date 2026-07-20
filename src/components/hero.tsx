@@ -128,7 +128,7 @@ export function Hero() {
             developer. I take a vision and ship it, using AI-augmented
             development to compress weeks of work into days. Most recently{" "}
             <a
-              href="#featured"
+              href="/work/sleeve"
               className="text-text-primary underline decoration-accent/60 underline-offset-4 hover:decoration-accent transition-colors"
             >
               Sleeve

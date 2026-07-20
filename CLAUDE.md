@@ -45,22 +45,31 @@ After an `/impeccable audit` rebuild, the site scores 20/20 on the impeccable ru
 
 ## Page architecture
 
-Single landing page at [src/app/page.tsx](src/app/page.tsx). The order is **proof-first**: what I do → what I've shipped → who I am → how I work → my timeline → toolkit → contact. Don't slip back into the portfolio-blog reflex of bio-before-evidence.
+**Multi-page since 2026-07-20** (Spencer's call: the single scroll had outgrown the body of work). The landing sells Spencer fast; the portfolio lives at `/work` with per-project case studies.
 
-**Three headliners lead the page, in this hierarchy (Spencer's explicit call, 2026-06-25): Sleeve (01) → Yurr Magazine (02) → Dogleg (03).** They run back-to-back right after the hero, before Stats/About. Each carries an editorial "Featured Work / 0N" eyebrow. To avoid three identical sections, the silhouettes alternate: Sleeve is phones-left/text-right, Yurr is a horizontal scrolling slide carousel, Dogleg is text-left/phones-right.
+### `/` — landing ([src/app/page.tsx](src/app/page.tsx))
 
-1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal on the right, "Available for new projects" badge, "Work with me" primary CTA, "See the work" secondary. Terminal + body copy lead with Sleeve now (was LinkUp). The `#featured` anchor (nav "Work", hero "See the work") lands on the Sleeve section.
-2. **FeaturedSleeve** ([featured-sleeve.tsx](src/components/featured-sleeve.tsx)) — headliner 01, `id="featured"`. Fanned phones (feed / album / discover) on the **left**, copy on the right (mirror of LinkUp so the two phone-fan sections don't read identically). Green+purple album-wash ambient gradient is the deliberate nod to Sleeve's signature per-album color environments (same opacity-40 pattern LinkUp uses). Status is **Live on iOS / App Store** (App Store approved + publicly released 2026-06-26). The stat block is a 2×2 (as of 2026-07-13): `Status / Live on iOS`, `Users / 350+`, `Countries / 20+`, `Albums logged / 2,750+`. Links to getsleeve.app and a real "Download on the App Store" link to `https://apps.apple.com/app/id6779825854`. See "Sleeve integration" below.
-3. **Magazine** ([magazine.tsx](src/components/magazine.tsx)) — headliner 02, `id="magazine"`. Yurr Magazine client design work as a horizontal snap-scroll carousel of real issue slides (covers + interiors). The gallery column needs `min-w-0` so the scroller engages inside the grid (section is `overflow-hidden`; without it the row expands the track and gets clipped instead of scrolling). Low-opacity orange ambient = Yurr's print ink, held faint so it never reads as a second site accent. See "Yurr Magazine" below.
-4. **FeaturedProject** ([featured-project.tsx](src/components/featured-project.tsx)) — headliner 03, `id="dogleg"` (was `id="linkup"`, originally `id="featured"`). **Dogleg** (the golf app formerly named LinkUp Golf; rebranded + pivoted 2026-07-13, see "Dogleg integration" below) with fanned phones (feed / welcome / play; the branded Dogleg welcome screen is the center hero, Spencer's call), text-left/phones-right. Green+cherry ambient gradient nods to Dogleg's "Scorecard" brand (fairway green `#1E5B45` + under-par red `#C2402B`, held faint). Craft-evidence framing: a live solo-built iOS app (GPS, USGA handicap, shareable cards), NOT the old marketplace pitch. Still strong evidence; Spencer demoted it to third behind the two newer pieces. Must still come before Stats and About.
-5. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk** (Spencer hasn't worked on them since the golf app). The "Latest launch" tile is "5.0★ / Sleeve's App Store rating" (real rating, supplied 2026-07-13: 5.0 from 4 ratings; the count is held off the site since it's small, the rating value is shown honestly).
-6. **Projects** ([projects.tsx](src/components/projects.tsx)) — bento for SoundSauce, LeadHawk, Job Scout, Project Hub, This Website. Mono kicker + serif title. No top-stripe accents.
-7. **About** ([about.tsx](src/components/about.tsx)) — prose + education card + interests pills (Music Production, Cooking, Golf, Outdoors, Animals, Gaming). No trait grid. Reads as character study, not introduction — the prospect has already met the work.
-8. **Approach** ([approach.tsx](src/components/approach.tsx)) — numbered editorial rows, no cards.
-9. **Journey** ([journey.tsx](src/components/journey.tsx)) — vertical timeline showing **build track** (filled accent dot) and **operations track** (hollow border dot) running in parallel since 2024.
-10. **Skills** ([skills.tsx](src/components/skills.tsx)) — definition-list layout, sticky heading on the left, pill clouds on the right.
-11. **Contact** ([contact.tsx](src/components/contact.tsx)) — Get In Touch + View Resume CTAs, social row below.
-12. **Footer** ([footer.tsx](src/components/footer.tsx)).
+Order stays **proof-first**: Hero → SelectedWork → Stats → About → Approach → Journey → Skills → Contact → Footer. Don't slip back into bio-before-evidence, and don't let full project sections creep back onto the landing; teasers only.
+
+1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal, "Available for new projects" badge, "Work with me" primary CTA. "See the work" secondary CTA anchors to `#featured` (now the SelectedWork section); the inline Sleeve link in body copy goes to `/work/sleeve`.
+2. **SelectedWork** ([selected-work.tsx](src/components/selected-work.tsx)) — `id="featured"`. Three editorial teaser rows (numbered, thumbnail right, divide-y): Sleeve 01 → Yurr 02 → Dogleg 03, same hierarchy as the old headliners (Spencer's 2026-06-25 call). Each links to its case study; a "Browse everything" pill goes to `/work`. Keep this list at three.
+3. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk**. "5.0★ / Sleeve's App Store rating" tile (real, supplied 2026-07-13; 4-rating count held off).
+4. **About / Approach / Journey / Skills / Contact / Footer** — unchanged from the single-page era ([about.tsx](src/components/about.tsx), [approach.tsx](src/components/approach.tsx), [journey.tsx](src/components/journey.tsx), [skills.tsx](src/components/skills.tsx), [contact.tsx](src/components/contact.tsx), [footer.tsx](src/components/footer.tsx)). Nav ([navbar.tsx](src/components/navbar.tsx)): "Work" now points to `/work`; the section anchors (`/#about` etc.) still work from any page.
+
+### `/work` — portfolio index
+
+[src/app/work/page.tsx](src/app/work/page.tsx) → [work-index.tsx](src/components/work-index.tsx). Three groups, three deliberately different silhouettes: **01 Shipped products** (Sleeve / Dogleg / SoundSauce, bordered image rows), **02 Client & design** (Yurr feature row with a three-cover strip), **03 Tools & automation** (Job Scout / LeadHawk / data hub / this site, dl rows, no images). Tools without a public surface get no link; never link LeadHawk's dead app. Contact section is reused at the bottom.
+
+### `/work/[slug]` — case studies
+
+Four pages, each: `Navbar → CaseTopBar (← All work) → migrated flagship section (h1) → enrichment section → CaseNextUp → Footer`. Shared chrome in [case-nav.tsx](src/components/case-nav.tsx) (update its `CASES` list when adding a study).
+
+- **/work/sleeve** — [featured-sleeve.tsx](src/components/featured-sleeve.tsx) (the old headliner 01: phone fan feed/album/discover, album-wash ambient, 2×2 traction dl, App Store links) + a "Daily Spins" numbered-rows section (the post-launch ritual feature: daily global drop, vinyl story viewer, reactions/share cards, song-level search).
+- **/work/yurr** — [magazine.tsx](src/components/magazine.tsx) (the old headliner 02: snap-scroll issue carousel; gallery column still needs `min-w-0`) + a "Design that compiles" 2×2 toolkit grid (config → typeset → composite → export).
+- **/work/dogleg** — [featured-project.tsx](src/components/featured-project.tsx) (the old headliner 03: phone fan, green+cherry Scorecard ambient, craft-evidence framing, NOT the dead marketplace pitch) + a "Built like a caddie thinks" sticky-heading dl (satellite maps, plays-like, caddie book, multi-tee, WHS handicap, round cards).
+- **/work/soundsauce** — all-new, in [soundsauce-case.tsx](src/components/soundsauce-case.tsx). **Engineering-framed with zero traction claims** (per the SoundSauce metrics ban): pipeline strip (Upload→Separate→Detect→Analyze→Generate), two "under the hood" columns, and an honest coda that it launched, went quiet, and stays live as proof of range. Links to soundsauce.app.
+
+The three migrated components got `Featured Work / 0N` eyebrows → `Case Study / …`, `h2` → `h1`, landing ids/borders dropped. The old Projects bento (`projects.tsx`) was **deleted**; its content lives in the `/work` tools group. If a project needs adding, it goes on `/work` (and gets a case page only if there's a real story).
 
 The Writing/Blog section was removed on 2026-05-28 — three "Coming soon" cards were a credibility tax. If you ship a real post later, add the section back with the real content; never reintroduce placeholders.
 
@@ -163,9 +172,15 @@ Send any of these and the answering session can integrate them:
 - [ ] Real public Instagram handle for Yurr Magazine, to relink the gallery CTA (only `@clintyurr` is documented).
 - [ ] "Now" paragraph if we want one (what he's working on this week).
 - [ ] Testimonials/quotes from anyone — coworkers, professors, TestFlight users.
-- [ ] Decision: build a dedicated `/work/dogleg` deep-dive case study page?
+- [x] ~~Decision: build a dedicated `/work/dogleg` deep-dive case study page?~~ — shipped 2026-07-20 as part of the multi-page restructure (all four case studies).
+- [ ] Sierra Music: Spencer is calling his grandpa (Bob Curnow, sierramusicstore.com, big band charts) about a full site redo. If it happens it becomes the flagship client case study at `/work/sierra-music`. Assessment done 2026-07-20: legacy buried in a 2005 store template, no audio/sample previews on $55+ charts, wall-of-names homepage.
 - [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
 - [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-07-20
+
+- **Multi-page restructure: landing + `/work` + case studies.** See "Page architecture" above for the full map. Landing lost the three full headliner sections and the Projects bento, gained the compact SelectedWork teasers; `/work` index (three grouped silhouettes) and four case studies (`sleeve`, `yurr`, `dogleg`, `soundsauce`) went up. Case-study enrichment drew on a fresh repo survey: Sleeve's Daily Spins, Dogleg's caddie book/multi-tee/plays-like, Yurr's Python pipeline, SoundSauce's full-SaaS build (kept metric-free per the ban). `projects.tsx` deleted. Verified: all 8 routes 200, clean `next build` (15/15 static), no horizontal overflow, single h1 per case page.
+- **`/web` local-services landing page + lead-gen tooling** (see their own sections above). Lead-finder ran real sweeps: Bellevue plumbers test + a 3-category × 3-city sweep, 110 unique leads in `leads-sweep/` (gitignored). Cloudflare bot-walls taught the scraper its `protected`/`unknown` tiers.
 
 ## Shipped on 2026-07-14
 

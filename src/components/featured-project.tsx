@@ -29,10 +29,7 @@ const stats = [
 
 export function FeaturedProject() {
   return (
-    <section
-      id="dogleg"
-      className="relative overflow-hidden py-24 md:py-32 border-t border-border"
-    >
+    <section className="relative overflow-hidden py-16 md:py-24">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-40"
@@ -49,12 +46,12 @@ export function FeaturedProject() {
               <div className="flex items-center gap-3">
                 <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent/70" />
                 <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                  Featured Work / 03
+                  Case Study / Shipped Product
                 </span>
               </div>
-              <h2 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">
+              <h1 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">
                 Dogleg
-              </h2>
+              </h1>
               <p className="mt-3 text-lg md:text-xl text-text-secondary font-serif italic">
                 A golf scorecard that feels like the clubhouse, not a
                 spreadsheet.

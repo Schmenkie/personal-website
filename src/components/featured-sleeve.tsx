@@ -30,10 +30,7 @@ const stats = [
 
 export function FeaturedSleeve() {
   return (
-    <section
-      id="featured"
-      className="relative overflow-hidden py-24 md:py-32 border-t border-border"
-    >
+    <section className="relative overflow-hidden py-16 md:py-24">
       {/* Album-wash ambient: the deliberate nod to Sleeve's signature color environments. */}
       <div
         aria-hidden
@@ -85,12 +82,12 @@ export function FeaturedSleeve() {
               <div className="flex items-center gap-3">
                 <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent/70" />
                 <span className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-                  Featured Work / 01
+                  Case Study / Shipped Product
                 </span>
               </div>
-              <h2 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">
+              <h1 className="mt-4 font-serif text-5xl md:text-6xl leading-[1.05]">
                 Sleeve
-              </h2>
+              </h1>
               <p className="mt-3 text-lg md:text-xl text-text-secondary font-serif italic">
                 Where music finds friends.
               </p>
