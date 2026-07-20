@@ -38,8 +38,8 @@ export function Navbar() {
     >
       <nav className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
         <a
-          href="#"
-          className="font-serif text-xl font-bold text-text-primary tracking-tight"
+          href="/"
+          className="inline-flex min-h-11 items-center font-serif text-xl font-bold text-text-primary tracking-tight"
         >
           SC
         </a>
