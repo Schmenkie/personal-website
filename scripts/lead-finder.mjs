@@ -115,7 +115,27 @@ async function search() {
 }
 
 // ---- website scoring -------------------------------------------------------
-// Returns { tier, reason } where tier is: "none" | "weak" | "solid" | "unknown"
+// Tiers: "none" (no site) | "weak" (real lead: broken/dated/not-mobile) |
+//        "protected" (bot wall — likely a REAL maintained site, NOT a lead) |
+//        "unknown" (unreachable/ambiguous — verify by hand) | "solid" (skip).
+//
+// A realistic browser UA gets past naive user-agent blocks so more sites score
+// honestly. It won't beat a real Cloudflare JS challenge — those we detect and
+// label "protected" instead of falsely calling the site broken.
+
+// Cloudflare / Incapsula / Akamai / generic bot-challenge fingerprints.
+const BLOCK_MARKERS = [
+  "just a moment",
+  "cf-browser-verification",
+  "cf-chl",
+  "__cf_chl",
+  "checking your browser",
+  "attention required",
+  "enable javascript and cookies",
+  "ddos protection by",
+  "request unsuccessful. incapsula",
+];
+
 async function scoreSite(url) {
   if (!url) return { tier: "none", reason: "no website listed" };
   if (!checkSites) return { tier: "unknown", reason: "not checked (--check-sites off)" };
@@ -126,11 +146,16 @@ async function scoreSite(url) {
 
   try {
     const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 10000);
+    const t = setTimeout(() => ctrl.abort(), 12000);
     const res = await fetch(url, {
       signal: ctrl.signal,
       redirect: "follow",
-      headers: { "User-Agent": "Mozilla/5.0 (lead-finder; +local audit)" },
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+      },
     });
     clearTimeout(t);
 
@@ -138,11 +163,28 @@ async function scoreSite(url) {
     https = res.url.startsWith("https://");
     if (https && reasons[0] === "no HTTPS") reasons.shift();
 
+    const server = (res.headers.get("server") || "").toLowerCase();
+
+    // Bot wall by status code (Cloudflare returns 403/503 to blocked bots).
+    // A protected site is almost always real and maintained — not a lead.
+    if ([401, 403, 429, 503].includes(res.status)) {
+      return {
+        tier: "protected",
+        reason: `bot wall (HTTP ${res.status}${server ? ", " + server : ""}) — likely a real site, verify by hand`,
+      };
+    }
+
+    const html = (await res.text()).slice(0, 200000).toLowerCase();
+
+    // Bot wall by challenge page (some return 200 with an interstitial).
+    if (BLOCK_MARKERS.some((m) => html.includes(m))) {
+      return { tier: "protected", reason: "bot challenge page — likely a real site, verify by hand" };
+    }
+
     if (!res.ok) {
       return { tier: "weak", reason: `site returns ${res.status}` };
     }
 
-    const html = (await res.text()).slice(0, 200000).toLowerCase();
     const hasViewport = /<meta[^>]+name=["']?viewport/.test(html);
     if (!hasViewport) reasons.push("not mobile-friendly (no viewport tag)");
 
@@ -155,7 +197,11 @@ async function scoreSite(url) {
     if (reasons.length === 0) return { tier: "solid", reason: "modern, https, mobile-friendly" };
     return { tier: "weak", reason: reasons.join("; ") };
   } catch (e) {
-    return { tier: "weak", reason: `site unreachable (${e.name === "AbortError" ? "timeout" : "error"})` };
+    // Thrown error is ambiguous: a dead site (real lead) OR a bot wall that
+    // resets the connection (Steve's-Plumbing case) OR just slow hosting.
+    // Don't over-claim it as broken — flag for a manual look.
+    const kind = e.name === "AbortError" ? "timeout" : "connection reset/DNS";
+    return { tier: "unknown", reason: `unreachable (${kind}) — could be down OR blocking a bot, verify by hand` };
   }
 }
 
@@ -167,7 +213,7 @@ function csvCell(v) {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-const TIER_RANK = { none: 0, weak: 1, unknown: 2, solid: 3 };
+const TIER_RANK = { none: 0, weak: 1, unknown: 2, protected: 3, solid: 4 };
 
 // ---- main ------------------------------------------------------------------
 const places = await search();
@@ -217,11 +263,17 @@ await fs.writeFile(outFile, csv, "utf8");
 
 // ---- summary ---------------------------------------------------------------
 const counts = leads.reduce((acc, r) => ((acc[r.tier] = (acc[r.tier] || 0) + 1), acc), {});
-console.log(`\n  Wrote ${leads.length} leads to ${outFile}`);
+console.log(`\n  Wrote ${leads.length} rows to ${outFile}`);
 console.log(
   `    no website:  ${counts.none || 0}   (hottest — nothing to compete with)`
 );
-if (checkSites) console.log(`    weak site:   ${counts.weak || 0}   (has a site, but broken/dated/not mobile)`);
+if (checkSites) {
+  console.log(`    weak site:   ${counts.weak || 0}   (real lead: broken/dated/not mobile)`);
+  if (counts.protected)
+    console.log(`    protected:   ${counts.protected}   (bot wall / Cloudflare — likely a REAL site, NOT a lead)`);
+  if (counts.unknown)
+    console.log(`    unreachable: ${counts.unknown}   (ambiguous — could be down OR blocking, verify by hand)`);
+}
 if (!checkSites) console.log(`    unchecked:   ${counts.unknown || 0}   (re-run with --check-sites to score these)`);
 if (keepGood) console.log(`    solid site:  ${counts.solid || 0}   (probably not worth pitching)`);
-console.log("");
+console.log("\n  Only 'no website' + 'weak site' are confirmed leads. Verify the rest before pitching.\n");

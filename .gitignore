@@ -44,3 +44,6 @@ next-env.d.ts
 /.agents/
 /.claude/skills/
 /.claude/settings.local.json
+
+# Lead-finder output (scraped business data — never commit, esp. public repo)
+*.csv
