@@ -7,7 +7,10 @@ import { useSpin, useSpinAudio } from "./use-spin";
 // from the record itself or the button. Playing: the tonearm swings onto the
 // record and the record spins with the album cover as its label. Paused: the
 // arm lifts off and the record stops where it is.
-// Label is big on purpose (r=125 of 250) so the album art reads.
+// The cover is the biggest square that fits on the record (side 336 of a
+// 500 disc, corners just inside the outer groove), never cropped or stretched.
+// The tonearm's needle lands on the grooves to the right of it.
+const ART = 336;
 const GROOVES = [238, 224, 210, 196, 182, 168, 154, 140];
 
 export function RecordPlayer({ initial }: { initial: Spin | null }) {
@@ -26,30 +29,25 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
         className="block w-full cursor-pointer bg-transparent p-0 disabled:cursor-default"
       >
         <svg viewBox="0 0 540 520" className="block h-auto w-full" aria-hidden="true">
-          <defs>
-            <clipPath id="player-label">
-              <circle cx="250" cy="260" r="125" />
-            </clipPath>
-          </defs>
           <g className="disc">
             <circle cx="250" cy="260" r="250" fill="#141414" />
             {GROOVES.map((r, i) => (
               <circle key={r} cx="250" cy="260" r={r} fill="none" stroke={i % 2 ? "#262626" : "#202020"} strokeWidth="1.2" />
             ))}
             <path d="M250 25 A235 235 0 0 1 455 145" fill="none" stroke="#3a3a3a" strokeWidth="3" opacity="0.6" />
-            <circle cx="250" cy="260" r="125" fill="#7A2FF2" />
-            {spin?.coverUrl && (
+            {spin?.coverUrl ? (
               <image
-                href={spin.coverUrl.replace("/120x120bb.jpg", "/600x600bb.jpg")}
-                x="125"
-                y="135"
-                width="250"
-                height="250"
-                clipPath="url(#player-label)"
-                preserveAspectRatio="xMidYMid slice"
+                href={spin.coverUrl.replace("/120x120bb.jpg", "/800x800bb.jpg")}
+                x={250 - ART / 2}
+                y={260 - ART / 2}
+                width={ART}
+                height={ART}
+                preserveAspectRatio="xMidYMid meet"
               />
+            ) : (
+              <circle cx="250" cy="260" r="125" fill="#7A2FF2" />
             )}
-            <circle cx="250" cy="260" r="7" fill="#FBFBF9" />
+            <circle cx="250" cy="260" r="5" fill="#FBFBF9" />
           </g>
           <g className="arm">
             <circle cx="510" cy="36" r="15" fill="#E4E4DF" stroke="#CFCFC9" />
