@@ -2,14 +2,14 @@
 
 # Spencer Curnow · personal website
 
-The site is a sales tool. Primary audience is **prospective clients and employers**. Primary outcome: **hire Spencer to build something.** Contract / project work is the headline pitch; full-time roles welcome as a softer mention.
+A **personal portfolio** (Spencer's call, 2026-10-04): who he is, what he's made, how to reach him. Readers are employers (product/design roles), clients and people he meets. The local-services pitch lives on its own page at `/web` and is not linked from the home page.
 
-Engagement model is informal: "send me what you want built, we'll scope and price it in conversation." Don't put rate cards or fixed packages on the site — that's not the offer.
+Since 2026-10-06 the whole site is a **minimal, plain design** (see Design system). It replaced a dark, animated template that Spencer felt "looks like it was put together with AI". Keep it simple: when in doubt, remove.
 
 ## Stack and deploy
 
-- Next.js 16 (app router), React 19, Tailwind v4, Framer Motion, lucide-react.
-- Fonts loaded via `next/font/google`: DM Serif Display, Plus Jakarta Sans.
+- Next.js 16 (app router), React 19, Tailwind v4. (`framer-motion` and `lucide-react` are still in package.json but no page uses them since the 2026-10 redo; safe to uninstall.)
+- Fonts via `next/font/google`: **Geist Mono** (`--font-geist-mono`) for every public page. DM Serif Display + Plus Jakarta Sans are still loaded only for `/admin/hub`.
 - **Live at https://spencercurnow.com** (as of 2026-05-28).
   - GitHub: `Schmenkie/personal-website` (public).
   - Hosting: Vercel project `personal-website` under `Schmenks's projects` (Hobby tier). Auto-deploys on push to `main`.
@@ -17,65 +17,34 @@ Engagement model is informal: "send me what you want built, we'll scope and pric
 - Analytics: PostHog client-side via [src/components/PostHogProvider.tsx](src/components/PostHogProvider.tsx). Reuses the LinkUp Golf project key (`NEXT_PUBLIC_POSTHOG_KEY` in Vercel env + `.env.local`). Every event tagged `app: 'personal_website'` so dashboards filter per app inside the shared project. SPA pageviews tracked via `usePathname`; DNT respected.
 - Dev: `npm run dev` (port 3000). Project has `.claude/launch.json` wired for the preview MCP, so `mcp__Claude_Preview__preview_start { name: "dev" }` Just Works.
 
-## Design system
+## Design system (2026-10 redo)
 
-After an `/impeccable audit` rebuild, the site scores 20/20 on the impeccable rubric. **Don't backslide.**
+Inspired by linusrogge.com (Spencer's reference): one small monospace face, paper background, almost nothing else. Borrow the principles, never copy that site's look.
 
-**Palette** (tokens in `src/app/globals.css`):
-- Background: warm-tinted obsidian `#100A07`. Never `#000`.
-- Text: warm-tinted off-whites `#F5EFE8` / `#B5A89C` / `#8A7E72`. Never `#fff`, never `text-white`.
-- Single committed accent: **terracotta `#D97757`** (light `#E8957A`, dark `#B85A3E`). It carries 40–60% of every surface. Resist adding a second accent unless you've thought about it for a full sentence.
+- **Scope:** every public page wraps its content in `<div className="minimal ...">`. All styling for it is the `.minimal` block at the bottom of [globals.css](src/app/globals.css) (`body:has(.minimal)` switches the page background). The older dark tokens above it exist only for `/admin/hub`.
+- **Type:** Geist Mono, 13px / 18px, weight 400 everywhere. Headings are the same size as body text; hierarchy comes from order, spacing and the muted color, never from size or bold.
+- **Color:** paper `#FBFBF9`, ink `#111111`, muted `#6B6B66` (5.3:1, use the `.muted` class). The vinyl mark's label is the only accent (`#E04E1B`). No gradients, shadows, cards, badges or pill buttons.
+- **Links:** plain ink text, hover goes muted. The one filled button is the black "Get a free mockup" on `/web` (`a.cta`).
+- **No animation** beyond a 150ms opacity hover on thumbnails.
+- **Shared pieces** in [src/components/minimal/](src/components/minimal/): `site-header.tsx` (vinyl mark home link + spinning today), `site-footer.tsx` ([i] colophon via `<details>` + year), `links.tsx` (the link list + the one-line bio `ONE_LINE`), `vinyl-mark.tsx`, `print-button.tsx`.
+- **Accessibility floor:** text 4.5:1+, touch targets `min-h-11` on standalone controls, real `<a>`/`<button>`, alt text on every image.
 
-**Type**: DM Serif Display for headlines (mixed case, never uppercase), Plus Jakarta Sans for body, font-mono for kickers and labels (uppercase with `tracking-widest`).
+### Spinning today
 
-**Hard bans** (impeccable absolute rules):
-- No gradient text (`background-clip: text` + gradient). Use serif italic in accent for emphasis instead.
-- No em dashes in copy. Use commas, colons, semicolons, periods, or parentheses.
-- No `#000` or `#fff` literals. No `text-white` / `bg-white`. Tint white-on-dark CTAs with `text-obsidian`.
-- No side-stripe (`border-left`/`border-right` >1px colored) or top-stripe accents on cards. No glassmorphism as default (navbar's scrolled state is the one exception, for legibility).
-- No identical card grids. Vary silhouette across sections — prose, numbered rows, dl-style lists, timelines, bento.
-- No hero-metric template (big number + small label + supporting stats + gradient accent).
-- No backdrop-blur for decoration. Animations: `useNativeDriver`-cheap on RN principle here means opacity + transform only, ease-out exponential, no bounce.
-
-**Accessibility floor**:
-- WCAG AA throughout. Body text ≥4.5:1 contrast (use `text-muted` not lower).
-- Touch targets ≥44pt — use `min-h-11` on interactive elements.
-- Global `:focus-visible` outline already set in `globals.css`. Don't override.
-- No hover-only secondary actions — anything keyboard users need must be visible at rest.
+The header shows Spencer's latest **Sleeve daily spin** ([src/lib/spin.ts](src/lib/spin.ts)): a REST read of Sleeve's `daily_spins` (world-readable via RLS) with Sleeve's *publishable* key, filtered to Spencer's user id `029305af-40b4-49ee-b2f0-a3b401d32b33`, linking to `getsleeve.app/user/<username>`. Cached 10 min (`revalidate = 600` on each page). Label is "spinning today" if posted in the last 24h, else "last spin". **On any failure it renders nothing**; the page must never break over it.
 
 ## Page architecture
 
-**Multi-page since 2026-07-20** (Spencer's call: the single scroll had outgrown the body of work). The landing sells Spencer fast; the portfolio lives at `/work` with per-project case studies.
+All work content lives in **[src/lib/work.ts](src/lib/work.ts)** (`PROJECTS`): name, one-line, body paragraphs, links, and `shots` (image, filename label, caption, optional `meta` like an issue date). Every page reads from it; add or edit work there only.
 
-### `/` — landing ([src/app/page.tsx](src/app/page.tsx))
+- **`/`** ([page.tsx](src/app/page.tsx)): name, one line, links, then a strip of every project's images at the bottom, grouped per project and in sequence. A thumbnail links to `/work/<slug>#<shot id>`. On phones the strip is one sideways-scrolling row.
+- **`/work`**: plain text index, one row per project.
+- **`/work/[slug]`** (static, `dynamicParams = false`): paragraphs, links, then each image with its filename and caption; prev/next links. Slugs: `sleeve`, `yurr`, `schmenk-golf`, `soundsauce`. `/work/dogleg` 308-redirects to `/work/schmenk-golf` ([next.config.ts](next.config.ts)).
+- **`/resume`**: the canonical resume (edit work history here, not in a PDF). Same layout; "Print / save as PDF" prints one clean letter page (print styles at the end of globals.css).
+- **`/web`**: the local-services sales page (see below).
+- **`not-found.tsx`**: plain 404.
 
-Order stays **proof-first**: Hero → SelectedWork → Stats → About → Approach → Journey → Skills → Contact → Footer. Don't slip back into bio-before-evidence, and don't let full project sections creep back onto the landing; teasers only.
-
-1. **Hero** ([hero.tsx](src/components/hero.tsx)) — animated terminal, "Available for new projects" badge, "Work with me" primary CTA. "See the work" secondary CTA anchors to `#featured` (now the SelectedWork section); the inline Sleeve link in body copy goes to `/work/sleeve`.
-2. **SelectedWork** ([selected-work.tsx](src/components/selected-work.tsx)) — `id="featured"`. Three editorial teaser rows (numbered, thumbnail right, divide-y): Sleeve 01 → Yurr 02 → Dogleg 03, same hierarchy as the old headliners (Spencer's 2026-06-25 call). Each links to its case study; a "Browse everything" pill goes to `/work`. Keep this list at three.
-3. **Stats** ([stats.tsx](src/components/stats.tsx)) — editorial 4-up band. Honest numbers only; **never claim metrics for SoundSauce/LeadHawk**. "5.0★ / Sleeve's App Store rating" tile (real, supplied 2026-07-13; 4-rating count held off).
-4. **About / Approach / Journey / Skills / Contact / Footer** — unchanged from the single-page era ([about.tsx](src/components/about.tsx), [approach.tsx](src/components/approach.tsx), [journey.tsx](src/components/journey.tsx), [skills.tsx](src/components/skills.tsx), [contact.tsx](src/components/contact.tsx), [footer.tsx](src/components/footer.tsx)). Nav ([navbar.tsx](src/components/navbar.tsx)): "Work" now points to `/work`; the section anchors (`/#about` etc.) still work from any page.
-
-### `/work` — portfolio index
-
-[src/app/work/page.tsx](src/app/work/page.tsx) → [work-index.tsx](src/components/work-index.tsx). Three groups, three deliberately different silhouettes: **01 Shipped products** (Sleeve / Dogleg / SoundSauce, bordered image rows), **02 Client & design** (Yurr feature row with a three-cover strip), **03 Tools & automation** (Job Scout / LeadHawk / data hub / this site, dl rows, no images). Tools without a public surface get no link; never link LeadHawk's dead app. Contact section is reused at the bottom.
-
-### `/work/[slug]` — case studies
-
-Four pages, each: `Navbar → CaseTopBar (← All work) → migrated flagship section (h1) → enrichment section → CaseNextUp → Footer`. Shared chrome in [case-nav.tsx](src/components/case-nav.tsx) (update its `CASES` list when adding a study).
-
-- **/work/sleeve** — [featured-sleeve.tsx](src/components/featured-sleeve.tsx) (the old headliner 01: phone fan feed/album/discover, album-wash ambient, 2×2 traction dl, App Store links) + a "Daily Spins" numbered-rows section (the post-launch ritual feature: daily global drop, vinyl story viewer, reactions/share cards, song-level search).
-- **/work/yurr** — [magazine.tsx](src/components/magazine.tsx) (the old headliner 02: snap-scroll issue carousel; gallery column still needs `min-w-0`) + a "Design that compiles" 2×2 toolkit grid (config → typeset → composite → export).
-- **/work/dogleg** — [featured-project.tsx](src/components/featured-project.tsx) (the old headliner 03: phone fan, green+cherry Scorecard ambient, craft-evidence framing, NOT the dead marketplace pitch) + a "Built like a caddie thinks" sticky-heading dl (satellite maps, plays-like, caddie book, multi-tee, WHS handicap, round cards).
-- **/work/soundsauce** — all-new, in [soundsauce-case.tsx](src/components/soundsauce-case.tsx). **Engineering-framed with zero traction claims** (per the SoundSauce metrics ban): pipeline strip (Upload→Separate→Detect→Analyze→Generate), two "under the hood" columns, and an honest coda that it launched, went quiet, and stays live as proof of range. Links to soundsauce.app.
-
-The three migrated components got `Featured Work / 0N` eyebrows → `Case Study / …`, `h2` → `h1`, landing ids/borders dropped. The old Projects bento (`projects.tsx`) was **deleted**; its content lives in the `/work` tools group. If a project needs adding, it goes on `/work` (and gets a case page only if there's a real story).
-
-The Writing/Blog section was removed on 2026-05-28 — three "Coming soon" cards were a credibility tax. If you ship a real post later, add the section back with the real content; never reintroduce placeholders.
-
-Resume page: [src/app/resume/page.tsx](src/app/resume/page.tsx) at `/resume`. Builder-positioned. Print stylesheet generates a clean 1-page PDF via the in-page Print button. This is the canonical resume — when updating Spencer's work history, edit this file, not a PDF.
-
-UI primitives: [src/components/ui/](src/components/ui/) holds `in-view`, `interactive-card`, `particle-field`. `GradientText` was deleted on purpose — don't add it back.
+**Image order rules:** app screens in the order you move through the app; Yurr in issue order (005 Leallicna, 006 Luvstruck, 007 Jared cover + Q&A + closing grid together, 008 Oliver). Images are 720px-wide JPEGs in `public/projects/<project>/`.
 
 ## /admin/hub — internal data hub
 
@@ -103,16 +72,9 @@ When adding a project to the hub: update [src/lib/hub/projects.ts](src/lib/hub/p
 
 The legacy hub at `~/data-hub/data-hub.html` + `server.mjs` is a localhost fallback. The Next.js version is canonical — change queries here first.
 
-## /web — local-services web-work landing page
+## /web — local-services landing page
 
-A **separate, focused sales page at `/web`** (not part of the main single-page flow) that pitches Spencer building websites for **local-services businesses** (plumbers, HVAC, contractors, salons, dentists). Added 2026-07-20 as the front door for a lead-gen side business (cold outreach → this page → free-mockup CTA). The main site (`/`) stays the personal/craft-credibility layer; `/web` links back to it ("See my full portfolio"), and `/web`'s "Who builds it" section links out to `/`.
-
-- Files: [src/app/web/page.tsx](src/app/web/page.tsx) (server shell + focused metadata) → [src/components/web-landing.tsx](src/components/web-landing.tsx) (`WebLanding`, client). Reuses `Footer` + `InView`; has its **own** lightweight header (SC logo + one "Get a free mockup" CTA), NOT the site `Navbar` (wrong audience).
-- **Impeccable rubric applies** (it's a public sales surface). Same palette/type/bans as `/`. Silhouettes deliberately varied so no two sections repeat: hero (phone-mockup visual) → problem (prose) → what-you-get (icon feature list, `sm:grid-cols-2`) → process (numbered `ol`, mirrors [approach.tsx](src/components/approach.tsx)) → credibility (centered prose) → FAQ (`dl`) → final CTA. Verified on desktop + mobile: no console errors, no horizontal overflow.
-- CTA is a single `mailto:` (MAILTO const in web-landing.tsx) that **prefills** business name / current site / what they want / phone, so leads arrive scoped. No form backend.
-- The hero phone preview is a **generic, clearly-illustrative** mock ("Riverside Plumbing"), not a real business, and desktop-only (`hidden md:block`).
-- **Offer copy rules:** free mockup first, scope-and-price-in-conversation (no rate card, matches Spencer's model), "live in about a week." Keep it honest.
-- **Not yet done:** `/impeccable audit` on this page (run it to confirm 20/20 holds), and there's no small-business demo/case-study yet — the free-mockup pitch leans on that gap, so a real example would strengthen it.
+[src/app/web/page.tsx](src/app/web/page.tsx): the front door for Spencer's local-business website side business (cold outreach links here). Same minimal design. Sections: intro + CTA, the problem, what you get, how it works (numbered), who builds it (links to `/work`), FAQ, closing CTA. The CTA is a `mailto:` that prefills business name / current site / what they want / phone. Offer rules: free mockup first, price scoped in conversation (no rate card on the site), "live in about a week". The business plan, leads and templates live outside this repo in `~/Downloads/Web Studio/` (this repo is public, so lead data never goes here).
 
 ## Lead-gen tooling (`scripts/`)
 
@@ -121,51 +83,26 @@ Support tooling for the `/web` side business (added 2026-07-20). Not shipped to 
 - [scripts/lead-finder.mjs](scripts/lead-finder.mjs) — finds local-services businesses that need a website via the **Google Places API (New)**. Tiers each result from a live site fetch (realistic Chrome UA): `none` (no site, hottest lead) → `weak` (real lead: broken/dated/not-mobile) → `unknown` (unreachable/ambiguous — could be down OR bot-blocking, verify by hand) → `protected` (Cloudflare/bot-wall — likely a REAL maintained site, NOT a lead) → `solid` (dropped unless `--keep-good`). **Only `none` + `weak` are confirmed leads.** The `protected`/`unknown` split exists because Cloudflare resets bot connections, which naively read as "site down" (learned from a real Bellevue run where Steve's Plumbing, a fine Cloudflare-protected site, got mis-flagged). Outputs a CSV. Zero npm deps (Node 20.6+ native `fetch` + `--env-file`). Needs `GOOGLE_PLACES_API_KEY` in `.env.local` (Spencer's own Google Cloud key on the already-billed golf-app project, restricted to Places API (New), no app restriction so the Node script works). Run: `node --env-file=.env.local scripts/lead-finder.mjs --query "plumbers" --location "Bellevue, WA" --check-sites --out leads.csv`.
 - [scripts/outreach-kit.md](scripts/outreach-kit.md) — cold-outreach playbook keyed to the scraper's `none`/`weak` tiers: positioning line, email templates per tier, follow-up cadence, call script, objection table, deposit/pricing mechanics, and a lead-tracker column schema that extends the scraper CSV.
 
-## Dogleg integration (formerly LinkUp Golf, headliner 03)
+## The projects (facts as of 2026-10-06)
 
-Spencer's live iOS golf app. **Renamed LinkUp Golf → Dogleg and pivoted on 2026-07-13**: the old marketplace / social-network thesis (tee-time marketplace, trips, groups, chat, discover, course reviews) was **torn down**. Dogleg is now a personal GPS + scorecard round tracker (4 tabs: Feed / Play / Friends / Profile) that Spencer builds joy-driven, **not marketing or monetizing**. The repo still lives at **`~/golf-app`** (folder name unchanged). Source-of-truth for claims is golf-app's `CLAUDE.md` (most current — `PRODUCT.md`/`store-listing.md` still carry pre-pivot LinkUp copy, so trust `CLAUDE.md` first).
+Source of truth for each is its own repo's CLAUDE.md. Re-check before changing claims.
 
-- **Site framing (Spencer's call, 2026-07-14): craft evidence, not a marketplace/business.** Pitch the shipping ability (a live, polished, solo-built iOS app: tap-to-score, GPS distance-to-green with wind+elevation, satellite hole maps, USGA handicap, shareable round cards) — never the dead "find someone to play with" pitch. No revenue/user-count claims (it's not monetized and the base is tiny by design).
-- App Store: <https://apps.apple.com/us/app/linkup-golf-app/id6762869994> — **same numeric id** (the "Dogleg: Golf" 1.2.0 rename goes live ~2026-07-15; the `linkup-golf-app` URL slug still resolves by id).
-- Web (marketing): <https://dogleg.spencercurnow.com>. `linkupgolf.org` now shows only a "we've rebranded → Dogleg" splash but stays load-bearing for auth redirects + App Store privacy/support URLs — do NOT link the site to `linkupgolf.org`.
-- Stack: Expo SDK 55, React Native, TypeScript, Supabase, Apple Maps.
-- Brand ("Scorecard"): warm paper `#FAF9F5` / ink `#1A1915` / one fairway green `#1E5B45` / under-par red `#C2402B`. The green+cherry ambient gradient in FeaturedProject is the nod (opacity-40 pattern, same as Sleeve/Yurr). The old "Blend" (ivory/forest/camel) is deleted.
-- Screenshots: real on-device caps in `/public/projects/dogleg/`. `feed.png`, `scorecard.png`, `play.png`, `friends.png` are resized from `~/golf-app/assets/landing/dl-*.png` (640w); `login.png` is the branded welcome screen, resized from `~/golf-app/design/screenshots/raw/6.png`. The phone fan uses **feed / login / play** (welcome screen center); `scorecard.png` + `friends.png` are kept as spare assets. If Dogleg's UI changes meaningfully, refresh those.
-- **Telemetry join key is unchanged:** the app still tags `properties.app = 'linkup_golf'` and reports to the `linkup-golf` Sentry org. The hub keeps that `id`/`SENTRY_ORG`; only the display `label` moved to "Dogleg" ([projects.ts](src/lib/hub/projects.ts)). Don't rename the id or the hub's data join breaks.
-
-## Sleeve integration (headliner 01)
-
-Spencer's newest product: **Sleeve, a Letterboxd-style social app for music fans** ("Where music finds friends" — log albums, rate ½ to 5 stars, review, find taste twins, discover through humans not algorithms). Repo lives at **`~/sleeve`** (separate from this project). Source-of-truth for claims is sleeve's `PRODUCT.md`, `DESIGN.md`, and `STORE_LISTING.md`.
-
-- Status (2026-06-26): **Live and publicly released on the App Store.** App Store approved + publicly released 2026-06-26 (build #16). Real metrics supplied by Spencer 2026-07-13 and now on the site: **5.0★ (from 4 ratings), 350+ users, 20+ countries, 2,750+ albums logged.** The star rating is shown as "5.0★" without the 4-count (small, held off); everything else is shown verbatim. Keep copy honest — update these numbers when Spencer sends fresher ones; don't inflate.
-- App Store: <https://apps.apple.com/app/id6779825854>
-- Marketing site: <https://getsleeve.app> (support `/support`, privacy `/privacy`, terms `/terms`).
-- Stack: Expo SDK 55, React Native, TypeScript, Supabase. Apple Music import, **on-device dominant-color extraction** (the signature: every album page is wrapped in its own color), taste-twin matching, lists, a vinyl "Spins" discovery feed.
-- Design DNA ("quiet with ink"): neutral near-black chrome, album color only on album-owned surfaces. The green+purple ambient on FeaturedSleeve is the nod to those per-album washes.
-- Screenshots: real on-device caps from `~/sleeve/design/screenshots/raw/`, resized to 640w and copied to `/public/projects/sleeve/` (`feed.png`, `album.png`, `discover.png`). If Sleeve's UI changes meaningfully, refresh those.
-- **Dev gotcha:** the center phone (`album.png`) renders fine in `next build` / prod but can stay inert under the Turbopack **dev** server (empty `currentSrc`, never fires load/error). It's a dev-only image-optimizer quirk — verified working via `next start`. Don't "fix" it by swapping the asset; the file is valid. `priority` was removed and `sizes="240px"` added to match the real render width.
-
-## Yurr Magazine (headliner 02)
-
-Spencer's **paid client design work**: Yurr is an independent magazine profiling one creator per issue, published as Instagram carousels. He art-directs and designs every drop end to end (cover, 7 Q&A spreads, outfit callouts, closing grid = 16 slides) and **built the rendering toolkit behind them in Python + Pillow** (config-driven; typographic system, shadow/glow compositing, reactive callout library, one-command build per issue). 8 issues shipped in Vol. 02.
-
-- Source material: `~/Downloads/yurr magazine/` — `YURR_VOL02_WORKFLOW.md` has the full pipeline; final slides live in each subject's `*_final/` folder.
-- Gallery assets: 4 covers + 2 interiors, exported to JPEG (82q, 760w) in `/public/projects/yurr/` (`jared`, `leallicna`, `luvstruck`, `oliver`, `jared-qa`, `jared-outro`).
-- **Open item:** no confirmed public Instagram handle for the magazine account (only `@clintyurr`, the coverage credit, appears in the files). The "See it on Instagram" CTA was replaced with a static credit line to avoid shipping a guessed/broken link. If Spencer supplies the real handle, wire it back as a link.
-- The magazine's own tagline contains mild profanity ("...doing cool sh*t"); keep that off the sales site. Frame as "a zine for cool people doing cool things."
+- **Sleeve** (`~/sleeve`): Letterboxd-style music app. Live on the App Store since 2026-06-26 (`id6779825854`), v1.0.2 released 2026-09-29. Albums *and* songs, shareable playlists, daily spin, weekly issue, taste twins. Numbers on the site: 400+ people, 20+ countries, 3,400+ albums logged. Screenshots = the v3 App Store set (`~/sleeve/design/screenshots/v3/out/`, approved by Spencer 2026-09-29), resized to 720w.
+- **Yurr Magazine** (`~/Downloads/Yurr Magazine/`): paid client design work for @clintyurr; Instagram carousels + Spencer's Python render toolkit. 8 issues in Vol. 02. Keep the magazine's profane tagline off the site.
+- **Schmenk Golf** (`~/golf-app`): renamed LinkUp Golf → Dogleg → **Schmenk Golf** (trademark filing on "Dogleg"; never use that name on the site). 1.2.0 was pulled from sale 2026-10-01; 1.3.0 relaunches it under the new name. Don't link the App Store until 1.3.0 is live. Screenshots = the 1.3.0 set (`~/golf-app/design/screenshots/out/` 01, 02, 05); skip the Feed/Friends shots, they show friends' real names. PostHog/Sentry ids in the hub stay `linkup_golf` / `linkup-golf` (only labels changed).
+- **SoundSauce** (`~/audio-analyzer-pro`): now a personal remix tool; no metrics claims.
 
 ## impeccable skill
 
-Installed locally at `.agents/skills/impeccable/` (gitignored; reinstall via `npx impeccable skills install`). `skills-lock.json` is committed for reproducible installs.
-
-Sub-commands available: `audit`, `critique`, `polish`, `bolder`, `quieter`, `distill`, `harden`, `clarify`, `adapt`, `optimize`, `animate`, `colorize`, `typeset`, `layout`, `delight`, `overdrive`, `shape`, `craft`, `extract`, `teach`, `document`, `live`.
-
-**Run `/impeccable audit` after any non-trivial visual change.** Target: stay at 20/20.
+Installed locally at `.agents/skills/impeccable/` (gitignored). Its old 20/20 rubric was written for the previous dark design; use it for critique, but the minimal design rules above win where they disagree.
 
 ## Outstanding asks from Spencer (as of last session)
 
 Send any of these and the answering session can integrate them:
 
+- [ ] The one-line bio is still Claude's draft: "Makes apps and magazines in Bellevue, WA." (`ONE_LINE` in links.tsx).
+- [ ] Case studies for design-job applications (Sleeve's album colors, Schmenk Golf's strip-down, Yurr's design system), offered 2026-10-06.
+- [ ] Sleeve's App Store rating: removed from the resume 2026-10-06 (last known 5.0★ from 4 ratings, July). Re-add if still true.
 - [ ] Headshots (1–2, casual or polished).
 - [x] ~~LinkUp Golf metrics.~~ — moot: the golf app is now Dogleg, a personal non-monetized project; the site frames it as craft evidence with no user-count/revenue claims (Spencer's call, 2026-07-14).
 - [x] ~~Sleeve metrics now that it's live on the App Store (ratings, user count, anything quotable) to put real numbers behind the "Live on iOS" status.~~ — supplied 2026-07-13: 5.0★ (4 ratings), 350+ users, 20+ countries, 2,750+ albums logged. Live on the site. Send refreshed numbers anytime and a session can bump them.
@@ -176,6 +113,10 @@ Send any of these and the answering session can integrate them:
 - [ ] Sierra Music: Spencer is calling his grandpa (Bob Curnow, sierramusicstore.com, big band charts) about a full site redo. If it happens it becomes the flagship client case study at `/work/sierra-music`. Assessment done 2026-07-20: legacy buried in a 2005 store template, no audio/sample previews on $55+ charts, wall-of-names homepage.
 - [x] ~~Decision: ship a real blog post or remove the Writing section?~~ — removed 2026-05-28.
 - [x] ~~Buy spencercurnow.com.~~ — bought via Cloudflare, pointed at Vercel, live 2026-05-28.
+
+## Shipped on 2026-10-06 — the minimal redo
+
+Branch `redo-minimal`, merged to main. Replaced the dark animated landing, the four headliner case studies, Stats/About/Approach/Journey/Skills sections, navbar, footer, `web-landing.tsx`, and `components/ui/*` with the minimal pages above. Added live "spinning today" from Sleeve, `src/lib/work.ts`, the 404 page, the dogleg redirect. Resume gained Yurr Magazine and lost the dead leadhawk.org link. Every "Dogleg" mention is gone from the site. Verified in the browser pane against `npm run dev` (real spin rendered) and with a production `next build`.
 
 ## Shipped on 2026-07-20
 
@@ -231,8 +172,9 @@ Send any of these and the answering session can integrate them:
 
 ## Don't
 
-- Don't claim metrics for SoundSauce or LeadHawk. They're past shipped work, not active products.
-- Don't reintroduce purple / cyan / pink. The reflex palette is the exact thing the audit failed.
-- Don't add a second accent color. It's "single committed accent" by design.
+- Don't claim metrics for SoundSauce or LeadHawk. They're past shipped work, not active products. Never link LeadHawk (the app is dead).
+- Don't use the name "Dogleg" anywhere public. It's Schmenk Golf.
+- Don't add color, cards, badges, gradients, icons or scroll animations to the public pages. Restraint is the design.
 - Don't write `electronic music production` — the certificate is just "Music Production."
+- Don't put lead data (CSVs) in this repo; it's public.
 - Don't commit `.claude/settings.local.json` or `.agents/`. Both are gitignored.
