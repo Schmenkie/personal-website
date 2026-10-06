@@ -225,7 +225,7 @@ body:has(.minimal) {
   }
 }
 .minimal .record .vinyl {
-  animation: record-spin 2.6s linear infinite;
+  animation: record-spin 3.7s linear infinite;
   animation-play-state: paused;
 }
 .minimal .record[data-playing] .vinyl {
@@ -253,7 +253,7 @@ body:has(.minimal) {
 .minimal .player .disc {
   transform-box: fill-box;
   transform-origin: center;
-  animation: record-spin 2.6s linear infinite;
+  animation: record-spin 3.7s linear infinite;
   animation-play-state: paused;
 }
 .minimal .player[data-playing] .disc {
