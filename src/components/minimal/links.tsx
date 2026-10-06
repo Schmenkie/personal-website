@@ -6,4 +6,4 @@ export const LINKS = [
   { label: "Resume", href: "/resume" },
 ];
 
-export const ONE_LINE = "Makes apps and magazines in Bellevue, WA.";
+export const ONE_LINE = "Just like everyone, figuring life out in Bellevue, WA.";
