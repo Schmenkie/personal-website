@@ -30,7 +30,7 @@ export const PROJECTS: Project[] = [
     // tags `properties.app = 'linkup_golf'` and reports to the `linkup-golf`
     // Sentry org, even after the Dogleg rebrand. Only the display `label` moves.
     id: 'linkup_golf',
-    label: 'Dogleg',
+    label: 'Schmenk Golf',
     stack: 'React Native',
     sentryProject: 'react-native',
     keyEvents: ['signup_completed', 'round_completed', 'round_card_shared'],

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Serif_Display, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import "./globals.css";
 
@@ -10,6 +10,12 @@ const dmSerif = DM_Serif_Display({
   display: "swap",
 });
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
@@ -17,13 +23,12 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Spencer Curnow · Builder, Problem Solver, People Person",
-  description:
-    "Personal portfolio of Spencer Curnow. I build products that merge technology and human connection, from AI workflows to music discovery platforms.",
+  metadataBase: new URL("https://spencercurnow.com"),
+  title: "Spencer Curnow",
+  description: "Spencer Curnow makes apps and magazines in Bellevue, WA: Sleeve, Yurr Magazine, Schmenk Golf.",
   openGraph: {
-    title: "Spencer Curnow · Builder, Problem Solver, People Person",
-    description:
-      "I build products that merge technology and human connection.",
+    title: "Spencer Curnow",
+    description: "Makes apps and magazines in Bellevue, WA.",
     type: "website",
   },
 };
@@ -36,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSerif.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${dmSerif.variable} ${jakarta.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <PostHogProvider>{children}</PostHogProvider>

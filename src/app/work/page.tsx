@@ -1,24 +1,45 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/navbar";
-import { WorkIndex } from "@/components/work-index";
-import { Contact } from "@/components/contact";
-import { Footer } from "@/components/footer";
+import Link from "next/link";
+import { SiteHeader } from "@/components/minimal/site-header";
+import { SiteFooter } from "@/components/minimal/site-footer";
+import { LINKS } from "@/components/minimal/links";
+import { PROJECTS } from "@/lib/work";
 
-export const metadata: Metadata = {
-  title: "Work · Spencer Curnow",
-  description:
-    "Shipped products, client design, and automation: Sleeve, Dogleg, SoundSauce, Yurr Magazine, and the tools behind them. All real, all built by Spencer Curnow.",
-};
+export const revalidate = 600;
+export const metadata: Metadata = { title: "Work · Spencer Curnow" };
 
-export default function WorkPage() {
+export default function WorkIndex() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <WorkIndex />
-        <Contact />
+    <div className="minimal flex min-h-dvh flex-col px-4 py-3.5">
+      <SiteHeader />
+      <main className="mt-10 flex max-w-[760px] flex-col gap-2.5">
+        <h1>Work</h1>
+        <ul className="flex flex-col">
+          {PROJECTS.map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/work/${p.slug}`}
+                className="row grid grid-cols-1 gap-x-4 py-1.5 sm:grid-cols-[160px_minmax(0,1fr)_100px] sm:py-0.5"
+              >
+                <span className="name">{p.name}</span>
+                <span className="muted">{p.oneLine}</span>
+                <span className="muted hidden text-right sm:block">{p.where}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="muted mt-8">Elsewhere</h2>
+        <nav aria-label="Links" className="flex flex-col items-start">
+          {LINKS.filter((l) => l.label !== "Sleeve").map((l) => (
+            <a key={l.label} href={l.href}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
       </main>
-      <Footer />
-    </>
+      <div className="flex-1" />
+      <SiteFooter />
+    </div>
   );
 }

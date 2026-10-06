@@ -15,14 +15,14 @@ const shippedProducts = [
     notes: "Live on the iOS App Store since June 2026. 350+ users across 20+ countries, 2,750+ albums logged, rated 5.0★.",
   },
   {
-    name: "Dogleg",
+    name: "Schmenk Golf",
     role: "Founder · Solo builder",
     period: "Jan 2026 – Present",
     summary:
       "A golf round tracker built end to end. Tap-to-score scorecard, GPS distance to the green (wind and elevation adjusted), satellite hole maps, USGA-accurate handicap that recalcs every round, shareable round cards, and a feed of your crew's rounds. On-device color, distance, and scoring. Designed with a 60+ accessibility floor.",
     stack: "React Native · Expo SDK 55 · TypeScript · Supabase · Postgres · Realtime · Apple Maps",
-    url: "dogleg.spencercurnow.com",
-    notes: "Live on the iOS App Store since April 2026 (launched as LinkUp Golf, rebuilt and rebranded as Dogleg in 2026). Web app at dogleg.spencercurnow.com.",
+    url: "spencercurnow.com/work/schmenk-golf",
+    notes: "Shipped to the iOS App Store in April 2026 (launched as LinkUp Golf, rebuilt and renamed Schmenk Golf in 2026).",
   },
   {
     name: "SoundSauce",
