@@ -7,11 +7,11 @@ import { useSpin, useSpinAudio } from "./use-spin";
 // from the record itself or the button. Playing: the tonearm swings onto the
 // record and the record spins with the album cover as its label. Paused: the
 // arm lifts off and the record stops where it is.
-// The cover is the biggest square that fits on the record (side 336 of a
-// 500 disc, corners just inside the outer groove), never cropped or stretched.
-// The tonearm's needle lands on the grooves to the right of it.
-const ART = 336;
-const GROOVES = [238, 224, 210, 196, 182, 168, 154, 140];
+// The cover is a round label as big as it can be (r=200 of a 250 disc),
+// filled edge to edge and never stretched; only the square's corners are
+// cropped. The outer ring of grooves is left for the tonearm's needle.
+const LABEL = 200;
+const GROOVES = [242, 234, 226, 218, 210];
 
 export function RecordPlayer({ initial }: { initial: Spin | null }) {
   const spin = useSpin(initial);
@@ -29,23 +29,28 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
         className="block w-full cursor-pointer bg-transparent p-0 disabled:cursor-default"
       >
         <svg viewBox="0 0 540 520" className="block h-auto w-full" aria-hidden="true">
+          <defs>
+            <clipPath id="player-label">
+              <circle cx="250" cy="260" r={LABEL} />
+            </clipPath>
+          </defs>
           <g className="disc">
             <circle cx="250" cy="260" r="250" fill="#141414" />
             {GROOVES.map((r, i) => (
               <circle key={r} cx="250" cy="260" r={r} fill="none" stroke={i % 2 ? "#262626" : "#202020"} strokeWidth="1.2" />
             ))}
             <path d="M250 25 A235 235 0 0 1 455 145" fill="none" stroke="#3a3a3a" strokeWidth="3" opacity="0.6" />
-            {spin?.coverUrl ? (
+            <circle cx="250" cy="260" r={LABEL} fill="#7A2FF2" />
+            {spin?.coverUrl && (
               <image
                 href={spin.coverUrl.replace("/120x120bb.jpg", "/800x800bb.jpg")}
-                x={250 - ART / 2}
-                y={260 - ART / 2}
-                width={ART}
-                height={ART}
-                preserveAspectRatio="xMidYMid meet"
+                x={250 - LABEL}
+                y={260 - LABEL}
+                width={LABEL * 2}
+                height={LABEL * 2}
+                clipPath="url(#player-label)"
+                preserveAspectRatio="xMidYMid slice"
               />
-            ) : (
-              <circle cx="250" cy="260" r="125" fill="#7A2FF2" />
             )}
             <circle cx="250" cy="260" r="5" fill="#FBFBF9" />
           </g>
