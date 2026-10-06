@@ -23,7 +23,7 @@ Inspired by linusrogge.com (Spencer's reference): one small monospace face, pape
 
 - **Scope:** every public page wraps its content in `<div className="minimal ...">`. All styling for it is the `.minimal` block at the bottom of [globals.css](src/app/globals.css) (`body:has(.minimal)` switches the page background). The older dark tokens above it exist only for `/admin/hub`.
 - **Type:** Geist Mono, 13px / 18px, weight 400 everywhere. Headings are the same size as body text; hierarchy comes from order, spacing and the muted color, never from size or bold.
-- **Color:** paper `#FBFBF9`, ink `#111111`, muted `#6B6B66` (5.3:1, use the `.muted` class). The vinyl mark's label is the only accent (`#E04E1B`). No gradients, shadows, cards, badges or pill buttons.
+- **Color:** paper `#FBFBF9`, ink `#111111`, muted `#6B6B66` (5.3:1, use the `.muted` class). The purple record (`#7A2FF2`, Spencer's favorite color) is the only accent: the favicon `src/app/icon.svg`, `apple-icon.png` and the header mark share it. No gradients, shadows, cards, badges or pill buttons.
 - **Links:** plain ink text, hover goes muted. The one filled button is the black "Get a free mockup" on `/web` (`a.cta`).
 - **No animation** beyond a 150ms opacity hover on thumbnails.
 - **Shared pieces** in [src/components/minimal/](src/components/minimal/): `site-header.tsx` (vinyl mark home link + spinning today), `site-footer.tsx` ([i] colophon via `<details>` + year), `links.tsx` (the link list + the one-line bio `ONE_LINE`), `vinyl-mark.tsx`, `print-button.tsx`.

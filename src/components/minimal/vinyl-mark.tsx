@@ -1,11 +1,12 @@
+// Same record as the favicon (src/app/icon.svg): purple vinyl, black label.
 export function VinylMark() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-      <circle cx="11" cy="11" r="10.5" fill="#111111" />
-      <circle cx="11" cy="11" r="7.5" fill="none" stroke="#3A3A38" strokeWidth="0.6" />
-      <circle cx="11" cy="11" r="5.2" fill="none" stroke="#3A3A38" strokeWidth="0.6" />
-      <circle cx="11" cy="11" r="3.2" fill="#E04E1B" />
-      <circle cx="11" cy="11" r="0.9" fill="#FBFBF9" />
+    <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="15.5" fill="#7A2FF2" />
+      <circle cx="16" cy="16" r="12" fill="none" stroke="#5B17CF" strokeWidth="1" />
+      <circle cx="16" cy="16" r="9.2" fill="none" stroke="#5B17CF" strokeWidth="1" />
+      <circle cx="16" cy="16" r="5.6" fill="#111111" />
+      <circle cx="16" cy="16" r="1.6" fill="#FBFBF9" />
     </svg>
   );
 }
