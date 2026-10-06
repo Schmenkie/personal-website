@@ -18,10 +18,10 @@ const shippedProducts = [
     role: "Founder · Solo builder",
     period: "May 2026 – Present",
     summary:
-      "Social app for music fans. Log what you listen to, rate it ½ to 5 stars, write reviews, and find the people whose taste tracks yours. Signature touch: on-device dominant-color extraction wraps every album page in its own color. Apple Music import, taste-twin matching, lists, and a vinyl discovery feed.",
-    stack: "React Native · Expo SDK 55 · TypeScript · Supabase",
+      "Social app for music fans. Log and rate albums and songs (½ to 5 stars), write reviews, build and share playlists, post a daily song, and find the people whose taste tracks yours. Every album page is wrapped in a color pulled from its cover on-device. A weekly issue recaps the community's week every Sunday. Apple Music and Last.fm import, taste-twin matching, push notifications, and a web companion for shared links.",
+    stack: "React Native · Expo SDK 55 · TypeScript · Swift (MusicKit module) · Supabase · Edge Functions",
     url: "getsleeve.app",
-    notes: "Live on the iOS App Store since June 2026. 350+ users across 20+ countries, 2,750+ albums logged, rated 5.0★.",
+    notes: "Live on the iOS App Store since June 2026, now on version 1.0.2. 400+ users across 20+ countries, 3,400+ albums logged.",
   },
   {
     name: "Yurr Magazine",
@@ -38,10 +38,10 @@ const shippedProducts = [
     role: "Founder · Solo builder",
     period: "Jan 2026 – Present",
     summary:
-      "A golf round tracker built end to end. Tap-to-score scorecard, GPS distance to the green (wind and elevation adjusted), satellite hole maps, USGA-accurate handicap that recalcs every round, shareable round cards, and a feed of your crew's rounds. Designed with a 60+ accessibility floor.",
+      "A golf round tracker built end to end. Tap-to-score scorecard, GPS distance to the green with a plays-like yardage (wind and elevation), a satellite hole map you tap to measure, a per-course caddie book, USGA handicap that recalcs every round, shareable round cards, and a feed of your crew's rounds. Rebuilt in July 2026 from a multi-feature social app down to a focused scorecard. Designed with a 60+ accessibility floor.",
     stack: "React Native · Expo SDK 55 · TypeScript · Supabase · Postgres · Realtime · Apple Maps",
     url: "spencercurnow.com/work/schmenk-golf",
-    notes: "Shipped to the iOS App Store in April 2026 (launched as LinkUp Golf, rebuilt and renamed Schmenk Golf in 2026).",
+    notes: "Shipped to the iOS App Store in April 2026 as LinkUp Golf. Renamed after a trademark conflict; version 1.3.0 relaunches it as Schmenk Golf.",
   },
   {
     name: "SoundSauce",

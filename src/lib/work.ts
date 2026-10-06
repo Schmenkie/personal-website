@@ -23,28 +23,34 @@ export type Project = {
   shots: Shot[];
 };
 
-const phone = { width: 640, height: 1385 };
+const store = { width: 720, height: 1564 }; // App Store screenshots
+const golf = { width: 720, height: 1561 };
 const cover = { width: 760, height: 950 };
 
 export const PROJECTS: Project[] = [
   {
     slug: "sleeve",
     name: "Sleeve",
-    oneLine: "A music diary for iOS. Log albums, rate songs, find friends.",
+    oneLine: "A music diary for iOS. Rate albums and songs, share playlists, find friends.",
     where: "App Store",
     platform: "iOS",
     body: [
-      "A music diary. You log the albums you listen to, rate songs, and see what your friends are playing. Each album page takes on the colors of its cover.",
-      "I designed and built it alone. It's on the App Store with 350+ people from 20+ countries.",
+      "A music diary. You log the albums and songs you listen to, rate them, and see what your friends are really playing. Every album page takes on the colors of its cover.",
+      "Since launch it has grown song ratings, playlists you can share, a daily song everyone posts at the same random moment, and a weekly issue that recaps the week in music every Sunday.",
+      "I designed and built it alone. It launched on the App Store in June 2026 and has 400+ people from 20+ countries.",
     ],
     links: [
       { label: "App Store", href: "https://apps.apple.com/app/id6779825854" },
       { label: "getsleeve.app", href: "https://getsleeve.app" },
     ],
     shots: [
-      { id: "feed", src: "/projects/sleeve/feed.png", file: "sleeve/feed.png", caption: "1. Friends feed", alt: "Sleeve's feed of friends' album ratings", ...phone },
-      { id: "album", src: "/projects/sleeve/album.png", file: "sleeve/album.png", caption: "2. Album page", alt: "Sleeve's album page, tinted in the colors of the album cover", ...phone },
-      { id: "discover", src: "/projects/sleeve/discover.png", file: "sleeve/discover.png", caption: "3. Discover", alt: "Sleeve's discover screen", ...phone },
+      { id: "album", src: "/projects/sleeve/01.jpg", file: "sleeve/01-album.jpg", caption: "Every album, wrapped in its own color", alt: "Sleeve's album page, tinted in the colors of the album cover", ...store },
+      { id: "songs", src: "/projects/sleeve/02.jpg", file: "sleeve/02-songs.jpg", caption: "Rating a song", alt: "Rating a song in Sleeve, with friends' ratings below", ...store },
+      { id: "feed", src: "/projects/sleeve/03.jpg", file: "sleeve/03-feed.jpg", caption: "What your friends are playing", alt: "Sleeve's feed of friends' ratings", ...store },
+      { id: "playlists", src: "/projects/sleeve/04.jpg", file: "sleeve/04-playlists.jpg", caption: "Playlists you can share", alt: "A Sleeve playlist and its share card", ...store },
+      { id: "taste", src: "/projects/sleeve/05.jpg", file: "sleeve/05-taste.jpg", caption: "People with your taste", alt: "A taste match in Sleeve showing a 94% match", ...store },
+      { id: "profile", src: "/projects/sleeve/06.jpg", file: "sleeve/06-profile.jpg", caption: "Your diary, in one place", alt: "A Sleeve profile with recent albums and songs", ...store },
+      { id: "week", src: "/projects/sleeve/07.jpg", file: "sleeve/07-week.jpg", caption: "The week in music, every Sunday", alt: "Sleeve's weekly issue recapping the week in music", ...store },
     ],
   },
   {
@@ -74,13 +80,15 @@ export const PROJECTS: Project[] = [
     where: "iPhone",
     platform: "iOS",
     body: [
-      "A golf app I built for my dad's weekly group and my friends. Tap to score, GPS distance to the green with wind and elevation, satellite hole maps, a USGA handicap, and a round card you can share.",
-      "No ads, no growth plan. It just has to work one-handed on the course, in the sun, for golfers in their sixties.",
+      "A golf app I built for my dad's weekly group and my friends. Tap to score, GPS distance to the green, a \u201cplays like\u201d yardage adjusted for wind and elevation, a satellite hole map you tap to measure, a caddie book of notes for every hole, a USGA handicap, and a round card worth sharing.",
+      "It started life as a busy golf social network. In July I cut it back to a scorecard: fewer screens, more care in each one. It has to work one-handed, in the sun, for golfers in their sixties.",
+      "It shipped to the App Store in April 2026 as LinkUp Golf. A trademark conflict means a new name; version 1.3.0 brings it back as Schmenk Golf.",
     ],
     links: [],
     shots: [
-      { id: "play", src: "/projects/golf/play.png", file: "golf/play.png", caption: "1. Start a round", alt: "Schmenk Golf's screen for starting a round", ...phone },
-      { id: "scorecard", src: "/projects/golf/scorecard.png", file: "golf/scorecard.png", caption: "2. The finished round", alt: "Schmenk Golf's round detail with a scorecard", ...phone },
+      { id: "round", src: "/projects/golf/01.jpg", file: "golf/01-round.jpg", caption: "Your round, hole by hole", alt: "Schmenk Golf's round detail with a scorecard", ...golf },
+      { id: "play", src: "/projects/golf/02.jpg", file: "golf/02-play.jpg", caption: "Your home course, one tap away", alt: "Schmenk Golf's screen for starting a round", ...golf },
+      { id: "log", src: "/projects/golf/03.jpg", file: "golf/03-log.jpg", caption: "Log any round in seconds", alt: "Schmenk Golf's form for logging a past round", ...golf },
     ],
   },
   {
