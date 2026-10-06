@@ -100,7 +100,7 @@ Installed locally at `.agents/skills/impeccable/` (gitignored). Its old 20/20 ru
 
 Send any of these and the answering session can integrate them:
 
-- [x] ~~One-line bio~~ — Spencer's own words (2026-10-06): "Just like everyone, figuring life out in Bellevue, WA." (`ONE_LINE` in links.tsx).
+- [ ] The one-line bio is still Claude's draft: "Makes apps and magazines in Bellevue, WA." (`ONE_LINE` in links.tsx).
 - [ ] Case studies for design-job applications (Sleeve's album colors, Schmenk Golf's strip-down, Yurr's design system), offered 2026-10-06.
 - [ ] Sleeve's App Store rating: removed from the resume 2026-10-06 (last known 5.0★ from 4 ratings, July). Re-add if still true.
 - [ ] Headshots (1–2, casual or polished).

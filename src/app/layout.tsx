@@ -25,10 +25,10 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL("https://spencercurnow.com"),
   title: "Spencer Curnow",
-  description: "Spencer Curnow, figuring life out in Bellevue, WA. Work: Sleeve, Yurr Magazine, Schmenk Golf.",
+  description: "Spencer Curnow makes apps and magazines in Bellevue, WA: Sleeve, Yurr Magazine, Schmenk Golf.",
   openGraph: {
     title: "Spencer Curnow",
-    description: "Just like everyone, figuring life out in Bellevue, WA.",
+    description: "Makes apps and magazines in Bellevue, WA.",
     type: "website",
   },
 };
