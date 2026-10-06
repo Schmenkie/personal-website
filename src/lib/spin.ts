@@ -21,10 +21,15 @@ type Row = {
   profiles: { username: string } | null;
 };
 
-export const SPIN_URL =
-  `${SLEEVE_API}/daily_spins` +
-  `?select=track_title,artist_name,created_at,profiles!daily_spins_user_id_fkey(username)` +
-  `&user_id=eq.${SPENCER_ID}&order=created_at.desc&limit=1`;
+// Built with URLSearchParams on purpose: the production compiler mangled the
+// equivalent string concatenation (it dropped the "/daily_spins?select=..." part).
+const SPIN_QUERY = new URLSearchParams({
+  select: "track_title,artist_name,created_at,profiles!daily_spins_user_id_fkey(username)",
+  user_id: `eq.${SPENCER_ID}`,
+  order: "created_at.desc",
+  limit: "1",
+});
+export const SPIN_URL = `${SLEEVE_API}/daily_spins?${SPIN_QUERY.toString()}`;
 export const SPIN_HEADERS = { apikey: SLEEVE_KEY, Authorization: `Bearer ${SLEEVE_KEY}` };
 
 export function toSpin(rows: unknown): Spin | null {
