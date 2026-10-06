@@ -21,28 +21,35 @@ type Row = {
   profiles: { username: string } | null;
 };
 
+export const SPIN_URL =
+  `${SLEEVE_API}/daily_spins` +
+  `?select=track_title,artist_name,created_at,profiles!daily_spins_user_id_fkey(username)` +
+  `&user_id=eq.${SPENCER_ID}&order=created_at.desc&limit=1`;
+export const SPIN_HEADERS = { apikey: SLEEVE_KEY, Authorization: `Bearer ${SLEEVE_KEY}` };
+
+export function toSpin(rows: unknown): Spin | null {
+  const [row] = (Array.isArray(rows) ? rows : []) as Row[];
+  if (!row) return null;
+  const ageMs = Date.now() - new Date(row.created_at).getTime();
+  const username = row.profiles?.username;
+  return {
+    title: row.track_title,
+    artist: row.artist_name,
+    isToday: ageMs < 24 * 60 * 60 * 1000,
+    href: username ? `https://getsleeve.app/user/${username}` : "https://getsleeve.app",
+  };
+}
+
+/** Server side, cached 10 minutes. Null on any failure; the header then asks from the browser. */
 export async function getLatestSpin(): Promise<Spin | null> {
-  const url =
-    `${SLEEVE_API}/daily_spins` +
-    `?select=track_title,artist_name,created_at,profiles!daily_spins_user_id_fkey(username)` +
-    `&user_id=eq.${SPENCER_ID}&order=created_at.desc&limit=1`;
   try {
-    const res = await fetch(url, {
-      headers: { apikey: SLEEVE_KEY, Authorization: `Bearer ${SLEEVE_KEY}` },
+    const res = await fetch(SPIN_URL, {
+      headers: SPIN_HEADERS,
       next: { revalidate: 600 },
-      signal: AbortSignal.timeout(4000),
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
-    const [row] = (await res.json()) as Row[];
-    if (!row) return null;
-    const ageMs = Date.now() - new Date(row.created_at).getTime();
-    const username = row.profiles?.username;
-    return {
-      title: row.track_title,
-      artist: row.artist_name,
-      isToday: ageMs < 24 * 60 * 60 * 1000,
-      href: username ? `https://getsleeve.app/user/${username}` : "https://getsleeve.app",
-    };
+    return toSpin(await res.json());
   } catch {
     // The site never breaks over this: no spin, no line.
     return null;
