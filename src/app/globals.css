@@ -103,11 +103,14 @@ body:has(.minimal) {
   font-size: 13px;
   line-height: 18px;
 }
-.minimal h1,
-.minimal h2 {
+@layer base {
+/* Resets live in the base layer (and :where) so Tailwind utilities always win. */
+:where(.minimal) h1,
+:where(.minimal) h2 {
   font-size: inherit;
   font-weight: 400;
   margin: 0;
+}
 }
 .minimal a {
   color: #111111;
@@ -163,19 +166,21 @@ body:has(.minimal) {
     color: #444444 !important;
   }
 }
-.minimal ul,
-.minimal ol,
-.minimal p,
-.minimal dl,
-.minimal dd {
+@layer base {
+:where(.minimal) ul,
+:where(.minimal) ol,
+:where(.minimal) p,
+:where(.minimal) dl,
+:where(.minimal) dd {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.minimal h3 {
+:where(.minimal) h3 {
   font-size: inherit;
   font-weight: 400;
   margin: 0;
+}
 }
 .minimal a.cta,
 .minimal a.cta:hover {
@@ -183,4 +188,32 @@ body:has(.minimal) {
 }
 .minimal a.cta:hover {
   background: #3A3A38;
+}
+
+/* /admin/hub: the dashboard still uses the old token names (bg-surface,
+   text-text-muted, var(--accent)...). Re-point them to the paper palette here
+   so the hub matches the site without rewriting every class. */
+.hub {
+  --obsidian: #FBFBF9;
+  --obsidian-mid: #F4F4F0;
+  --surface: #F4F4F0;
+  --surface-light: #EDEDE8;
+  --border: #E4E4DF;
+  --border-strong: #CFCFC9;
+  --accent: #7A2FF2;
+  --accent-light: #6A22DE;
+  --accent-dark: #5B17CF;
+  --accent-muted: #B79BF5;
+  --text-primary: #111111;
+  --text-secondary: #3A3A38;
+  --text-muted: #6B6B66;
+  --danger: #B3261E;
+  --font-dm-serif: var(--font-geist-mono);
+  --font-jakarta: var(--font-geist-mono);
+}
+.hub select,
+.hub input,
+.hub button {
+  font: inherit;
+  color: inherit;
 }

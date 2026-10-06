@@ -152,23 +152,23 @@ export default function HubClient() {
   }, [perProject])
 
   return (
-    <main className="min-h-screen bg-obsidian text-text-primary">
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+    <main className="text-text-primary">
+      <div className="mt-10 max-w-6xl">
         <header className="mb-6 flex flex-wrap items-baseline justify-between gap-3 border-b border-border pb-4">
           <div>
-            <h1 className="font-serif text-2xl text-text-primary">Project Data Hub</h1>
+            <h1 className="text-text-primary">Data hub</h1>
             <p className="mt-0.5 text-sm text-text-muted">
               PostHog + Sentry across {PROJECTS.length} projects · last {rangeLabel(days)}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <label className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
+            <label className="font-mono text-[11px] text-text-muted">
               Range
             </label>
             <select
               value={days}
               onChange={(e) => setDays(parseInt(e.target.value, 10))}
-              className="min-h-9 rounded-md border border-border bg-surface px-2 py-1 text-sm text-text-primary focus:border-accent focus:outline-none"
+              className="min-h-9 border border-border bg-surface px-2 py-1 text-sm text-text-primary focus:border-accent focus:outline-none"
             >
               <option value={1}>24 hours</option>
               <option value={7}>7 days</option>
@@ -177,7 +177,7 @@ export default function HubClient() {
             <button
               onClick={() => void load()}
               disabled={loading}
-              className="min-h-9 rounded-md border border-border bg-surface px-3 py-1 text-sm text-text-primary hover:border-accent disabled:opacity-50"
+              className="min-h-9 border border-border bg-surface px-3 py-1 text-sm text-text-primary hover:border-accent disabled:opacity-50"
             >
               {loading ? 'Loading…' : 'Refresh'}
             </button>
@@ -201,7 +201,7 @@ export default function HubClient() {
         </nav>
 
         {error && (
-          <div className="mb-4 rounded-md border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
+          <div className="mb-4 border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
             Failed to load: {error}
           </div>
         )}
@@ -257,7 +257,7 @@ function TabButton({
     >
       {dot && (
         <span
-          className={`mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle ${
+          className={`mr-2 inline-block h-1.5 w-1.5 align-middle ${
             dot === 'live' ? 'bg-accent' : 'bg-border-strong'
           }`}
         />
@@ -301,7 +301,7 @@ function Overview({
 
   return (
     <div>
-      <p className="mb-4 rounded-md border border-border bg-surface px-3 py-2 text-sm text-text-secondary">
+      <p className="mb-4 border border-border bg-surface px-3 py-2 text-sm text-text-secondary">
         {loading
           ? 'Loading…'
           : `Tracking ${perProject.length} projects across PostHog (shared project + Sleeve's own). ` +
@@ -326,11 +326,11 @@ function Overview({
           ) : (
             <>
             <p className="mb-2 text-xs text-text-muted">
-              Shared-project apps, split by <code className="rounded bg-surface-light px-1">app</code> tag. Sleeve runs in its own project, so it has a tab but isn&apos;t in this split.
+              Shared-project apps, split by <code className=" bg-surface-light px-1">app</code> tag. Sleeve runs in its own project, so it has a tab but isn&apos;t in this split.
             </p>
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left font-mono text-[11px] uppercase tracking-widest text-text-muted">
+                <tr className="text-left font-mono text-[11px] text-text-muted">
                   <th className="pb-2">App</th>
                   <th className="pb-2">Users</th>
                   <th className="pb-2">Events</th>
@@ -404,7 +404,7 @@ function ProjectPanel({
   return (
     <div>
       {noData ? (
-        <div className="mb-4 rounded-md border border-border bg-surface px-4 py-3 text-sm text-text-secondary">
+        <div className="mb-4 border border-border bg-surface px-4 py-3 text-sm text-text-secondary">
           <strong className="text-text-primary">{project.label}</strong> isn&apos;t
           sending events yet. Wired up in code; set the PostHog env var in
           deployment and this tab populates within a few minutes.
@@ -434,7 +434,7 @@ function ProjectPanel({
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left font-mono text-[11px] uppercase tracking-widest text-text-muted">
+                <tr className="text-left font-mono text-[11px] text-text-muted">
                   <th className="pb-2"></th>
                   <th className="pb-2">Country</th>
                   <th className="pb-2">City</th>
@@ -485,7 +485,7 @@ function ProjectPanel({
           {!project.sentryProject ? (
             <Muted>
               No Sentry project for {project.label}. PostHog{' '}
-              <code className="rounded bg-surface-light px-1 text-xs">$exception</code> autocapture handles errors here.
+              <code className=" bg-surface-light px-1 text-xs">$exception</code> autocapture handles errors here.
             </Muted>
           ) : !data.sentry || data.sentry.length === 0 ? (
             <Muted>No unresolved issues in this window.</Muted>
@@ -581,11 +581,11 @@ function Card({
   sub?: string
 }) {
   return (
-    <div className="rounded-lg border border-border bg-surface p-3">
-      <div className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+    <div className=" border border-border bg-surface p-3">
+      <div className="font-mono text-[10px] text-text-muted">
         {label}
       </div>
-      <div className="mt-1 font-serif text-xl text-text-primary">{value}</div>
+      <div className="mt-1 text-xl text-text-primary">{value}</div>
       {sub && <div className="mt-0.5 text-xs text-text-muted">{sub}</div>}
     </div>
   )
@@ -593,8 +593,8 @@ function Card({
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-border bg-surface p-4">
-      <h2 className="mb-3 font-mono text-[11px] uppercase tracking-widest text-text-muted">
+    <div className=" border border-border bg-surface p-4">
+      <h2 className="mb-3 font-mono text-[11px] text-text-muted">
         {title}
       </h2>
       {children}
@@ -623,7 +623,7 @@ function Pill({
           : 'border-border text-text-secondary'
   return (
     <span
-      className={`inline-block whitespace-nowrap rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${styles}`}
+      className={`inline-block whitespace-nowrap border px-2 py-0.5 font-mono text-[10px] ${styles}`}
     >
       {children}
     </span>

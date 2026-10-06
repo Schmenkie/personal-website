@@ -48,6 +48,8 @@ All work content lives in **[src/lib/work.ts](src/lib/work.ts)** (`PROJECTS`): n
 
 ## /admin/hub — internal data hub
 
+**2026-10-06 (look):** the hub now uses the minimal theme too: `page.tsx` wraps it in `.minimal.hub` with the shared SiteHeader, and the `.hub` block in globals.css re-points the old dark token names (`--obsidian`, `--surface`, `--text-*`, `--accent`...) to the paper palette, so HubClient's classes didn't need rewriting. Kickers are no longer uppercase; corners are square. The minimal resets in globals.css live in `@layer base` with `:where()` so Tailwind utilities always beat them (unlayered CSS beats every utility).
+
 **2026-10-06:** the hub tracks **Schmenk Golf, Sleeve, Personal Site, Job Scout** only. SoundSauce (analytics removed 2026-09-14) and LeadHawk (retired) were taken out of `PROJECTS`; the per-app breakdown table filters to `PROJECTS` so their old events in the shared PostHog project don't show. Sleeve's key events now include `song_rated`.
 
 This site also hosts Spencer's cross-project observability dashboard at `/admin/hub` (basic-auth gated). It is NOT part of the public sales surface and the impeccable rubric does not apply — it can use identical card grids, hero-metric layouts, and dense tables that would be banned on the marketing pages. It does keep the site palette so it doesn't look alien when you context-switch from `/`.
