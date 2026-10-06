@@ -1,53 +1,64 @@
-import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/minimal/site-header";
 import { SiteFooter } from "@/components/minimal/site-footer";
-import { LINKS, ONE_LINE } from "@/components/minimal/links";
-import { PROJECTS } from "@/lib/work";
+import { RecordPlayer } from "@/components/minimal/record-player";
+import { ONE_LINE } from "@/components/minimal/links";
+import { getLatestSpin } from "@/lib/spin";
+import { PROJECTS, TOOLS } from "@/lib/work";
 
-export const revalidate = 600; // refresh "spinning today" every 10 minutes
+export const revalidate = 600; // refresh today's spin every 10 minutes
 
-export default function Home() {
+// Home: the work as a two-sided tracklist on the left, today's Sleeve spin on
+// a turntable on the right. On a phone the record comes first.
+export default async function Home() {
+  const spin = await getLatestSpin();
+  const sideA = PROJECTS.map((p, i) => ({ ...p, no: `A${i + 1}` }));
+  const sideB = TOOLS.map((t, i) => ({ ...t, no: `B${i + 1}` }));
+
   return (
     <div className="minimal flex min-h-dvh flex-col px-4 py-3.5">
-      <SiteHeader showName={false} />
+      <SiteHeader home />
 
-      <main className="mt-10 flex flex-col gap-2.5">
-        <h1>Spencer Curnow</h1>
-        <p>{ONE_LINE}</p>
-        <nav aria-label="Links" className="flex flex-col items-start">
-          {LINKS.map((l) => (
-            <a key={l.label} href={l.href}>
-              {l.label}
-            </a>
-          ))}
-          <Link href="/work">All work</Link>
-        </nav>
-      </main>
+      <main className="flex flex-1 flex-col items-center gap-12 py-8 lg:flex-row-reverse lg:items-center lg:justify-between lg:gap-14">
+        <RecordPlayer initial={spin} />
 
-      <div className="min-h-24 flex-1" />
-
-      <section
-        aria-label="Work"
-        className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:gap-x-4 sm:gap-y-2 sm:overflow-visible sm:px-0 sm:pb-0"
-      >
-        {PROJECTS.filter((p) => p.shots.length > 0).map((p) => (
-          <div key={p.slug} role="group" aria-label={p.name} className="flex shrink-0 gap-1">
-            {p.shots.map((s) => (
-              <Link key={s.id} href={`/work/${p.slug}#${s.id}`} className="thumb block shrink-0" title={`${p.name}, ${s.caption}`}>
-                <Image
-                  src={s.src}
-                  alt={`${p.name}: ${s.alt}`}
-                  width={104}
-                  height={144}
-                  sizes="(min-width: 640px) 52px, 64px"
-                  className="h-[88px] w-16 object-cover object-top sm:h-[72px] sm:w-[52px]"
-                />
-              </Link>
-            ))}
+        <section aria-label="The work" className="flex w-full max-w-[460px] flex-col gap-8 self-start lg:self-center">
+          <div>
+            <h1 className="sr-only">Spencer Curnow</h1>
+            <p>{ONE_LINE}</p>
           </div>
-        ))}
-      </section>
+
+          <div className="flex flex-col">
+            <h2 className="muted mb-1.5">Side A — The work</h2>
+            <ul>
+              {sideA.map((t) => (
+                <li key={t.slug}>
+                  <Link href={`/work/${t.slug}`} className="track flex min-h-8 items-baseline gap-2.5">
+                    <span className="w-[3ch] shrink-0 text-[#7A2FF2]">{t.no}</span>
+                    <span>{t.name}</span>
+                    <span aria-hidden className="leader" />
+                    <span className="muted">{t.where}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col">
+            <h2 className="muted mb-1.5">Side B — Private tools</h2>
+            <ul>
+              {sideB.map((t) => (
+                <li key={t.name} className="flex min-h-8 items-baseline gap-2.5" title={t.oneLine}>
+                  <span className="muted w-[3ch] shrink-0">{t.no}</span>
+                  <span>{t.name}</span>
+                  <span aria-hidden className="leader" />
+                  <span className="muted">Private</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </main>
 
       <SiteFooter />
     </div>

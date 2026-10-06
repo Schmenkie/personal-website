@@ -45,7 +45,7 @@ export default function WorkIndex() {
 
         <h2 className="muted mt-8">Elsewhere</h2>
         <nav aria-label="Links" className="flex flex-col items-start">
-          {LINKS.filter((l) => l.label !== "Sleeve").map((l) => (
+          {LINKS.filter((l) => l.label !== "Work" && l.label !== "Sleeve").map((l) => (
             <a key={l.label} href={l.href}>
               {l.label}
             </a>
