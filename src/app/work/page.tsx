@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/minimal/site-header";
 import { SiteFooter } from "@/components/minimal/site-footer";
 import { LINKS } from "@/components/minimal/links";
-import { PROJECTS } from "@/lib/work";
+import { PROJECTS, TOOLS } from "@/lib/work";
 
 export const revalidate = 600;
 export const metadata: Metadata = { title: "Work · Spencer Curnow" };
@@ -25,6 +25,20 @@ export default function WorkIndex() {
                 <span className="muted">{p.oneLine}</span>
                 <span className="muted hidden text-right sm:block">{p.where}</span>
               </Link>
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="muted mt-8">Tools</h2>
+        <ul className="flex flex-col">
+          {TOOLS.map((t) => (
+            <li
+              key={t.name}
+              className="grid grid-cols-1 gap-x-4 py-1.5 sm:grid-cols-[160px_minmax(0,1fr)_100px] sm:py-0.5"
+            >
+              <span>{t.name}</span>
+              <span className="muted">{t.oneLine}</span>
+              <span className="muted hidden text-right sm:block">Private</span>
             </li>
           ))}
         </ul>

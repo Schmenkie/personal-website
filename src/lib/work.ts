@@ -108,3 +108,10 @@ export const PROJECTS: Project[] = [
 
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
 
+
+/** Private tools: listed on /work, no pages (they have no public surface). */
+export const TOOLS = [
+  { name: "Data hub", oneLine: "A private dashboard of usage and errors across my apps, from PostHog and Sentry." },
+  { name: "Job Scout", oneLine: "A daily job-search agent. Scores listings against my resume and emails me a digest." },
+  { name: "Lead finder", oneLine: "Finds local businesses with no website, or a broken one, from Google Places." },
+];

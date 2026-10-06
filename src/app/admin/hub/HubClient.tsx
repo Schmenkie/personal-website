@@ -338,7 +338,7 @@ function Overview({
                 </tr>
               </thead>
               <tbody>
-                {breakdown.map((r) => {
+                {breakdown.filter((r) => PROJECTS.some((p) => p.id === r.app)).map((r) => {
                   const proj = PROJECTS.find((p) => p.id === r.app)
                   return (
                     <tr key={r.app} className="border-t border-border">

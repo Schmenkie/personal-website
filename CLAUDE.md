@@ -38,7 +38,7 @@ The header shows Spencer's latest **Sleeve daily spin** ([src/lib/spin.ts](src/l
 All work content lives in **[src/lib/work.ts](src/lib/work.ts)** (`PROJECTS`): name, one-line, body paragraphs, links, and `shots` (image, filename label, caption, optional `meta` like an issue date). Every page reads from it; add or edit work there only.
 
 - **`/`** ([page.tsx](src/app/page.tsx)): name, one line, links, then a strip of every project's images at the bottom, grouped per project and in sequence. A thumbnail links to `/work/<slug>#<shot id>`. On phones the strip is one sideways-scrolling row.
-- **`/work`**: plain text index, one row per project.
+- **`/work`**: plain text index, one row per project, then a **Tools** list (`TOOLS` in work.ts: data hub, Job Scout, lead finder; marked Private, no pages, no links).
 - **`/work/[slug]`** (static, `dynamicParams = false`): paragraphs, links, then each image with its filename and caption; prev/next links. Slugs: `sleeve`, `yurr`, `schmenk-golf`, `soundsauce`. `/work/dogleg` 308-redirects to `/work/schmenk-golf` ([next.config.ts](next.config.ts)).
 - **`/resume`**: the canonical resume (edit work history here, not in a PDF). Same layout; "Print / save as PDF" prints one clean letter page (print styles at the end of globals.css).
 - **`/web`**: the local-services sales page (see below).
@@ -47,6 +47,8 @@ All work content lives in **[src/lib/work.ts](src/lib/work.ts)** (`PROJECTS`): n
 **Image order rules:** app screens in the order you move through the app; Yurr in issue order (005 Leallicna, 006 Luvstruck, 007 Jared cover + Q&A + closing grid together, 008 Oliver). Images are 720px-wide JPEGs in `public/projects/<project>/`.
 
 ## /admin/hub — internal data hub
+
+**2026-10-06:** the hub tracks **Schmenk Golf, Sleeve, Personal Site, Job Scout** only. SoundSauce (analytics removed 2026-09-14) and LeadHawk (retired) were taken out of `PROJECTS`; the per-app breakdown table filters to `PROJECTS` so their old events in the shared PostHog project don't show. Sleeve's key events now include `song_rated`.
 
 This site also hosts Spencer's cross-project observability dashboard at `/admin/hub` (basic-auth gated). It is NOT part of the public sales surface and the impeccable rubric does not apply — it can use identical card grids, hero-metric layouts, and dense tables that would be banned on the marketing pages. It does keep the site palette so it doesn't look alien when you context-switch from `/`.
 

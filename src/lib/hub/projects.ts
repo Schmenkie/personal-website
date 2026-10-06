@@ -1,8 +1,6 @@
 export type ProjectId =
   | 'linkup_golf'
   | 'sleeve'
-  | 'soundsauce'
-  | 'leadhawk'
   | 'personal_website'
   | 'job_scout'
 
@@ -24,6 +22,8 @@ export type Project = {
   keyEvents: string[]
 }
 
+// SoundSauce (analytics removed 2026-09-14) and LeadHawk (app retired) were
+// dropped 2026-10-06. Their old events still sit in the shared PostHog project.
 export const PROJECTS: Project[] = [
   {
     // `id` and `sentryProject` are the live telemetry join keys — the app still
@@ -40,19 +40,7 @@ export const PROJECTS: Project[] = [
     label: 'Sleeve',
     stack: 'Expo / RN',
     source: 'sleeve',
-    keyEvents: ['signup_completed', 'album_rated', 'spins_opened', 'list_created', 'user_followed'],
-  },
-  {
-    id: 'soundsauce',
-    label: 'SoundSauce',
-    stack: 'Vite + React',
-    keyEvents: ['user_signed_up', 'audio_uploaded', 'analysis_completed', 'recipe_published', 'checkout_started'],
-  },
-  {
-    id: 'leadhawk',
-    label: 'LeadHawk',
-    stack: 'Cloudflare Workers',
-    keyEvents: ['$pageview', '$autocapture'],
+    keyEvents: ['signup_completed', 'album_rated', 'song_rated', 'list_created', 'user_followed'],
   },
   {
     id: 'personal_website',
@@ -62,7 +50,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'job_scout',
-    label: 'JobSearch',
+    label: 'Job Scout',
     stack: 'Node CLI',
     keyEvents: ['scout_run_started', 'jobs_found', 'digest_sent'],
   },
