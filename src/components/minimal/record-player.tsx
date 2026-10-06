@@ -7,7 +7,8 @@ import { useSpin, useSpinAudio } from "./use-spin";
 // from the record itself or the button. Playing: the tonearm swings onto the
 // record and the record spins with the album cover as its label. Paused: the
 // arm lifts off and the record stops where it is.
-const GROOVES = [235, 220, 205, 190, 175, 160, 145, 130];
+// Label is big on purpose (r=125 of 250) so the album art reads.
+const GROOVES = [238, 224, 210, 196, 182, 168, 154, 140];
 
 export function RecordPlayer({ initial }: { initial: Spin | null }) {
   const spin = useSpin(initial);
@@ -15,7 +16,7 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
   const songLabel = spin ? `${spin.title} by ${spin.artist}` : "today's spin";
 
   return (
-    <section aria-label="Today's spin" className="player flex w-full max-w-[540px] flex-col gap-5" data-playing={playing || undefined}>
+    <section aria-label="Today's spin" className="player flex w-full flex-col gap-4" data-playing={playing || undefined}>
       <button
         type="button"
         onClick={toggle}
@@ -27,7 +28,7 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
         <svg viewBox="0 0 540 520" className="block h-auto w-full" aria-hidden="true">
           <defs>
             <clipPath id="player-label">
-              <circle cx="250" cy="260" r="90" />
+              <circle cx="250" cy="260" r="125" />
             </clipPath>
           </defs>
           <g className="disc">
@@ -36,19 +37,19 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
               <circle key={r} cx="250" cy="260" r={r} fill="none" stroke={i % 2 ? "#262626" : "#202020"} strokeWidth="1.2" />
             ))}
             <path d="M250 25 A235 235 0 0 1 455 145" fill="none" stroke="#3a3a3a" strokeWidth="3" opacity="0.6" />
-            <circle cx="250" cy="260" r="90" fill="#7A2FF2" />
+            <circle cx="250" cy="260" r="125" fill="#7A2FF2" />
             {spin?.coverUrl && (
               <image
-                href={spin.coverUrl.replace("/120x120bb.jpg", "/400x400bb.jpg")}
-                x="160"
-                y="170"
-                width="180"
-                height="180"
+                href={spin.coverUrl.replace("/120x120bb.jpg", "/600x600bb.jpg")}
+                x="125"
+                y="135"
+                width="250"
+                height="250"
                 clipPath="url(#player-label)"
                 preserveAspectRatio="xMidYMid slice"
               />
             )}
-            <circle cx="250" cy="260" r="6" fill="#FBFBF9" />
+            <circle cx="250" cy="260" r="7" fill="#FBFBF9" />
           </g>
           <g className="arm">
             <circle cx="510" cy="36" r="15" fill="#E4E4DF" stroke="#CFCFC9" />

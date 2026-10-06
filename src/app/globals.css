@@ -259,6 +259,17 @@ body:has(.minimal) {
 .minimal .player[data-playing] .disc {
   animation-play-state: running;
 }
+/* Size the turntable to the window so the home page fits one screen on
+   desktop: ~280px covers header, footer, padding and the song line under it.
+   (540/520 = the record artwork's aspect.) Phones stack and scroll. */
+.minimal .player {
+  max-width: 540px;
+}
+@media (min-width: 1024px) {
+  .minimal .player {
+    max-width: min(560px, calc((100dvh - 250px) * 1.04));
+  }
+}
 .minimal .player .arm {
   transform-box: view-box;
   transform-origin: 510px 36px;

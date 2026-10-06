@@ -19,7 +19,7 @@ export default async function Home() {
     <div className="minimal flex min-h-dvh flex-col px-4 py-3.5">
       <SiteHeader home />
 
-      <main className="flex flex-1 flex-col items-center gap-12 py-8 lg:flex-row-reverse lg:items-center lg:justify-between lg:gap-14">
+      <main className="flex flex-1 flex-col items-center gap-12 py-8 lg:flex-row-reverse lg:items-center lg:justify-between lg:gap-14 lg:py-2">
         <RecordPlayer initial={spin} />
 
         <section aria-label="The work" className="flex w-full max-w-[460px] flex-col gap-8 self-start lg:self-center">
