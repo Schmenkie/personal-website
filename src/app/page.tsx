@@ -10,7 +10,7 @@ export const revalidate = 600; // refresh "spinning today" every 10 minutes
 export default function Home() {
   return (
     <div className="minimal flex min-h-dvh flex-col px-4 py-3.5">
-      <SiteHeader />
+      <SiteHeader showName={false} />
 
       <main className="mt-10 flex flex-col gap-2.5">
         <h1>Spencer Curnow</h1>

@@ -217,3 +217,22 @@ body:has(.minimal) {
   font: inherit;
   color: inherit;
 }
+
+/* The header record spins while today's spin plays, and stops where it is. */
+@keyframes record-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.minimal .record .vinyl {
+  animation: record-spin 1.8s linear infinite;
+  animation-play-state: paused;
+}
+.minimal .record[data-playing] .vinyl {
+  animation-play-state: running;
+}
+@media (prefers-reduced-motion: reduce) {
+  .minimal .record .vinyl {
+    animation: none;
+  }
+}

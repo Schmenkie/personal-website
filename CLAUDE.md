@@ -31,7 +31,7 @@ Inspired by linusrogge.com (Spencer's reference): one small monospace face, pape
 
 ### Spinning today
 
-The header shows Spencer's latest **Sleeve daily spin** ([src/lib/spin.ts](src/lib/spin.ts)): a REST read of Sleeve's `daily_spins` (world-readable via RLS) with Sleeve's *publishable* key, filtered to Spencer's user id `029305af-40b4-49ee-b2f0-a3b401d32b33`, linking to `getsleeve.app/user/<username>`. Cached 10 min (`revalidate = 600` on each page). Label is "spinning today" if posted in the last 24h, else "last spin". **On any failure it renders nothing**; the page must never break over it.
+The header shows Spencer's latest **Sleeve daily spin** ([src/lib/spin.ts](src/lib/spin.ts)): a REST read of Sleeve's `daily_spins` (world-readable via RLS) with Sleeve's *publishable* key, filtered to Spencer's user id `029305af-40b4-49ee-b2f0-a3b401d32b33`, linking to `getsleeve.app/user/<username>`. Cached 10 min (`revalidate = 600` on each page). **The record plays it** ([spin-header.tsx](src/components/minimal/spin-header.tsx)): click = the 30s Apple preview (`preview_url`), the record spins (CSS `record-spin`, paused in place on pause, off under reduced motion) and its label shows the album cover (`cover_url`, resized to 120px). Pages other than home show "Spencer Curnow" next to the record as the home link, since the record is now a play button. Label is "spinning today" if posted in the last 24h, else "last spin". **On any failure it renders nothing**; the page must never break over it.
 
 ## Page architecture
 

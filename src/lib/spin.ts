@@ -12,19 +12,23 @@ export type Spin = {
   artist: string;
   isToday: boolean; // posted in the last 24 hours
   href: string; // Spencer's Sleeve profile
+  previewUrl: string | null; // 30s Apple Music clip
+  coverUrl: string | null; // small album cover for the record label
 };
 
 type Row = {
   track_title: string;
   artist_name: string;
   created_at: string;
+  preview_url: string | null;
+  cover_url: string | null;
   profiles: { username: string } | null;
 };
 
 // Built with URLSearchParams on purpose: the production compiler mangled the
 // equivalent string concatenation (it dropped the "/daily_spins?select=..." part).
 const SPIN_QUERY = new URLSearchParams({
-  select: "track_title,artist_name,created_at,profiles!daily_spins_user_id_fkey(username)",
+  select: "track_title,artist_name,created_at,preview_url,cover_url,profiles!daily_spins_user_id_fkey(username)",
   user_id: `eq.${SPENCER_ID}`,
   order: "created_at.desc",
   limit: "1",
@@ -42,6 +46,9 @@ export function toSpin(rows: unknown): Spin | null {
     artist: row.artist_name,
     isToday: ageMs < 24 * 60 * 60 * 1000,
     href: username ? `https://getsleeve.app/user/${username}` : "https://getsleeve.app",
+    previewUrl: row.preview_url || null,
+    // Apple artwork URLs end in /600x600bb.jpg; ask for a small one for the label.
+    coverUrl: row.cover_url ? row.cover_url.replace(/\/\d+x\d+bb\.(jpg|png)$/, "/120x120bb.jpg") : null,
   };
 }
 
