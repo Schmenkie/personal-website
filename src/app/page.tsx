@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/minimal/site-header";
 import { SiteFooter } from "@/components/minimal/site-footer";
 import { LINKS, ONE_LINE } from "@/components/minimal/links";
-import { ALL_SHOTS } from "@/lib/work";
+import { PROJECTS } from "@/lib/work";
 
 export const revalidate = 600; // refresh "spinning today" every 10 minutes
 
@@ -27,18 +27,25 @@ export default function Home() {
 
       <div className="min-h-24 flex-1" />
 
-      <section aria-label="Work" className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
-        {ALL_SHOTS.map((s) => (
-          <Link key={s.src} href={`/work/${s.slug}#${s.id}`} className="thumb block shrink-0" title={`${s.project}, ${s.caption}`}>
-            <Image
-              src={s.src}
-              alt={`${s.project}: ${s.alt}`}
-              width={104}
-              height={144}
-              sizes="(min-width: 640px) 52px, 64px"
-              className="h-[88px] w-16 object-cover object-top sm:h-[72px] sm:w-[52px]"
-            />
-          </Link>
+      <section
+        aria-label="Work"
+        className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:gap-x-4 sm:gap-y-2 sm:overflow-visible sm:px-0 sm:pb-0"
+      >
+        {PROJECTS.filter((p) => p.shots.length > 0).map((p) => (
+          <div key={p.slug} role="group" aria-label={p.name} className="flex shrink-0 gap-1">
+            {p.shots.map((s) => (
+              <Link key={s.id} href={`/work/${p.slug}#${s.id}`} className="thumb block shrink-0" title={`${p.name}, ${s.caption}`}>
+                <Image
+                  src={s.src}
+                  alt={`${p.name}: ${s.alt}`}
+                  width={104}
+                  height={144}
+                  sizes="(min-width: 640px) 52px, 64px"
+                  className="h-[88px] w-16 object-cover object-top sm:h-[72px] sm:w-[52px]"
+                />
+              </Link>
+            ))}
+          </div>
         ))}
       </section>
 

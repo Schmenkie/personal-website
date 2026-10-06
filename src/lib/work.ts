@@ -6,6 +6,7 @@ export type Shot = {
   src: string;
   file: string; // shown like a filename above the image
   caption: string;
+  meta?: string; // right of the filename; defaults to the project's platform
   alt: string;
   width: number;
   height: number;
@@ -41,9 +42,9 @@ export const PROJECTS: Project[] = [
       { label: "getsleeve.app", href: "https://getsleeve.app" },
     ],
     shots: [
-      { id: "album", src: "/projects/sleeve/album.png", file: "sleeve/album.png", caption: "Album page", alt: "Sleeve's album page, tinted in the colors of the album cover", ...phone },
-      { id: "feed", src: "/projects/sleeve/feed.png", file: "sleeve/feed.png", caption: "Friends feed", alt: "Sleeve's feed of friends' album ratings", ...phone },
-      { id: "discover", src: "/projects/sleeve/discover.png", file: "sleeve/discover.png", caption: "Discover", alt: "Sleeve's discover screen", ...phone },
+      { id: "feed", src: "/projects/sleeve/feed.png", file: "sleeve/feed.png", caption: "1. Friends feed", alt: "Sleeve's feed of friends' album ratings", ...phone },
+      { id: "album", src: "/projects/sleeve/album.png", file: "sleeve/album.png", caption: "2. Album page", alt: "Sleeve's album page, tinted in the colors of the album cover", ...phone },
+      { id: "discover", src: "/projects/sleeve/discover.png", file: "sleeve/discover.png", caption: "3. Discover", alt: "Sleeve's discover screen", ...phone },
     ],
   },
   {
@@ -58,12 +59,12 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     shots: [
-      { id: "jared", src: "/projects/yurr/jared.jpg", file: "yurr/jared.jpg", caption: "Issue 007, cover", alt: "Yurr Magazine cover for Jared", ...cover },
-      { id: "jared-qa", src: "/projects/yurr/jared-qa.jpg", file: "yurr/jared-qa.jpg", caption: "Issue 007, Q&A", alt: "A question-and-answer slide from Yurr Magazine", ...cover },
-      { id: "luvstruck", src: "/projects/yurr/luvstruck.jpg", file: "yurr/luvstruck.jpg", caption: "Cover", alt: "Yurr Magazine cover for Luvstruck", ...cover },
-      { id: "leallicna", src: "/projects/yurr/leallicna.jpg", file: "yurr/leallicna.jpg", caption: "Cover", alt: "Yurr Magazine cover for Leallicna", ...cover },
-      { id: "oliver", src: "/projects/yurr/oliver.jpg", file: "yurr/oliver.jpg", caption: "Cover", alt: "Yurr Magazine cover for Oliver", ...cover },
-      { id: "jared-outro", src: "/projects/yurr/jared-outro.jpg", file: "yurr/jared-outro.jpg", caption: "Issue 007, closing grid", alt: "Closing photo grid from Yurr Magazine", ...cover },
+      { id: "leallicna", src: "/projects/yurr/leallicna.jpg", file: "yurr/005-leallicna.jpg", caption: "Issue 005, cover", meta: "Jun 22", alt: "Yurr Magazine issue 005 cover for Leallicna", ...cover },
+      { id: "luvstruck", src: "/projects/yurr/luvstruck.jpg", file: "yurr/006-luvstruck.jpg", caption: "Issue 006, cover", meta: "Jun 23", alt: "Yurr Magazine issue 006 cover for Luvstruck", ...cover },
+      { id: "jared", src: "/projects/yurr/jared.jpg", file: "yurr/007-jared.jpg", caption: "Issue 007, cover", meta: "Jun 24", alt: "Yurr Magazine issue 007 cover for Jared", ...cover },
+      { id: "jared-qa", src: "/projects/yurr/jared-qa.jpg", file: "yurr/007-jared-qa.jpg", caption: "Issue 007, a Q&A slide", meta: "Jun 24", alt: "A question-and-answer slide from Yurr Magazine issue 007", ...cover },
+      { id: "jared-outro", src: "/projects/yurr/jared-outro.jpg", file: "yurr/007-jared-outro.jpg", caption: "Issue 007, closing grid", meta: "Jun 24", alt: "The closing photo grid from Yurr Magazine issue 007", ...cover },
+      { id: "oliver", src: "/projects/yurr/oliver.jpg", file: "yurr/008-oliver.jpg", caption: "Issue 008, cover", meta: "Jun 25", alt: "Yurr Magazine issue 008 cover for Oliver", ...cover },
     ],
   },
   {
@@ -78,8 +79,8 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     shots: [
-      { id: "scorecard", src: "/projects/golf/scorecard.png", file: "golf/scorecard.png", caption: "Round detail", alt: "Schmenk Golf's round detail with a scorecard", ...phone },
-      { id: "play", src: "/projects/golf/play.png", file: "golf/play.png", caption: "Start a round", alt: "Schmenk Golf's screen for starting a round", ...phone },
+      { id: "play", src: "/projects/golf/play.png", file: "golf/play.png", caption: "1. Start a round", alt: "Schmenk Golf's screen for starting a round", ...phone },
+      { id: "scorecard", src: "/projects/golf/scorecard.png", file: "golf/scorecard.png", caption: "2. The finished round", alt: "Schmenk Golf's round detail with a scorecard", ...phone },
     ],
   },
   {
@@ -99,7 +100,3 @@ export const PROJECTS: Project[] = [
 
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
 
-/** Every image, in project order: the home page's strip. */
-export const ALL_SHOTS = PROJECTS.flatMap((p) =>
-  p.shots.map((s) => ({ ...s, slug: p.slug, project: p.name })),
-);

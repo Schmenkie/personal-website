@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <figure key={s.id} id={s.id} className="m-0 flex w-[300px] max-w-full scroll-mt-6 flex-col gap-1.5">
                 <div className="flex justify-between gap-4">
                   <span>{s.file}</span>
-                  <span className="muted">{p.platform}</span>
+                  <span className="muted">{s.meta ?? p.platform}</span>
                 </div>
                 <Image
                   src={s.src}

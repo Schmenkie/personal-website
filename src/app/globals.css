@@ -143,3 +143,44 @@ body:has(.minimal) {
 .minimal summary::-webkit-details-marker {
   display: none;
 }
+
+/* Resume prints on letter paper, black on white. */
+@media print {
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
+  body:has(.minimal),
+  .minimal {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .minimal.resume {
+    font-size: 9pt;
+    line-height: 1.35;
+  }
+  .minimal .muted {
+    color: #444444 !important;
+  }
+}
+.minimal ul,
+.minimal ol,
+.minimal p,
+.minimal dl,
+.minimal dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.minimal h3 {
+  font-size: inherit;
+  font-weight: 400;
+  margin: 0;
+}
+.minimal a.cta,
+.minimal a.cta:hover {
+  color: #FBFBF9;
+}
+.minimal a.cta:hover {
+  background: #3A3A38;
+}
