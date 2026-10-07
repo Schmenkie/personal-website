@@ -286,3 +286,41 @@ body:has(.minimal) {
     transition: none;
   }
 }
+
+/* /work grid and lightbox */
+.minimal .tile img {
+  outline: 1px solid rgba(17, 17, 17, 0.08);
+  outline-offset: -1px;
+  transition: opacity 150ms ease-out;
+}
+.minimal .tile-label {
+  display: block;
+  padding-top: 6px;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+@media (hover: hover) {
+  .minimal .tile:hover img { opacity: 0.85; }
+  .minimal .tile:hover .tile-label,
+  .minimal .tile:focus-visible .tile-label { opacity: 1; }
+}
+@media (hover: none) {
+  .minimal .tile-label { display: none; }
+}
+.minimal .lb-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px;
+  background: transparent;
+  color: #111111;
+  font: inherit;
+  cursor: pointer;
+}
+.minimal .lb-btn:hover { color: #6B6B66; }
+.minimal .lb-img {
+  max-height: 72dvh;
+  object-fit: contain;
+}
+@media (min-width: 1024px) {
+  .minimal .lb-img { max-height: calc(100dvh - 110px); }
+}

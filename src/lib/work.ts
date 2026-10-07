@@ -10,6 +10,8 @@ export type Shot = {
   alt: string;
   width: number;
   height: number;
+  phone?: boolean; // a raw phone screen: rounder corners in the grid
+  slides?: { src: string; alt: string; width: number; height: number }[]; // a set that plays in the lightbox (a Yurr issue)
 };
 
 export type Project = {
@@ -19,13 +21,27 @@ export type Project = {
   where: string; // right-hand column of the index: App Store, Instagram, Web...
   platform: string; // shown next to each image's filename
   body: string[];
+  story?: string[]; // the short story shown beside the images on /work; falls back to body
   links: { label: string; href: string }[];
   shots: Shot[];
 };
 
-const store = { width: 720, height: 1564 }; // App Store screenshots
-const golf = { width: 720, height: 1561 };
-const cover = { width: 760, height: 950 };
+const store = { width: 720, height: 1564, phone: true }; // App Store screenshots
+const golf = { width: 720, height: 1561, phone: true };
+const cover = { width: 1080, height: 1350 }; // Yurr slides are 4:5
+
+// One Yurr issue: the cover in the grid, every slide in the lightbox.
+function issue(slug: string, no: string, who: string, vol: string, count: number): Shot {
+  const name = no ? `Issue ${no}, ${who}` : `${who}, a compilation`;
+  const what = (i: number) =>
+    i === 1 ? "cover" : i === count ? "closing grid" : no && i % 2 === 1 ? "photo and callout" : "interview slide";
+  const slides = Array.from({ length: count }, (_, k) => ({
+    src: `/projects/yurr/${slug}/${String(k + 1).padStart(2, "0")}.jpg`,
+    alt: `Yurr Magazine ${name}, ${what(k + 1)}`,
+    ...cover,
+  }));
+  return { id: slug, src: slides[0].src, file: `yurr/${slug}`, caption: `${name} · ${vol}`, meta: vol, alt: slides[0].alt, ...cover, slides };
+}
 
 export const PROJECTS: Project[] = [
   {
@@ -38,6 +54,11 @@ export const PROJECTS: Project[] = [
       "A music diary. You log the albums and songs you listen to, rate them, and see what your friends are really playing. Every album page takes on the colors of its cover.",
       "Since launch it has grown song ratings, playlists you can share, a daily song everyone posts at the same random moment, and a weekly issue that recaps the week in music every Sunday.",
       "I designed and built it alone. It launched on the App Store in June 2026 and has 400+ people from 20+ countries.",
+    ],
+    story: [
+      "Most of my group chats are food, sports and music. Sleeve started as a place for my friends and me to share what we're listening to, and it grew into a place for anyone to do the same.",
+      "My favorite moment so far: a friend of mine started talking with a Sleeve user in China. They had never met and live on opposite sides of the world, but they connected over the same songs.",
+      "I had no development experience going in. I had a vision, Claude Code as my architect, and a lot of trial and error. People using it told me what worked and what didn't, and every round of that feedback made it better. The thing people say most often is that they're surprised how polished it is.",
     ],
     links: [
       { label: "App Store", href: "https://apps.apple.com/app/id6779825854" },
@@ -60,17 +81,20 @@ export const PROJECTS: Project[] = [
     where: "Instagram",
     platform: "Instagram",
     body: [
-      "An independent magazine that profiles one creator per issue, published as Instagram carousels. I design every issue: the cover, seven Q&A spreads, a callout reacting to each answer, and a closing grid.",
-      "I also wrote the Python tool that builds an issue from one config file, so every issue stays consistent. Eight issues so far in Vol. 02, made with @clintyurr.",
+      "An independent magazine that profiles one creator per issue, published as Instagram carousels. I design every issue: the cover, the Q&A spreads, a callout reacting to each answer, and a closing grid.",
+      "I also wrote the Python tool that builds an issue from one config file, so every issue stays consistent. Made with @clintyurr.",
     ],
     links: [],
     shots: [
-      { id: "leallicna", src: "/projects/yurr/leallicna.jpg", file: "yurr/005-leallicna.jpg", caption: "Issue 005, cover", meta: "Jun 22", alt: "Yurr Magazine issue 005 cover for Leallicna", ...cover },
-      { id: "luvstruck", src: "/projects/yurr/luvstruck.jpg", file: "yurr/006-luvstruck.jpg", caption: "Issue 006, cover", meta: "Jun 23", alt: "Yurr Magazine issue 006 cover for Luvstruck", ...cover },
-      { id: "jared", src: "/projects/yurr/jared.jpg", file: "yurr/007-jared.jpg", caption: "Issue 007, cover", meta: "Jun 24", alt: "Yurr Magazine issue 007 cover for Jared", ...cover },
-      { id: "jared-qa", src: "/projects/yurr/jared-qa.jpg", file: "yurr/007-jared-qa.jpg", caption: "Issue 007, a Q&A slide", meta: "Jun 24", alt: "A question-and-answer slide from Yurr Magazine issue 007", ...cover },
-      { id: "jared-outro", src: "/projects/yurr/jared-outro.jpg", file: "yurr/007-jared-outro.jpg", caption: "Issue 007, closing grid", meta: "Jun 24", alt: "The closing photo grid from Yurr Magazine issue 007", ...cover },
-      { id: "oliver", src: "/projects/yurr/oliver.jpg", file: "yurr/008-oliver.jpg", caption: "Issue 008, cover", meta: "Jun 25", alt: "Yurr Magazine issue 008 cover for Oliver", ...cover },
+      issue("leallicna", "005", "@leallicna", "Vol. 02", 16),
+      issue("luvstruck", "006", "@luvstruck", "Vol. 02", 14),
+      issue("oliver", "008", "@ollybee", "Vol. 02", 14),
+      issue("jared", "010", "@jwesttttttttt", "Vol. 02", 16),
+      issue("amon", "017", "@amoninsta", "Vol. 02", 16),
+      issue("jaren", "018", "@ohthatsjuice__", "Vol. 02", 16),
+      issue("andy", "015", "@waitimgoated", "Vol. 01", 14),
+      issue("lyric", "020", "@bestfilmer", "Vol. 01", 16),
+      issue("best-advice", "", "The best advice", "Vol. 01", 12),
     ],
   },
   {
@@ -102,11 +126,32 @@ export const PROJECTS: Project[] = [
       "Built for one user: me.",
     ],
     links: [{ label: "soundsauce.app", href: "https://soundsauce.app" }],
-    shots: [],
+    shots: [
+      { id: "calc", src: "/projects/soundsauce/calc.jpg", file: "soundsauce/calc.jpg", caption: "The remix calculator", alt: "SoundSauce's remix calculator, working out the transpose and tempo change to fit a vocal into a project", width: 784, height: 985 },
+    ],
   },
 ];
 
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
+
+/** The /work grid, in order: projects mixed together like a mood board. "slug/shot-id". */
+export const GRID_ORDER = [
+  "sleeve/album", "yurr/jared", "schmenk-golf/round", "yurr/leallicna",
+  "sleeve/songs", "yurr/lyric", "soundsauce/calc", "yurr/oliver", "sleeve/feed",
+  "yurr/jaren", "schmenk-golf/play", "sleeve/playlists", "yurr/luvstruck",
+  "yurr/andy", "sleeve/taste", "yurr/amon", "schmenk-golf/log", "sleeve/profile",
+  "yurr/best-advice", "sleeve/week",
+];
+
+export type GridItem = { key: string; project: Project; shot: Shot };
+
+export function gridItems(): GridItem[] {
+  const all = PROJECTS.flatMap((project) => project.shots.map((shot) => ({ key: `${project.slug}/${shot.id}`, project, shot })));
+  const byKey = new Map(all.map((it) => [it.key, it]));
+  const ordered = GRID_ORDER.flatMap((k) => byKey.get(k) ?? []);
+  // Anything added to a project but not placed above still shows, at the end.
+  return [...ordered, ...all.filter((it) => !GRID_ORDER.includes(it.key))];
+}
 
 
 /** Private tools: listed on /work, no pages (they have no public surface). */
