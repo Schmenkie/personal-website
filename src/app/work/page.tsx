@@ -14,7 +14,7 @@ export default function WorkIndex() {
       <SiteHeader />
       <main className="mt-10 flex flex-col gap-2.5">
         <h1 className="sr-only">Work</h1>
-        <WorkGrid items={gridItems()} />
+        <WorkGrid items={gridItems()} rack />
 
         <div className="flex max-w-[760px] flex-col gap-2.5">
           <h2 className="muted mt-8">Tools</h2>

@@ -11,11 +11,14 @@ export type Shot = {
   width: number;
   height: number;
   phone?: boolean; // a raw phone screen: rounder corners in the grid
-  slides?: { src: string; alt: string; width: number; height: number }[]; // a set that plays in the lightbox (a Yurr issue)
+  slides?: Slide[]; // a set that plays in the lightbox (a Yurr issue, an app walkthrough)
+  line?: string; // the line under a project tile on /work
   href?: string; // the tile links here instead of opening the lightbox
   tagline?: string; // a Yurr issue's cover line, shown under it and in the reader
   post?: string; // the issue's Instagram post
 };
+
+export type Slide = { src: string; alt: string; width: number; height: number; caption?: string };
 
 export type Project = {
   slug: string;
@@ -30,9 +33,14 @@ export type Project = {
   issues?: { vol: string; issues: Shot[] }[]; // Yurr's archive, newest first
 };
 
-const store = { width: 720, height: 1564, phone: true }; // App Store screenshots
-const golf = { width: 720, height: 1561, phone: true };
 const cover = { width: 1080, height: 1350 }; // Yurr slides are 4:5
+
+// An app walkthrough: one tile on /work that plays raw screens in order.
+const screen = { width: 720, height: 1558 };
+function walkthrough(dir: string, name: string, line: string, screens: [file: string, caption: string, alt: string][]): Shot {
+  const slides = screens.map(([file, caption, alt]) => ({ src: `/projects/${dir}/screens/${file}.jpg`, caption, alt, ...screen }));
+  return { id: "app", src: slides[0].src, file: `${dir}/screens`, caption: name, line, alt: slides[0].alt, ...screen, phone: true, slides };
+}
 
 // One Yurr issue: the cover in the grid, every slide in the lightbox.
 function issue(slug: string, no: string, who: string, vol: string, count: number, tagline: string, post?: string): Shot {
@@ -69,13 +77,14 @@ export const PROJECTS: Project[] = [
       { label: "getsleeve.app", href: "https://getsleeve.app" },
     ],
     shots: [
-      { id: "album", src: "/projects/sleeve/01.jpg", file: "sleeve/01-album.jpg", caption: "Every album, wrapped in its own color", alt: "Sleeve's album page, tinted in the colors of the album cover", ...store },
-      { id: "songs", src: "/projects/sleeve/02.jpg", file: "sleeve/02-songs.jpg", caption: "Rating a song", alt: "Rating a song in Sleeve, with friends' ratings below", ...store },
-      { id: "feed", src: "/projects/sleeve/03.jpg", file: "sleeve/03-feed.jpg", caption: "What your friends are playing", alt: "Sleeve's feed of friends' ratings", ...store },
-      { id: "playlists", src: "/projects/sleeve/04.jpg", file: "sleeve/04-playlists.jpg", caption: "Playlists you can share", alt: "A Sleeve playlist and its share card", ...store },
-      { id: "taste", src: "/projects/sleeve/05.jpg", file: "sleeve/05-taste.jpg", caption: "People with your taste", alt: "A taste match in Sleeve showing a 94% match", ...store },
-      { id: "profile", src: "/projects/sleeve/06.jpg", file: "sleeve/06-profile.jpg", caption: "Your diary, in one place", alt: "A Sleeve profile with recent albums and songs", ...store },
-      { id: "week", src: "/projects/sleeve/07.jpg", file: "sleeve/07-week.jpg", caption: "The week in music, every Sunday", alt: "Sleeve's weekly issue recapping the week in music", ...store },
+      walkthrough("sleeve", "Sleeve", "A music diary for iOS. On the App Store.", [
+        ["01-album", "Every album, wrapped in its own color", "Sleeve's album page for SOS by SZA, tinted in the cover's blues"],
+        ["02-song", "Rating a song", "Rating Birds of a Feather in Sleeve, with friends' ratings below"],
+        ["03-feed", "What your friends are playing", "Sleeve's feed: friends' album ratings with short reviews"],
+        ["04-playlist", "Playlists you can share", "A Sleeve playlist called late night drive"],
+        ["05-taste", "People with your taste", "Sleeve's taste twin screen showing albums you both loved"],
+        ["06-profile", "Your diary, in one place", "A Sleeve profile with recent songs and albums"],
+      ]),
     ],
   },
   {
@@ -90,7 +99,7 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     shots: [
-      { id: "archive", href: "/work/yurr", src: "/projects/yurr/jaren/01.jpg", file: "yurr/archive", caption: "The archive", alt: "Yurr Magazine issue 018 cover, opening the archive of every issue", ...cover },
+      { id: "archive", href: "/work/yurr", src: "/projects/yurr/jaren/01.jpg", file: "yurr/archive", caption: "Yurr Magazine", line: "Nine issues of an Instagram magazine. Open the archive →", alt: "Yurr Magazine issue 018 cover, opening the archive of every issue", ...cover },
     ],
     issues: [
       {
@@ -127,9 +136,11 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     shots: [
-      { id: "round", src: "/projects/golf/01.jpg", file: "golf/01-round.jpg", caption: "Your round, hole by hole", alt: "Schmenk Golf's round detail with a scorecard", ...golf },
-      { id: "play", src: "/projects/golf/02.jpg", file: "golf/02-play.jpg", caption: "Your home course, one tap away", alt: "Schmenk Golf's screen for starting a round", ...golf },
-      { id: "log", src: "/projects/golf/03.jpg", file: "golf/03-log.jpg", caption: "Log any round in seconds", alt: "Schmenk Golf's form for logging a past round", ...golf },
+      walkthrough("golf", "Schmenk Golf", "GPS and a scorecard for my dad's weekly golf group.", [
+        ["01-play", "Your home course, one tap away", "Schmenk Golf's screen for starting a round at a home course"],
+        ["02-round", "Your round, hole by hole", "A finished round in Schmenk Golf with its scorecard"],
+        ["03-log", "Log any round in seconds", "Schmenk Golf's form for logging a past round"],
+      ]),
     ],
   },
   {
@@ -144,7 +155,7 @@ export const PROJECTS: Project[] = [
     ],
     links: [{ label: "soundsauce.app", href: "https://soundsauce.app" }],
     shots: [
-      { id: "calc", src: "/projects/soundsauce/calc.jpg", file: "soundsauce/calc.jpg", caption: "The remix calculator", alt: "SoundSauce's remix calculator, working out the transpose and tempo change to fit a vocal into a project", width: 784, height: 985 },
+      { id: "calc", src: "/projects/soundsauce/calc.jpg", file: "soundsauce/calc.jpg", caption: "SoundSauce", line: "Paste a song link, get its stems, key and tempo.", alt: "SoundSauce's remix calculator, working out the transpose and tempo change to fit a vocal into a project", width: 784, height: 985 },
     ],
   },
 ];
@@ -152,11 +163,7 @@ export const PROJECTS: Project[] = [
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug);
 
 /** The /work grid, in order: projects mixed together like a mood board. "slug/shot-id". */
-export const GRID_ORDER = [
-  "sleeve/album", "yurr/archive", "schmenk-golf/round", "sleeve/songs",
-  "soundsauce/calc", "sleeve/feed", "schmenk-golf/play", "sleeve/playlists",
-  "sleeve/taste", "schmenk-golf/log", "sleeve/profile", "sleeve/week",
-];
+export const GRID_ORDER = ["sleeve/app", "yurr/archive", "schmenk-golf/app", "soundsauce/calc"];
 
 export type GridItem = { key: string; project: Project; shot: Shot };
 

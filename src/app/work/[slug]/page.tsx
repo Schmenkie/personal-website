@@ -67,29 +67,44 @@ export default async function ProjectPage({
               aria-label={`${p.name} images`}
               className="flex flex-wrap gap-6"
             >
-              {p.shots.map((s) => (
-                <figure
-                  key={s.id}
-                  id={s.id}
-                  className="m-0 flex w-[300px] max-w-full scroll-mt-6 flex-col gap-1.5"
-                >
-                  <div className="flex justify-between gap-4">
-                    <span>{s.file}</span>
-                    <span className="muted">{s.meta ?? p.platform}</span>
-                  </div>
-                  <Image
-                    src={s.src}
-                    alt={s.alt}
-                    width={s.width}
-                    height={s.height}
-                    sizes="300px"
-                    className="h-auto w-full bg-[#EDEDEA] outline outline-1 -outline-offset-1 outline-black/10"
-                  />
-                  <figcaption className="muted text-right">
-                    {s.caption}
-                  </figcaption>
-                </figure>
-              ))}
+              {p.shots
+                .flatMap((s) =>
+                  s.slides
+                    ? s.slides.map((sl) => ({
+                        ...s,
+                        ...sl,
+                        id: sl.src
+                          .split("/")
+                          .pop()!
+                          .replace(/\.\w+$/, ""),
+                        file: sl.src.replace("/projects/", ""),
+                        caption: sl.caption ?? s.caption,
+                      }))
+                    : [s],
+                )
+                .map((s) => (
+                  <figure
+                    key={s.id}
+                    id={s.id}
+                    className="m-0 flex w-[300px] max-w-full scroll-mt-6 flex-col gap-1.5"
+                  >
+                    <div className="flex justify-between gap-4">
+                      <span>{s.file}</span>
+                      <span className="muted">{s.meta ?? p.platform}</span>
+                    </div>
+                    <Image
+                      src={s.src}
+                      alt={s.alt}
+                      width={s.width}
+                      height={s.height}
+                      sizes="300px"
+                      className="h-auto w-full bg-[#EDEDEA] outline outline-1 -outline-offset-1 outline-black/10"
+                    />
+                    <figcaption className="muted text-right">
+                      {s.caption}
+                    </figcaption>
+                  </figure>
+                ))}
             </section>
           )
         )}
