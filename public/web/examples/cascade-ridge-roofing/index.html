@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root{--accent:#1F6F5C;--ink:#14171A;--muted:#5B636B;--line:#E3E1DA;--paper:#FAF9F5;--card:#FFFFFF}
+:root{--accent:#1F6F5C;--on:#FFFFFF;--ink:#14171A;--muted:#5B636B;--line:#E3E1DA;--paper:#FAF9F5;--card:#FFFFFF}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font:400 17px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:84px}
@@ -25,10 +25,11 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 .brand small{display:block;font:500 12px Inter,sans-serif;color:var(--muted);letter-spacing:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--accent);transition:transform .15s,background .15s}
 .btn:active{transform:scale(.98)}
-.btn.solid{background:var(--accent);color:#fff}
+.btn.solid{background:var(--accent);color:var(--on)}
 .btn.ghost{color:var(--accent);background:transparent}
 header .btn{min-height:42px;padding:0 16px;font-size:15px}
 .hero{padding:56px 0 40px;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
 .eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
 .hero h1{font-size:clamp(40px,8vw,76px);line-height:1.02;font-weight:800;margin:14px 0 18px;max-width:14ch}
@@ -57,6 +58,11 @@ section h2{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1;margin
 .steps li:before{content:"0" counter(s);font:800 14px Archivo,sans-serif;color:var(--accent)}
 .steps b{display:block;font-size:19px;margin:6px 0 4px}
 .steps span{color:var(--muted);font-size:16px}
+.rates ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.rates li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:4px}
+.rates li span{font-weight:600}
+.rates li b{font:800 32px Archivo,sans-serif;color:var(--accent)}
+.rates li small{color:var(--muted);font-size:15px}
 .area ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
 .area li{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font-weight:500}
 .area p{margin-top:18px;color:var(--muted)}
@@ -66,11 +72,11 @@ section h2{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1;margin
 .faq summary:after{content:"+";color:var(--accent);font-size:22px;line-height:1}
 .faq details[open] summary:after{content:"–"}
 .faq p{color:var(--muted);margin-top:8px;max-width:60ch}
-.contact{background:var(--accent);color:#fff;text-align:center}
+.contact{background:var(--accent);color:var(--on);text-align:center}
 .contact h2{margin:0 auto 12px}
 .contact p{opacity:.85;margin-bottom:26px}
-.contact .btn.solid{background:#fff;color:var(--accent);border-color:#fff}
-.contact .btn.ghost{color:#fff;border-color:rgba(255,255,255,.6)}
+.contact .btn.solid{background:var(--on);color:var(--accent);border-color:var(--on)}
+.contact .btn.ghost{color:var(--on);border-color:var(--on);opacity:.85}
 .contact .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 footer{padding:28px 0;font-size:14px;color:var(--muted)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
@@ -100,6 +106,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <div class="stats"><div><b>4.9</b><span>average Google rating</span></div><div><b>300+</b><span>roofs since 2009</span></div><div><b>48 hrs</b><span>to a written estimate</span></div></div>
 
 <section class="services"><div class="wrap"><h2>What we do</h2><ul><li><h3>Roof replacement</h3><p>Asphalt, metal and cedar. Old roof off, new roof on, yard cleaned, in most cases in two days.</p></li><li><h3>Leak repair</h3><p>We find the source, not just the drip. Most repairs done the same week.</p></li><li><h3>Storm damage</h3><p>Emergency tarping and help with your insurance claim, start to finish.</p></li><li><h3>Gutters</h3><p>New seamless gutters, guards and downspouts that move water away from the house.</p></li><li><h3>Moss and maintenance</h3><p>Moss removal, treatment and a yearly check so small problems stay small.</p></li><li><h3>Skylights</h3><p>Leaky skylights resealed or replaced, and new ones installed.</p></li></ul></div></section>
+
+
 
 <section class="reviews"><div class="wrap"><h2>What neighbors say</h2><div class="grid"><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Called on a Saturday with water coming through the ceiling. They had a tarp on by the afternoon and the repair done Tuesday.”</blockquote><figcaption>Dana K. · Redmond</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Three quotes, theirs was the clearest and not the most expensive. New roof in two days and the crew left the yard spotless.”</blockquote><figcaption>Marcus T. · Kirkland</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“They told me I didn&#x27;t need a new roof yet, just a repair. That honesty is why they&#x27;ll get the job when I do.”</blockquote><figcaption>Priya S. · Bellevue</figcaption></figure></div></div></section>
 

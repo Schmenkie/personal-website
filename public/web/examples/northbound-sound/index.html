@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Northbound Sound · Recording studio in Seattle</title>
+<meta name="description" content="A recording studio in Georgetown, Seattle. Tracking, mixing and late sessions for artists who care how it sounds."><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{--accent:#E0B23C;--on:#14171A;--ink:#14171A;--muted:#5B636B;--line:#E3E1DA;--paper:#FAF9F5;--card:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+a{color:inherit}
+h1,h2,h3,.brand{font-family:Archivo,Inter,sans-serif;letter-spacing:-.01em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.demo{background:#14171A;color:#E9E7E1;font-size:13px;text-align:center;padding:8px 16px}
+.demo a{color:#fff}
+header{position:sticky;top:0;z-index:5;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{font-weight:800;font-size:19px;text-decoration:none}
+.brand{line-height:1.15}
+.narrow{display:none}
+@media (max-width:520px){.wide{display:none}.narrow{display:inline}}
+.brand small{display:block;font:500 12px Inter,sans-serif;color:var(--muted);letter-spacing:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--accent);transition:transform .15s,background .15s}
+.btn:active{transform:scale(.98)}
+.btn.solid{background:var(--accent);color:var(--on)}
+.btn.ghost{color:var(--accent);background:transparent}
+header .btn{min-height:42px;padding:0 16px;font-size:15px}
+.hero{padding:56px 0 40px;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
+.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.hero h1{font-size:clamp(40px,8vw,76px);line-height:1.02;font-weight:800;margin:14px 0 18px;max-width:14ch}
+.hero p{font-size:19px;color:var(--muted);max-width:36ch}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.roof{position:absolute;right:-40px;bottom:-10px;width:min(560px,70vw);opacity:.9;pointer-events:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card)}
+.stats div{padding:22px 12px;text-align:center;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.stats b{display:block;font:800 clamp(24px,5vw,36px) Archivo,sans-serif;color:var(--accent)}
+.stats span{font-size:14px;color:var(--muted)}
+section{padding:64px 0}
+section h2{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1;margin-bottom:28px;max-width:20ch}
+.services ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.services li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.services h3{font-size:20px;margin-bottom:6px}
+.services p{color:var(--muted);font-size:16px}
+.reviews{background:var(--ink);color:#F2F0EA}
+.reviews .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.reviews figure{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px}
+.stars{color:#F4B740;letter-spacing:2px;font-size:18px}
+.reviews blockquote{font-size:18px;line-height:1.5;margin:10px 0 14px}
+.reviews figcaption{font-size:14px;color:#A9ADB1}
+.steps ol{list-style:none;counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.steps li{counter-increment:s;border-top:3px solid var(--accent);padding-top:14px}
+.steps li:before{content:"0" counter(s);font:800 14px Archivo,sans-serif;color:var(--accent)}
+.steps b{display:block;font-size:19px;margin:6px 0 4px}
+.steps span{color:var(--muted);font-size:16px}
+.rates ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.rates li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:4px}
+.rates li span{font-weight:600}
+.rates li b{font:800 32px Archivo,sans-serif;color:var(--accent)}
+.rates li small{color:var(--muted);font-size:15px}
+.area ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
+.area li{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font-weight:500}
+.area p{margin-top:18px;color:var(--muted)}
+.faq details{border-top:1px solid var(--line);padding:18px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font-weight:600;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary:after{content:"+";color:var(--accent);font-size:22px;line-height:1}
+.faq details[open] summary:after{content:"–"}
+.faq p{color:var(--muted);margin-top:8px;max-width:60ch}
+.contact{background:var(--accent);color:var(--on);text-align:center}
+.contact h2{margin:0 auto 12px}
+.contact p{opacity:.85;margin-bottom:26px}
+.contact .btn.solid{background:var(--on);color:var(--accent);border-color:var(--on)}
+.contact .btn.ghost{color:var(--on);border-color:var(--on);opacity:.85}
+.contact .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+footer{padding:28px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.callbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:10;display:flex;gap:10px}
+.callbar .btn{flex:1;min-height:56px;box-shadow:0 10px 30px rgba(0,0,0,.18);font-size:17px}
+.callbar .btn.ghost{background:#fff}
+@media (min-width:768px){body{padding-bottom:0}.callbar{display:none}.hero{padding:96px 0 72px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:root{--ink:#F1EEE7;--muted:#A39E94;--line:#2B2925;--paper:#0F0E0D;--card:#181614}
+header{background:rgba(15,14,13,.88)!important}
+.reviews{background:#171513!important}
+.callbar .btn.ghost{background:#181614!important}
+.demo{background:#000!important}
+</style></head>
+<body>
+<div class="demo">Example site by <a href="https://spencercurnow.com/web">Spencer Curnow</a>. Northbound Sound is made up; every name, review and number here is invented.</div>
+<header><div class="wrap">
+  <a class="brand" href="#top">Northbound Sound<small>Recording studio · Georgetown, Seattle</small></a>
+  <a class="btn solid" href="tel:+12065550193"><span class="wide">Call (206) 555-0193</span><span class="narrow">Call</span></a>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <span class="eyebrow">Now booking November</span>
+  <h1>Make the record<br>you hear in your head.</h1>
+  <p>A treated live room, a vocal booth that&#x27;s actually quiet, and an engineer who&#x27;s on your side. Hourly or day rates.</p>
+  <div class="ctas"><a class="btn solid" href="mailto:book@example.com?subject=Session request for Northbound Sound">Book a session</a><a class="btn ghost" href="tel:+12065550193">Call the studio</a></div>
+</div>
+<svg class="roof" viewBox="0 0 560 220" aria-hidden="true"><rect x="12" y="100" width="8" height="20" rx="4" fill="#E0B23C" opacity=".28"/><rect x="30" y="86" width="8" height="48" rx="4" fill="#E0B23C" opacity=".28"/><rect x="48" y="70" width="8" height="80" rx="4" fill="#E0B23C" opacity=".28"/><rect x="66" y="92" width="8" height="36" rx="4" fill="#E0B23C" opacity=".28"/><rect x="84" y="50" width="8" height="120" rx="4" fill="#E0B23C" opacity=".28"/><rect x="102" y="26" width="8" height="168" rx="4" fill="#E0B23C" opacity=".28"/><rect x="120" y="60" width="8" height="100" rx="4" fill="#E0B23C" opacity=".28"/><rect x="138" y="14" width="8" height="192" rx="4" fill="#E0B23C" opacity=".28"/><rect x="156" y="40" width="8" height="140" rx="4" fill="#E0B23C" opacity=".28"/><rect x="174" y="72" width="8" height="76" rx="4" fill="#E0B23C" opacity=".28"/><rect x="192" y="22" width="8" height="176" rx="4" fill="#E0B23C" opacity=".28"/><rect x="210" y="50" width="8" height="120" rx="4" fill="#E0B23C" opacity=".28"/><rect x="228" y="80" width="8" height="60" rx="4" fill="#E0B23C" opacity=".28"/><rect x="246" y="36" width="8" height="148" rx="4" fill="#E0B23C" opacity=".28"/><rect x="264" y="66" width="8" height="88" rx="4" fill="#E0B23C" opacity=".28"/><rect x="282" y="90" width="8" height="40" rx="4" fill="#E0B23C" opacity=".28"/><rect x="300" y="54" width="8" height="112" rx="4" fill="#E0B23C" opacity=".28"/><rect x="318" y="76" width="8" height="68" rx="4" fill="#E0B23C" opacity=".28"/><rect x="336" y="94" width="8" height="32" rx="4" fill="#E0B23C" opacity=".28"/><rect x="354" y="68" width="8" height="84" rx="4" fill="#E0B23C" opacity=".28"/><rect x="372" y="84" width="8" height="52" rx="4" fill="#E0B23C" opacity=".28"/><rect x="390" y="98" width="8" height="24" rx="4" fill="#E0B23C" opacity=".28"/><rect x="408" y="80" width="8" height="60" rx="4" fill="#E0B23C" opacity=".28"/><rect x="426" y="92" width="8" height="36" rx="4" fill="#E0B23C" opacity=".28"/><rect x="444" y="100" width="8" height="20" rx="4" fill="#E0B23C" opacity=".28"/><rect x="462" y="88" width="8" height="44" rx="4" fill="#E0B23C" opacity=".28"/><rect x="480" y="96" width="8" height="28" rx="4" fill="#E0B23C" opacity=".28"/><rect x="498" y="102" width="8" height="16" rx="4" fill="#E0B23C" opacity=".28"/><rect x="516" y="98" width="8" height="24" rx="4" fill="#E0B23C" opacity=".28"/><rect x="534" y="104" width="8" height="12" rx="4" fill="#E0B23C" opacity=".28"/></svg>
+</div>
+
+<div class="stats"><div><b>5.0</b><span>average Google rating</span></div><div><b>600+</b><span>songs since 2017</span></div><div><b>2am</b><span>latest session</span></div></div>
+
+<section class="services"><div class="wrap"><h2>What we do</h2><ul><li><h3>Tracking</h3><p>Full band in the live room or one instrument at a time. Drums, amps and a real piano included.</p></li><li><h3>Vocals</h3><p>An iso booth, a short list of great mics, and as many takes as it takes.</p></li><li><h3>Mixing</h3><p>Mixed in house, with two rounds of notes. Send stems from anywhere.</p></li><li><h3>Mastering</h3><p>Loud enough for streaming, without squashing what made it good.</p></li><li><h3>Production</h3><p>Need beats, a band or an arrangement? We&#x27;ll build it with you.</p></li><li><h3>Rehearsal</h3><p>Three-hour blocks with the PA and backline set up when you walk in.</p></li></ul></div></section>
+
+<section class="rates"><div class="wrap"><h2>Rates</h2><ul><li><span>Hourly session</span><b>$65/hr</b><small>Engineer included, 2-hour minimum</small></li><li><span>Day rate</span><b>$480</b><small>10 hours, engineer included</small></li><li><span>Mix</span><b>$250/song</b><small>Two rounds of notes</small></li><li><span>Rehearsal block</span><b>$45</b><small>Three hours, backline included</small></li></ul></div></section>
+
+<section class="reviews"><div class="wrap"><h2>Artists who&#x27;ve recorded here</h2><div class="grid"><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Came in with phone voice memos and left with a finished EP. They pushed me on the vocals in the best way.”</blockquote><figcaption>Ari M. · singer-songwriter</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“The live room sounds massive. We cut six songs in one day and kept almost every take.”</blockquote><figcaption>The Low Hours · band</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Booked a 2-hour vocal session and it felt like we&#x27;d been working together for years.”</blockquote><figcaption>J. Reyes · rapper</figcaption></figure></div></div></section>
+
+<section class="steps"><div class="wrap"><h2>How a session works</h2><ol><li><b>Tell us about the project</b><span>What you&#x27;re making, how many songs, and any references you love.</span></li><li><b>Pick a time</b><span>We&#x27;ll hold a session and send what to bring.</span></li><li><b>Record</b><span>Show up, plug in, make the thing. We handle everything technical.</span></li><li><b>Take it home</b><span>Rough mixes the same night, final files in a week.</span></li></ol></div></section>
+
+<section class="area"><div class="wrap"><h2>What we record</h2><ul><li>Hip-hop and R&amp;B</li><li>Indie and rock</li><li>Singer-songwriter</li><li>Podcasts and voiceover</li><li>Rehearsal blocks</li></ul><p>Sessions 10am to 2am, seven days. Book at least 24 hours ahead.</p></div></section>
+
+<section class="faq"><div class="wrap"><h2>Before you book</h2><details><summary>Do I need to bring gear?</summary><p>No. Drums, amps, a keyboard and mics are all here. Bring your own if you love it.</p></details><details><summary>Can I bring friends?</summary><p>Up to four people in the control room. More than that slows the session down.</p></details><details><summary>Do you do remote mixing?</summary><p>Yes. Send stems and references and we&#x27;ll mix them like you were here.</p></details><details><summary>What&#x27;s the cancellation policy?</summary><p>Free up to 48 hours before. After that we keep half the deposit.</p></details></div></section>
+
+<section class="contact"><div class="wrap"><h2>Got songs ready?</h2><p>Tell us what you&#x27;re working on and we&#x27;ll hold a time for you.</p>
+  <div class="ctas"><a class="btn solid" href="tel:+12065550193">Call (206) 555-0193</a><a class="btn ghost" href="mailto:book@example.com?subject=Session request for Northbound Sound">Email us</a></div></div></section>
+</main>
+
+<footer><div class="wrap"><span>© Northbound Sound · since 2017</span><span>Georgetown, Seattle · parking out front</span></div></footer>
+
+<nav class="callbar" aria-label="Contact"><a class="btn ghost" href="tel:+12065550193">Call</a><a class="btn solid" href="mailto:book@example.com?subject=Session request for Northbound Sound">Book a session</a></nav>
+</body></html>

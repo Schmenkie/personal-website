@@ -5,11 +5,11 @@ import { SiteFooter } from "@/components/minimal/site-footer";
 
 export const revalidate = 600;
 export const metadata: Metadata = {
-  title: "Websites for Local Businesses · Spencer Curnow",
+  title: "Websites for Creative Spaces · Spencer Curnow",
   description:
-    "Fast, mobile-first websites for local businesses that turn Google searches into phone calls. Free mockup, live in about a week, one clear price.",
+    "Fast, mobile-first websites for studios, shops and local businesses that turn searches into bookings. Free mockup, live in about a week, one clear price.",
   openGraph: {
-    title: "Websites for Local Businesses · Spencer Curnow",
+    title: "Websites for Creative Spaces · Spencer Curnow",
     description: "Fast, mobile-first websites that turn searches into phone calls. Free mockup, no obligation.",
     type: "website",
   },
@@ -64,10 +64,10 @@ export default function WebServicesPage() {
 
       <main className="mt-10 flex max-w-[640px] flex-col gap-12">
         <section className="flex flex-col gap-2.5">
-          <h1>Websites for local businesses</h1>
+          <h1>Websites for creative spaces and local businesses</h1>
           <p>
-            I build fast, simple websites for local businesses: the kind that load instantly, look right on
-            a phone, and make it easy for a new customer to call you. Send me what you have, and I&apos;ll
+            I build fast, simple websites for studios, shops and local businesses: the kind that load
+            instantly, look right on a phone, and make it easy for someone to book you or call you. Send me what you have, and I&apos;ll
             show you what yours could look like, free.
           </p>
           <Cta />
@@ -76,8 +76,8 @@ export default function WebServicesPage() {
         <section className="flex flex-col gap-2.5">
           <h2 className="muted">The problem</h2>
           <p>
-            When someone needs a plumber, an electrician, or a haircut, they pull out their phone and
-            search. If you have no website, they land on a competitor. If your site is slow or broken on
+            When someone needs a studio, a tattoo artist, a photographer or a plumber, they pull out
+            their phone and search. If you have no website, they land on a competitor. If your site is slow or broken on
             a phone, they leave before they ever see your number.
           </p>
           <p>
@@ -99,13 +99,21 @@ export default function WebServicesPage() {
         </section>
 
         <section className="flex flex-col gap-2.5">
-          <h2 className="muted">Example</h2>
+          <h2 className="muted">Examples</h2>
           <p>
-            A one-page site for a roofer: reviews up front, a call button that follows you down the page,
-            and a free-estimate path for people who&apos;d rather text a photo. The business is made up;
-            the site is real. Open it on your phone.
+            Two one-page sites, built from the same system. The businesses are made up; the sites are
+            real. Open them on your phone.
           </p>
-          <a href="/web/examples/cascade-ridge-roofing">Cascade Ridge Roofing, an example site ↗</a>
+          <ul className="flex flex-col">
+            <li>
+              <a href="/web/examples/northbound-sound">Northbound Sound ↗</a>
+              <span className="muted"> · a recording studio: rates, sessions, booking</span>
+            </li>
+            <li>
+              <a href="/web/examples/cascade-ridge-roofing">Cascade Ridge Roofing ↗</a>
+              <span className="muted"> · a roofer: reviews, service area, one-tap call</span>
+            </li>
+          </ul>
         </section>
 
         <section className="flex flex-col gap-2.5">
