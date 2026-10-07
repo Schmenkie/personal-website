@@ -3,6 +3,7 @@ export const LINKS = [
   { label: "Work", href: "/work", nav: true },
   { label: "Resume", href: "/resume", nav: true },
   { label: "Email", href: "mailto:scurnow24@gmail.com", nav: true },
+  { label: "Hire me", href: "/web", nav: false },
   { label: "Sleeve", href: "https://getsleeve.app", nav: false },
   { label: "Instagram", href: "https://instagram.com/spencer.curnow", nav: false },
   { label: "GitHub", href: "https://github.com/Schmenkie", nav: false },
