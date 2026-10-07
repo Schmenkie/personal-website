@@ -319,6 +319,16 @@ body:has(.minimal) {
   cursor: pointer;
 }
 .minimal .lb-btn:hover { color: #6B6B66; }
+.minimal .lb-arrow {
+  flex-shrink: 0;
+  width: 32px;
+  min-width: 32px;
+  padding: 0;
+  font-size: 22px;
+}
+@media (min-width: 640px) {
+  .minimal .lb-arrow { width: 44px; min-width: 44px; }
+}
 .minimal .lb-img {
   max-height: 72dvh;
   object-fit: contain;

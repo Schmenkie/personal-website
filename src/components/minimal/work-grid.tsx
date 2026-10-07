@@ -57,6 +57,8 @@ export function WorkGrid({
       setOpen((o) => {
         if (!o) return o;
         const n = framesOf(o.item).length;
+        // An issue starts at its cover: there's no going back from it.
+        if (dir === -1 && n > 1 && o.slide === 0) return o;
         if (dir === 1 && o.slide < n - 1)
           return { item: o.item, slide: o.slide + 1 };
         if (dir === -1 && o.slide > 0)
@@ -242,6 +244,7 @@ function Lightbox({
   const f = frames[slide];
   const story = project.story ?? project.body;
   const touch = useRef<number | null>(null);
+  const canBack = !(frames.length > 1 && slide === 0);
 
   return (
     <div
@@ -254,26 +257,10 @@ function Lightbox({
         <span className="muted">{position}</span>
         <div className="flex items-center gap-1">
           <button
-            type="button"
-            onClick={() => onStep(-1)}
-            aria-label="Previous image"
-            className="lb-btn"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => onStep(1)}
-            aria-label="Next image"
-            className="lb-btn"
-          >
-            →
-          </button>
-          <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="lb-btn ml-3"
+            className="lb-btn"
           >
             Close
           </button>
@@ -293,16 +280,44 @@ function Lightbox({
             if (Math.abs(dx) > 40) onStep(dx < 0 ? 1 : -1);
           }}
         >
-          <Image
-            key={f.src}
-            src={f.src}
-            alt={f.alt}
-            width={f.width}
-            height={f.height}
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            priority
-            className={`lb-img block h-auto w-auto max-w-full bg-[#EDEDEA] ${shot.phone ? "rounded-[22px]" : "rounded-[3px]"}`}
-          />
+          <div className="flex min-h-0 w-full items-center justify-center gap-0 sm:gap-4">
+            {canBack ? (
+              <button
+                type="button"
+                onClick={() => onStep(-1)}
+                aria-label={slide > 0 ? "Previous slide" : "Previous image"}
+                className="lb-btn lb-arrow"
+              >
+                ←
+              </button>
+            ) : (
+              <span aria-hidden="true" className="lb-arrow" />
+            )}
+            <Image
+              key={f.src}
+              src={f.src}
+              alt={f.alt}
+              width={f.width}
+              height={f.height}
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              priority
+              className={`lb-img block h-auto w-[calc(100%-64px)] sm:w-[calc(100%-120px)] min-w-0 lg:w-auto lg:max-w-[calc(100%-96px)] bg-[#EDEDEA] ${shot.phone ? "rounded-[22px]" : "rounded-[3px]"}`}
+            />
+            <button
+              type="button"
+              onClick={() => onStep(1)}
+              aria-label={
+                slide < frames.length - 1
+                  ? "Next slide"
+                  : frames.length > 1
+                    ? "Next issue"
+                    : "Next image"
+              }
+              className="lb-btn lb-arrow"
+            >
+              →
+            </button>
+          </div>
           {frames.length > 1 && (
             <figcaption className="muted">
               {slide + 1} of {frames.length}
