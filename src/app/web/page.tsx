@@ -99,21 +99,12 @@ export default function WebServicesPage() {
         </section>
 
         <section className="flex flex-col gap-2.5">
-          <h2 className="muted">Examples</h2>
+          <h2 className="muted">Example</h2>
           <p>
-            Two one-page sites, built from the same system. The businesses are made up; the sites are
-            real. Open them on your phone.
+            A one-page site for a recording studio: rates up front, how a session works, and booking
+            from any screen. The studio is made up; the site is real. Open it on your phone.
           </p>
-          <ul className="flex flex-col">
-            <li>
-              <a href="/web/examples/northbound-sound">Northbound Sound ↗</a>
-              <span className="muted"> · a recording studio: rates, sessions, booking</span>
-            </li>
-            <li>
-              <a href="/web/examples/cascade-ridge-roofing">Cascade Ridge Roofing ↗</a>
-              <span className="muted"> · a roofer: reviews, service area, one-tap call</span>
-            </li>
-          </ul>
+          <a href="/web/examples/northbound-sound">Northbound Sound, an example site ↗</a>
         </section>
 
         <section className="flex flex-col gap-2.5">
