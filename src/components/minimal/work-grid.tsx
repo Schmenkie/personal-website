@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { GridItem } from "@/lib/work";
+import type { GridItem, Slide } from "@/lib/work";
 
 // /work: every image from every project in one masonry grid, each at its true
 // shape. Clicking one opens it large with that project's story beside it;
@@ -20,9 +20,11 @@ type Open = { item: number; slide: number };
 export function WorkGrid({
   items: flat,
   groups,
+  rack = false,
 }: {
   items?: GridItem[];
   groups?: { vol: string; items: GridItem[] }[];
+  rack?: boolean; // even rows of 4:5 tiles with a line under each, instead of masonry
 }) {
   const items = useMemo(
     () => flat ?? groups?.flatMap((g) => g.items) ?? [],
@@ -109,45 +111,41 @@ export function WorkGrid({
 
   return (
     <>
-      {groups ? (
-        groups.map((g) => {
+      {groups || rack ? (
+        (groups ?? [{ vol: "", items }]).map((g) => {
           const offset = items.indexOf(g.items[0]);
           return (
             <section
-              key={g.vol}
-              aria-label={g.vol}
+              key={g.vol || "all"}
+              aria-label={g.vol || undefined}
               className="mb-12 flex flex-col gap-3"
             >
-              <h2 className="muted">{g.vol}</h2>
-              <ul className="grid max-w-[1200px] grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5">
+              {g.vol && <h2 className="muted">{g.vol}</h2>}
+              <ul className={`grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5 ${groups ? "max-w-[1200px]" : "lg:grid-cols-4"}`}>
                 {g.items.map((it, j) => {
                   const i = offset + j;
                   return (
                     <li key={it.key}>
-                      <button
-                        ref={(el) => {
-                          tiles.current[i] = el;
-                        }}
-                        type="button"
-                        onClick={() => setOpen({ item: i, slide: 0 })}
-                        aria-label={`Read ${it.shot.caption}`}
-                        className="tile rack-tile group block w-full cursor-zoom-in bg-transparent p-0 text-left"
-                      >
-                        <Image
-                          src={it.shot.src}
-                          alt={it.shot.alt}
-                          width={it.shot.width}
-                          height={it.shot.height}
-                          sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                          className="block h-auto w-full rounded-[3px] bg-[#EDEDEA]"
-                        />
-                        <span className="mt-2 flex flex-col">
-                          <span>{it.shot.caption}</span>
-                          {it.shot.tagline && (
-                            <span className="muted">{it.shot.tagline}</span>
-                          )}
-                        </span>
-                      </button>
+                      {it.shot.href ? (
+                        <Link
+                          href={it.shot.href}
+                          className="tile rack-tile group block"
+                        >
+                          <RackFace it={it} />
+                        </Link>
+                      ) : (
+                        <button
+                          ref={(el) => {
+                            tiles.current[i] = el;
+                          }}
+                          type="button"
+                          onClick={() => setOpen({ item: i, slide: 0 })}
+                          aria-label={`Open ${it.shot.caption}`}
+                          className="tile rack-tile group block w-full cursor-zoom-in bg-transparent p-0 text-left"
+                        >
+                          <RackFace it={it} />
+                        </button>
+                      )}
                     </li>
                   );
                 })}
@@ -223,6 +221,29 @@ export function WorkGrid({
   );
 }
 
+/** A newsstand tile: the image at 4:5 (tall phone screens show their top),
+ *  then the name and a line. */
+function RackFace({ it }: { it: GridItem }) {
+  const { shot } = it;
+  const line = shot.tagline ?? shot.line;
+  return (
+    <>
+      <Image
+        src={shot.src}
+        alt={shot.alt}
+        width={shot.width}
+        height={shot.height}
+        sizes="(min-width: 1024px) 400px, (min-width: 640px) 33vw, 50vw"
+        className="block aspect-[4/5] h-auto w-full rounded-[3px] bg-[#EDEDEA] object-cover object-top"
+      />
+      <span className="mt-2 flex flex-col">
+        <span>{shot.caption}</span>
+        {line && <span className="muted">{line}</span>}
+      </span>
+    </>
+  );
+}
+
 function Lightbox({
   item,
   frames,
@@ -233,7 +254,7 @@ function Lightbox({
   closeRef,
 }: {
   item: GridItem;
-  frames: { src: string; alt: string; width: number; height: number }[];
+  frames: Slide[];
   slide: number;
   position: string;
   onClose: () => void;
@@ -332,7 +353,7 @@ function Lightbox({
               · {shot.tagline ? shot.meta : project.where}
             </span>
           </h2>
-          <p className="muted">{shot.caption}</p>
+          <p className="muted">{f.caption ?? shot.caption}</p>
           {shot.tagline ? (
             <>
               <p>{shot.tagline}</p>
