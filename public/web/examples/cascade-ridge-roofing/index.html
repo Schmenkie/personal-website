@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cascade Ridge Roofing · Roofing in Redmond</title>
+<meta name="description" content="Roofs done right on the Eastside, by the family that answers the phone."><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{--accent:#1F6F5C;--ink:#14171A;--muted:#5B636B;--line:#E3E1DA;--paper:#FAF9F5;--card:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+a{color:inherit}
+h1,h2,h3,.brand{font-family:Archivo,Inter,sans-serif;letter-spacing:-.01em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.demo{background:#14171A;color:#E9E7E1;font-size:13px;text-align:center;padding:8px 16px}
+.demo a{color:#fff}
+header{position:sticky;top:0;z-index:5;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{font-weight:800;font-size:19px;text-decoration:none}
+.brand{line-height:1.15}
+.narrow{display:none}
+@media (max-width:520px){.wide{display:none}.narrow{display:inline}}
+.brand small{display:block;font:500 12px Inter,sans-serif;color:var(--muted);letter-spacing:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--accent);transition:transform .15s,background .15s}
+.btn:active{transform:scale(.98)}
+.btn.solid{background:var(--accent);color:#fff}
+.btn.ghost{color:var(--accent);background:transparent}
+header .btn{min-height:42px;padding:0 16px;font-size:15px}
+.hero{padding:56px 0 40px;position:relative;overflow:hidden}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
+.eyebrow:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.hero h1{font-size:clamp(40px,8vw,76px);line-height:1.02;font-weight:800;margin:14px 0 18px;max-width:14ch}
+.hero p{font-size:19px;color:var(--muted);max-width:36ch}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.roof{position:absolute;right:-40px;bottom:-10px;width:min(560px,70vw);opacity:.9;pointer-events:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card)}
+.stats div{padding:22px 12px;text-align:center;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.stats b{display:block;font:800 clamp(24px,5vw,36px) Archivo,sans-serif;color:var(--accent)}
+.stats span{font-size:14px;color:var(--muted)}
+section{padding:64px 0}
+section h2{font-size:clamp(28px,5vw,42px);font-weight:800;line-height:1.1;margin-bottom:28px;max-width:20ch}
+.services ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.services li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.services h3{font-size:20px;margin-bottom:6px}
+.services p{color:var(--muted);font-size:16px}
+.reviews{background:var(--ink);color:#F2F0EA}
+.reviews .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.reviews figure{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px}
+.stars{color:#F4B740;letter-spacing:2px;font-size:18px}
+.reviews blockquote{font-size:18px;line-height:1.5;margin:10px 0 14px}
+.reviews figcaption{font-size:14px;color:#A9ADB1}
+.steps ol{list-style:none;counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.steps li{counter-increment:s;border-top:3px solid var(--accent);padding-top:14px}
+.steps li:before{content:"0" counter(s);font:800 14px Archivo,sans-serif;color:var(--accent)}
+.steps b{display:block;font-size:19px;margin:6px 0 4px}
+.steps span{color:var(--muted);font-size:16px}
+.area ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
+.area li{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font-weight:500}
+.area p{margin-top:18px;color:var(--muted)}
+.faq details{border-top:1px solid var(--line);padding:18px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font-weight:600;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary:after{content:"+";color:var(--accent);font-size:22px;line-height:1}
+.faq details[open] summary:after{content:"–"}
+.faq p{color:var(--muted);margin-top:8px;max-width:60ch}
+.contact{background:var(--accent);color:#fff;text-align:center}
+.contact h2{margin:0 auto 12px}
+.contact p{opacity:.85;margin-bottom:26px}
+.contact .btn.solid{background:#fff;color:var(--accent);border-color:#fff}
+.contact .btn.ghost{color:#fff;border-color:rgba(255,255,255,.6)}
+.contact .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+footer{padding:28px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.callbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:10;display:flex;gap:10px}
+.callbar .btn{flex:1;min-height:56px;box-shadow:0 10px 30px rgba(0,0,0,.18);font-size:17px}
+.callbar .btn.ghost{background:#fff}
+@media (min-width:768px){body{padding-bottom:0}.callbar{display:none}.hero{padding:96px 0 72px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head>
+<body>
+<div class="demo">Example site by <a href="https://spencercurnow.com/web">Spencer Curnow</a>. Cascade Ridge Roofing is made up; every name, review and number here is invented.</div>
+<header><div class="wrap">
+  <a class="brand" href="#top">Cascade Ridge Roofing<small>Roofing · Redmond and the Eastside</small></a>
+  <a class="btn solid" href="tel:+14255550148"><span class="wide">Call (425) 555-0148</span><span class="narrow">Call</span></a>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <span class="eyebrow">Licensed, bonded and insured</span>
+  <h1>Leaks fixed fast.<br>New roofs built to last.</h1>
+  <p>Free inspections and written estimates within 48 hours.</p>
+  <div class="ctas"><a class="btn solid" href="tel:+14255550148">Call for a free estimate</a><a class="btn ghost" href="mailto:hello@example.com?subject=Estimate request for Cascade Ridge Roofing">Send a photo of the problem</a></div>
+</div>
+<svg class="roof" viewBox="0 0 560 220" aria-hidden="true"><path d="M10 210 L190 60 L300 150 L400 70 L550 210" fill="none" stroke="#1F6F5C" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity=".18"/><path d="M60 210 L190 100 L300 190" fill="none" stroke="#1F6F5C" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" opacity=".1"/></svg>
+</div>
+
+<div class="stats"><div><b>4.9</b><span>average Google rating</span></div><div><b>300+</b><span>roofs since 2009</span></div><div><b>48 hrs</b><span>to a written estimate</span></div></div>
+
+<section class="services"><div class="wrap"><h2>What we do</h2><ul><li><h3>Roof replacement</h3><p>Asphalt, metal and cedar. Old roof off, new roof on, yard cleaned, in most cases in two days.</p></li><li><h3>Leak repair</h3><p>We find the source, not just the drip. Most repairs done the same week.</p></li><li><h3>Storm damage</h3><p>Emergency tarping and help with your insurance claim, start to finish.</p></li><li><h3>Gutters</h3><p>New seamless gutters, guards and downspouts that move water away from the house.</p></li><li><h3>Moss and maintenance</h3><p>Moss removal, treatment and a yearly check so small problems stay small.</p></li><li><h3>Skylights</h3><p>Leaky skylights resealed or replaced, and new ones installed.</p></li></ul></div></section>
+
+<section class="reviews"><div class="wrap"><h2>What neighbors say</h2><div class="grid"><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Called on a Saturday with water coming through the ceiling. They had a tarp on by the afternoon and the repair done Tuesday.”</blockquote><figcaption>Dana K. · Redmond</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“Three quotes, theirs was the clearest and not the most expensive. New roof in two days and the crew left the yard spotless.”</blockquote><figcaption>Marcus T. · Kirkland</figcaption></figure><figure><div class="stars" aria-label="5 stars">★★★★★</div><blockquote>“They told me I didn&#x27;t need a new roof yet, just a repair. That honesty is why they&#x27;ll get the job when I do.”</blockquote><figcaption>Priya S. · Bellevue</figcaption></figure></div></div></section>
+
+<section class="steps"><div class="wrap"><h2>How it works</h2><ol><li><b>Call or send a photo</b><span>Tell us what&#x27;s going on. A photo of the problem helps.</span></li><li><b>Free inspection</b><span>We come out, get on the roof and show you what we find.</span></li><li><b>Written estimate</b><span>One clear price in writing within 48 hours. No pressure.</span></li><li><b>Done right</b><span>We do the work, clean up and stand behind it for 10 years.</span></li></ol></div></section>
+
+<section class="area"><div class="wrap"><h2>Where we work</h2><ul><li>Redmond</li><li>Kirkland</li><li>Bellevue</li><li>Sammamish</li><li>Woodinville</li><li>Bothell</li></ul><p>Mon–Sat, 7am–6pm. Emergency tarping any time.</p></div></section>
+
+<section class="faq"><div class="wrap"><h2>Questions</h2><details><summary>Do you do free estimates?</summary><p>Yes. Inspections and written estimates are always free.</p></details><details><summary>Do you work with insurance?</summary><p>Yes. We document the damage and work with your adjuster directly.</p></details><details><summary>How long does a new roof take?</summary><p>Most homes take one to two days once materials arrive.</p></details><details><summary>Is your work guaranteed?</summary><p>Every new roof comes with a 10-year workmanship warranty, on top of the manufacturer&#x27;s.</p></details></div></section>
+
+<section class="contact"><div class="wrap"><h2>Got a leak or an old roof?</h2><p>Free inspection and a written estimate within 48 hours.</p>
+  <div class="ctas"><a class="btn solid" href="tel:+14255550148">Call (425) 555-0148</a><a class="btn ghost" href="mailto:hello@example.com?subject=Estimate request for Cascade Ridge Roofing">Email us</a></div></div></section>
+</main>
+
+<footer><div class="wrap"><span>© Cascade Ridge Roofing · since 2009</span><span>WA contractor license #CASCARR000XX</span></div></footer>
+
+<nav class="callbar" aria-label="Contact"><a class="btn solid" href="tel:+14255550148">Call now</a><a class="btn ghost" href="mailto:hello@example.com?subject=Estimate request for Cascade Ridge Roofing">Free estimate</a></nav>
+</body></html>

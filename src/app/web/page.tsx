@@ -99,6 +99,16 @@ export default function WebServicesPage() {
         </section>
 
         <section className="flex flex-col gap-2.5">
+          <h2 className="muted">Example</h2>
+          <p>
+            A one-page site for a roofer: reviews up front, a call button that follows you down the page,
+            and a free-estimate path for people who&apos;d rather text a photo. The business is made up;
+            the site is real. Open it on your phone.
+          </p>
+          <a href="/web/examples/cascade-ridge-roofing">Cascade Ridge Roofing, an example site ↗</a>
+        </section>
+
+        <section className="flex flex-col gap-2.5">
           <h2 className="muted">How it works</h2>
           <p>You never pay to find out if it&apos;s worth it. The mockup comes first.</p>
           <ol className="flex flex-col gap-3">

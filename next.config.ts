@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
       { source: "/work/dogleg", destination: "/work/schmenk-golf", permanent: true },
     ];
   },
+  // Example client sites are static pages in public/web/examples/<slug>/index.html.
+  async rewrites() {
+    return [{ source: "/web/examples/:slug", destination: "/web/examples/:slug/index.html" }];
+  },
 };
 
 export default nextConfig;
