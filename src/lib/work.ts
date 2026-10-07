@@ -12,6 +12,9 @@ export type Shot = {
   height: number;
   phone?: boolean; // a raw phone screen: rounder corners in the grid
   slides?: { src: string; alt: string; width: number; height: number }[]; // a set that plays in the lightbox (a Yurr issue)
+  href?: string; // the tile links here instead of opening the lightbox
+  tagline?: string; // a Yurr issue's cover line, shown under it and in the reader
+  post?: string; // the issue's Instagram post
 };
 
 export type Project = {
@@ -24,6 +27,7 @@ export type Project = {
   story?: string[]; // the short story shown beside the images on /work; falls back to body
   links: { label: string; href: string }[];
   shots: Shot[];
+  issues?: { vol: string; issues: Shot[] }[]; // Yurr's archive, newest first
 };
 
 const store = { width: 720, height: 1564, phone: true }; // App Store screenshots
@@ -31,7 +35,7 @@ const golf = { width: 720, height: 1561, phone: true };
 const cover = { width: 1080, height: 1350 }; // Yurr slides are 4:5
 
 // One Yurr issue: the cover in the grid, every slide in the lightbox.
-function issue(slug: string, no: string, who: string, vol: string, count: number): Shot {
+function issue(slug: string, no: string, who: string, vol: string, count: number, tagline: string, post?: string): Shot {
   const name = no ? `Issue ${no}, ${who}` : `${who}, a compilation`;
   const what = (i: number) =>
     i === 1 ? "cover" : i === count ? "closing grid" : no && i % 2 === 1 ? "photo and callout" : "interview slide";
@@ -40,7 +44,7 @@ function issue(slug: string, no: string, who: string, vol: string, count: number
     alt: `Yurr Magazine ${name}, ${what(k + 1)}`,
     ...cover,
   }));
-  return { id: slug, src: slides[0].src, file: `yurr/${slug}`, caption: `${name} · ${vol}`, meta: vol, alt: slides[0].alt, ...cover, slides };
+  return { id: slug, src: slides[0].src, file: `yurr/${slug}`, caption: name, meta: vol, alt: slides[0].alt, ...cover, slides, tagline, post };
 }
 
 export const PROJECTS: Project[] = [
@@ -86,15 +90,28 @@ export const PROJECTS: Project[] = [
     ],
     links: [],
     shots: [
-      issue("leallicna", "005", "@leallicna", "Vol. 02", 16),
-      issue("luvstruck", "006", "@luvstruck", "Vol. 02", 14),
-      issue("oliver", "008", "@ollybee", "Vol. 02", 14),
-      issue("jared", "010", "@jwesttttttttt", "Vol. 02", 16),
-      issue("amon", "017", "@amoninsta", "Vol. 02", 16),
-      issue("jaren", "018", "@ohthatsjuice__", "Vol. 02", 16),
-      issue("andy", "015", "@waitimgoated", "Vol. 01", 14),
-      issue("lyric", "020", "@bestfilmer", "Vol. 01", 16),
-      issue("best-advice", "", "The best advice", "Vol. 01", 12),
+      { id: "archive", href: "/work/yurr", src: "/projects/yurr/jaren/01.jpg", file: "yurr/archive", caption: "The archive", alt: "Yurr Magazine issue 018 cover, opening the archive of every issue", ...cover },
+    ],
+    issues: [
+      {
+        vol: "Vol. 02",
+        issues: [
+          issue("jaren", "018", "@ohthatsjuice__", "Vol. 02", 16, "Small-town America's funniest export."),
+          issue("amon", "017", "@amoninsta", "Vol. 02", 16, "Never knowing what he wants to be, and calling it the reward."),
+          issue("jared", "010", "@jwesttttttttt", "Vol. 02", 16, "Bringing back the good old days of the internet."),
+          issue("oliver", "008", "@ollybee", "Vol. 02", 14, "Actor, creative director, and full-time menace out of Jersey."),
+          issue("luvstruck", "006", "@luvstruck", "Vol. 02", 14, "She turned a Twitch stream into a life built around cars, creating, and doing what she loves."),
+          issue("leallicna", "005", "@leallicna", "Vol. 02", 16, "Artist. Illustrator. Worldbuilder."),
+        ],
+      },
+      {
+        vol: "Vol. 01",
+        issues: [
+          issue("lyric", "020", "@bestfilmer", "Vol. 01", 16, "The handle isn't a flex. It's a fact."),
+          issue("andy", "015", "@waitimgoated", "Vol. 01", 14, "Wait... he's goated."),
+          issue("best-advice", "", "The best advice", "Vol. 01", 12, "After 20 interviews, here's some of the best advice we got."),
+        ],
+      },
     ],
   },
   {
@@ -136,14 +153,18 @@ export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug
 
 /** The /work grid, in order: projects mixed together like a mood board. "slug/shot-id". */
 export const GRID_ORDER = [
-  "sleeve/album", "yurr/jared", "schmenk-golf/round", "yurr/leallicna",
-  "sleeve/songs", "yurr/lyric", "soundsauce/calc", "yurr/oliver", "sleeve/feed",
-  "yurr/jaren", "schmenk-golf/play", "sleeve/playlists", "yurr/luvstruck",
-  "yurr/andy", "sleeve/taste", "yurr/amon", "schmenk-golf/log", "sleeve/profile",
-  "yurr/best-advice", "sleeve/week",
+  "sleeve/album", "yurr/archive", "schmenk-golf/round", "sleeve/songs",
+  "soundsauce/calc", "sleeve/feed", "schmenk-golf/play", "sleeve/playlists",
+  "sleeve/taste", "schmenk-golf/log", "sleeve/profile", "sleeve/week",
 ];
 
 export type GridItem = { key: string; project: Project; shot: Shot };
+
+/** Yurr's archive as reader items, newest first, grouped by volume. */
+export function yurrIssues(): { vol: string; items: GridItem[] }[] {
+  const yurr = getProject("yurr")!;
+  return (yurr.issues ?? []).map((v) => ({ vol: v.vol, items: v.issues.map((shot) => ({ key: shot.id, project: yurr, shot })) }));
+}
 
 export function gridItems(): GridItem[] {
   const all = PROJECTS.flatMap((project) => project.shots.map((shot) => ({ key: `${project.slug}/${shot.id}`, project, shot })));

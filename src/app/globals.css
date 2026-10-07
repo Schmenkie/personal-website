@@ -307,6 +307,8 @@ body:has(.minimal) {
 @media (hover: none) {
   .minimal .tile-label { display: none; }
 }
+/* A tile that leads somewhere (Yurr's archive) always says so. */
+.minimal .tile .tile-label-on { opacity: 1; display: block; }
 .minimal .lb-btn {
   min-width: 44px;
   min-height: 44px;

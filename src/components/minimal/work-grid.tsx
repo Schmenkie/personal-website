@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GridItem } from "@/lib/work";
 
 // /work: every image from every project in one masonry grid, each at its true
@@ -9,10 +10,24 @@ import type { GridItem } from "@/lib/work";
 // arrow keys (or the buttons) move through the grid, and through a set's
 // slides first when the image is a set (a Yurr issue). The open image is in
 // the URL hash (#sleeve/album) so it can be linked to.
+//
+// With `groups` it lays out as a newsstand instead (Yurr's archive): even rows
+// of covers under a volume heading, each with its issue line and tagline, and
+// the lightbox reads one issue after another.
 
 type Open = { item: number; slide: number };
 
-export function WorkGrid({ items }: { items: GridItem[] }) {
+export function WorkGrid({
+  items: flat,
+  groups,
+}: {
+  items?: GridItem[];
+  groups?: { vol: string; items: GridItem[] }[];
+}) {
+  const items = useMemo(
+    () => flat ?? groups?.flatMap((g) => g.items) ?? [],
+    [flat, groups],
+  );
   const [open, setOpen] = useState<Open | null>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
   const closeBtn = useRef<HTMLButtonElement>(null);
@@ -92,39 +107,104 @@ export function WorkGrid({ items }: { items: GridItem[] }) {
 
   return (
     <>
-      <ul className="columns-2 gap-3 sm:columns-3 sm:gap-4 lg:columns-4 xl:columns-5">
-        {items.map((it, i) => (
-          <li key={it.key} className="mb-3 break-inside-avoid sm:mb-4">
-            <button
-              ref={(el) => {
-                tiles.current[i] = el;
-              }}
-              type="button"
-              onClick={() => setOpen({ item: i, slide: 0 })}
-              aria-label={`${it.project.name}: ${it.shot.caption}`}
-              className="tile group relative block w-full cursor-zoom-in bg-transparent p-0 text-left"
+      {groups ? (
+        groups.map((g) => {
+          const offset = items.indexOf(g.items[0]);
+          return (
+            <section
+              key={g.vol}
+              aria-label={g.vol}
+              className="mb-12 flex flex-col gap-3"
             >
-              <Image
-                src={it.shot.src}
-                alt={it.shot.alt}
-                width={it.shot.width}
-                height={it.shot.height}
-                sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                className={`block h-auto w-full bg-[#EDEDEA] ${it.shot.phone ? "rounded-[18px]" : "rounded-[3px]"}`}
-              />
-              <span aria-hidden="true" className="tile-label">
-                {it.project.name}
-                {it.shot.slides && (
-                  <span className="muted">
-                    {" "}
-                    · {it.shot.slides.length} slides
+              <h2 className="muted">{g.vol}</h2>
+              <ul className="grid max-w-[1200px] grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5">
+                {g.items.map((it, j) => {
+                  const i = offset + j;
+                  return (
+                    <li key={it.key}>
+                      <button
+                        ref={(el) => {
+                          tiles.current[i] = el;
+                        }}
+                        type="button"
+                        onClick={() => setOpen({ item: i, slide: 0 })}
+                        aria-label={`Read ${it.shot.caption}`}
+                        className="tile rack-tile group block w-full cursor-zoom-in bg-transparent p-0 text-left"
+                      >
+                        <Image
+                          src={it.shot.src}
+                          alt={it.shot.alt}
+                          width={it.shot.width}
+                          height={it.shot.height}
+                          sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                          className="block h-auto w-full rounded-[3px] bg-[#EDEDEA]"
+                        />
+                        <span className="mt-2 flex flex-col">
+                          <span>{it.shot.caption}</span>
+                          {it.shot.tagline && (
+                            <span className="muted">{it.shot.tagline}</span>
+                          )}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          );
+        })
+      ) : (
+        <ul className="columns-2 gap-3 sm:columns-3 sm:gap-4 lg:columns-4 xl:columns-5">
+          {items.map((it, i) => (
+            <li key={it.key} className="mb-3 break-inside-avoid sm:mb-4">
+              {it.shot.href ? (
+                <Link href={it.shot.href} className="tile group relative block">
+                  <Image
+                    src={it.shot.src}
+                    alt={it.shot.alt}
+                    width={it.shot.width}
+                    height={it.shot.height}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                    className="block h-auto w-full rounded-[3px] bg-[#EDEDEA]"
+                  />
+                  <span className="tile-label tile-label-on">
+                    {it.project.name}{" "}
+                    <span className="muted">· {it.shot.caption} →</span>
                   </span>
-                )}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+                </Link>
+              ) : (
+                <button
+                  ref={(el) => {
+                    tiles.current[i] = el;
+                  }}
+                  type="button"
+                  onClick={() => setOpen({ item: i, slide: 0 })}
+                  aria-label={`${it.project.name}: ${it.shot.caption}`}
+                  className="tile group relative block w-full cursor-zoom-in bg-transparent p-0 text-left"
+                >
+                  <Image
+                    src={it.shot.src}
+                    alt={it.shot.alt}
+                    width={it.shot.width}
+                    height={it.shot.height}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                    className={`block h-auto w-full bg-[#EDEDEA] ${it.shot.phone ? "rounded-[18px]" : "rounded-[3px]"}`}
+                  />
+                  <span aria-hidden="true" className="tile-label">
+                    {it.project.name}
+                    {it.shot.slides && (
+                      <span className="muted">
+                        {" "}
+                        · {it.shot.slides.length} slides
+                      </span>
+                    )}
+                  </span>
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {open && (
         <Lightbox
@@ -232,13 +312,25 @@ function Lightbox({
 
         <section className="flex flex-col gap-2.5 lg:w-[360px] lg:shrink-0 lg:justify-center lg:overflow-y-auto">
           <h2>
-            {project.name} <span className="muted">· {project.where}</span>
+            {project.name}{" "}
+            <span className="muted">
+              · {shot.tagline ? shot.meta : project.where}
+            </span>
           </h2>
           <p className="muted">{shot.caption}</p>
-          {story.map((para) => (
-            <p key={para.slice(0, 24)}>{para}</p>
-          ))}
-          {project.links.length > 0 && (
+          {shot.tagline ? (
+            <>
+              <p>{shot.tagline}</p>
+              {shot.post && (
+                <a href={shot.post} className="self-start">
+                  See it on Instagram ↗
+                </a>
+              )}
+            </>
+          ) : (
+            story.map((para) => <p key={para.slice(0, 24)}>{para}</p>)
+          )}
+          {!shot.tagline && project.links.length > 0 && (
             <div className="mt-1 flex flex-col items-start">
               {project.links.map((l) => (
                 <a key={l.href} href={l.href}>
