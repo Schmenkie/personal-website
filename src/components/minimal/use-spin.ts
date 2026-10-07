@@ -3,15 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { SPIN_HEADERS, SPIN_URL, toSpin, type Spin } from "@/lib/spin";
 
-/** The server's spin when it has one; otherwise the browser asks Sleeve itself. */
+/** The server's spin shows first (it's cached up to 10 minutes); then the
+ *  browser asks Sleeve directly, so a spin posted a minute ago shows right away. */
 export function useSpin(initial: Spin | null) {
   const [spin, setSpin] = useState(initial);
   useEffect(() => {
-    if (initial) return;
     let alive = true;
-    fetch(SPIN_URL, { headers: SPIN_HEADERS })
+    fetch(SPIN_URL, { headers: SPIN_HEADERS, cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((rows) => alive && setSpin(toSpin(rows)))
+      .then((rows) => {
+        const fresh = toSpin(rows);
+        if (!alive || !fresh) return;
+        setSpin((cur) =>
+          cur && cur.title === fresh.title && cur.artist === fresh.artist && cur.isToday === fresh.isToday ? cur : fresh,
+        );
+      })
       .catch(() => {});
     return () => {
       alive = false;

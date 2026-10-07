@@ -270,6 +270,19 @@ body:has(.minimal) {
     max-width: min(560px, calc((100dvh - 250px) * 1.04));
   }
 }
+/* Below desktop the record is small and centered; the song line under it keeps
+   the full width. */
+@media (max-width: 1023px) {
+  .minimal .player .turntable {
+    max-width: 360px;
+    align-self: center;
+  }
+}
+@media (max-width: 639px) {
+  .minimal .player .turntable {
+    max-width: 210px;
+  }
+}
 .minimal .player .arm {
   transform-box: view-box;
   transform-origin: 510px 36px;

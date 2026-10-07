@@ -26,7 +26,7 @@ export function RecordPlayer({ initial }: { initial: Spin | null }) {
         disabled={!canPlay}
         aria-pressed={playing}
         aria-label={playing ? `Pause ${songLabel}` : `Play ${songLabel}`}
-        className="block w-full cursor-pointer bg-transparent p-0 disabled:cursor-default"
+        className="turntable block w-full cursor-pointer bg-transparent p-0 disabled:cursor-default"
       >
         <svg viewBox="0 0 540 520" className="block h-auto w-full" aria-hidden="true">
           <defs>
